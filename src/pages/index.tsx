@@ -1,8 +1,11 @@
+import DialogComponent from "@/components/Dialog/Dialog";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Login() {
+  const [open, setOpen] = useState(false);
   const { push } = useRouter();
 
   return (
@@ -18,7 +21,7 @@ export default function Login() {
               onClick={() => {
                 push("/admin");
               }}
-              className="bg-gray-200 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-300 transition-all cursor-pointer group"
+              className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
             >
               Administração{" "}
               <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
@@ -29,7 +32,7 @@ export default function Login() {
               onClick={() => {
                 push("/avaliador");
               }}
-              className="bg-gray-200 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-300 transition-all cursor-pointer group"
+              className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
             >
               Área do Avaliador{" "}
               <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
@@ -38,11 +41,20 @@ export default function Login() {
             </div>
           </div>
         </div>
-        <div className="text-center mt-10 font-normal text-sm hover:underline cursor-pointer text-gray-500">
+        <div
+          className="text-center mt-10 font-normal text-sm hover:underline cursor-pointer text-gray-500"
+          onClick={() => setOpen(true)}
+        >
           Precisa de ajuda?
         </div>
       </div>
       <Footer fixed={true} />
+      <DialogComponent
+        open={open}
+        setOpen={setOpen}
+        title="Sobre este sistema"
+        content={`O "Avalia" é um sistema criado pela Hotay para ser utilizado nas avaliações de projetos de Feiras de Iniciação Científica. O sistema é livre para qualquer um utilizar e ofere funcionalidades de orquestração de notas a avaliações dos projetos científicos apresentados. Se você quiser usar o sistema e ainda não tiver conta, basta ir para a área de administração que poderá criar uma. Se você é um avaliador, você provavelmente terá recebido um link de acessou ou um código de acesso. Com ele você pode acessar os trabalhos que irá avaliar sem precisar fazer nenhum tipo de login.`}
+      />
     </main>
   );
 }
