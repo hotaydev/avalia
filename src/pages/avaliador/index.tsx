@@ -2,11 +2,8 @@ import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import AvaliadorCode from "@/components/AvaliadorCode/AvaliadorCode";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
-// import { useRouter } from "next/router";
 
 export default function Login() {
-  // const { push } = useRouter();
-
   return (
     <main className="z-10 flex flex-col items-center relative px-6 pt-20 pb-10 sm:pb-10 md:pb-14 lg:pb-20">
       <HeaderTitle />

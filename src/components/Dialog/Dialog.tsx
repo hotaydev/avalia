@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -10,12 +10,12 @@ export default function DialogComponent({
   open,
   setOpen,
   title,
-  content,
+  children,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
-  content: string;
+  children?: ReactNode;
 }) {
   return (
     <Dialog className="relative z-10" open={open} onClose={setOpen}>
@@ -40,7 +40,7 @@ export default function DialogComponent({
                     {title}
                   </DialogTitle>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">{content}</p>
+                    <p className="text-sm text-gray-500">{children}</p>
                   </div>
                 </div>
               </div>

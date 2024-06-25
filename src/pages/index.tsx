@@ -49,12 +49,17 @@ export default function Login() {
         </div>
       </div>
       <Footer />
-      <DialogComponent
-        open={open}
-        setOpen={setOpen}
-        title="Sobre este sistema"
-        content={`O "Avalia" é um sistema criado pela Hotay para ser utilizado nas avaliações de projetos de Feiras de Iniciação Científica. O sistema é livre para qualquer um utilizar e ofere funcionalidades de orquestração de notas a avaliações dos projetos científicos apresentados. Se você quiser usar o sistema e ainda não tiver conta, basta ir para a área de administração que poderá criar uma. Se você é um avaliador, você provavelmente terá recebido um link de acessou ou um código de acesso. Com ele você pode acessar os trabalhos que irá avaliar sem precisar fazer nenhum tipo de login.`}
-      />
+      <DialogComponent open={open} setOpen={setOpen} title="Sobre este sistema">
+        O Avalia é um sistema criado pela Hotay para ser utilizado nas
+        avaliações de projetos de Feiras de Iniciação Científica. O sistema é
+        livre para qualquer um utilizar e ofere funcionalidades de orquestração
+        de notas a avaliações dos projetos científicos apresentados. Se você
+        quiser usar o sistema e ainda não tiver conta, basta ir para a área de
+        administração que poderá criar uma. Se você é um avaliador, você
+        provavelmente terá recebido um link de acessou ou um código de acesso.
+        Com ele você pode acessar os trabalhos que irá avaliar sem precisar
+        fazer nenhum tipo de login.
+      </DialogComponent>
     </main>
   );
 }
