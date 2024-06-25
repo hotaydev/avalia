@@ -1,3 +1,4 @@
+import { signIn } from "next-auth/react";
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import DialogComponent from "@/components/Dialog/Dialog";
 import Footer from "@/components/Footer/Footer";
@@ -19,9 +20,10 @@ export default function AdminPage() {
           </h2>
           <div className="space-y-4 px-4">
             <div
-              // onClick={() => {
-              //   push("/admin");
-              // }}
+              onClick={async () => {
+                // TODO: add "loading" animation
+                await signIn("google");
+              }}
               className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
             >
               <FcGoogle />
@@ -31,9 +33,12 @@ export default function AdminPage() {
               </span>
             </div>
             <div
-              // onClick={() => {
-              //   push("/avaliador");
-              // }}
+              onClick={async () => {
+                // TODO: get e-mail via UI changes
+                await signIn("nodemailer", {
+                  email: "",
+                });
+              }}
               className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
             >
               <FcLink />
