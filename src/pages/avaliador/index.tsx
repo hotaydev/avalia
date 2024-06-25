@@ -1,3 +1,4 @@
+import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import AvaliadorCode from "@/components/AvaliadorCode/AvaliadorCode";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
@@ -20,7 +21,8 @@ export default function Login() {
           Precisa de ajuda?
         </div>
       </div>
-      <Footer fixed={true} />
+      <Footer />
+      <ArrowBack />
     </main>
   );
 }

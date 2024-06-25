@@ -48,7 +48,7 @@ export default function Login() {
           Precisa de ajuda?
         </div>
       </div>
-      <Footer fixed={true} />
+      <Footer />
       <DialogComponent
         open={open}
         setOpen={setOpen}
