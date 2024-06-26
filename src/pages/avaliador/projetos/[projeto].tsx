@@ -1,15 +1,9 @@
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import { Project } from "@/lib/models/projects";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
-interface Project {
-  title: string;
-  evaluated: boolean;
-  category: string;
-  id: number;
-}
 
 export default function ProjetosAvaliador() {
   const router = useRouter();
@@ -41,11 +35,13 @@ export default function ProjetosAvaliador() {
         </h2>
         <h3 className="font-normal text-gray-500 mb-10">
           {project && project?.title ? (
-            "Nome do projeto"
-          ) : (
-            <span className="rounded-lg bg-gray-200 text-gray-200">
+            project?.title
+          ) : loading ? (
+            <span className="rounded-lg bg-gray-100 text-gray-100">
               ------------------------------
             </span>
+          ) : (
+            "Projeto não encontrado"
           )}
         </h3>
       </div>

@@ -1,9 +1,4 @@
-interface Project {
-  title: string;
-  evaluated: boolean;
-  category: string;
-  id: number;
-}
+import { Project } from "@/lib/models/projects";
 
 const mockData: Project[] = [
   {

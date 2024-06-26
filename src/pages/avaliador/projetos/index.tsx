@@ -1,15 +1,9 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import { Project } from "@/lib/models/projects";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FcOk } from "react-icons/fc";
-
-interface Project {
-  title: string;
-  evaluated: boolean;
-  category: string;
-  id: number;
-}
 
 export default function ProjetosAvaliador() {
   const { push } = useRouter();
@@ -56,19 +50,19 @@ export default function ProjetosAvaliador() {
 function LoadingComponent() {
   return (
     <div className="text-center px-4">
-      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
-        ----------------------------------
-      </span>
-      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
-        ----------------------------------
-      </span>
-      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
-        ----------------------------------
-      </span>
-      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
-        ----------------------------------
-      </span>
+      <LoadingListItem />
+      <LoadingListItem />
+      <LoadingListItem />
+      <LoadingListItem />
     </div>
+  );
+}
+
+function LoadingListItem() {
+  return (
+    <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
+      ----------------------------------
+    </span>
   );
 }
 
