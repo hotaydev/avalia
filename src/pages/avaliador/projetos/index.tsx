@@ -1,37 +1,39 @@
-// import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { FcOk } from "react-icons/fc";
 
 interface Project {
   title: string;
   evaluated: boolean;
   category: string;
+  id: number;
 }
 
 export default function ProjetosAvaliador() {
-  const projects: Project[] = [
-    {
-      title: "Projeto exemplo 1",
-      evaluated: false,
-      category: "Categoria exemplo",
-    },
-    {
-      title: "Projeto exemplo 2",
-      evaluated: true,
-      category: "Categoria exemplo",
-    },
-    {
-      title: "Projeto exemplo 3",
-      evaluated: false,
-      category: "Categoria exemplo",
-    },
-    {
-      title: "Projeto exemplo 4",
-      evaluated: true,
-      category: "Categoria exemplo",
-    },
-  ];
+  const { push } = useRouter();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      fetch("/api/avaliador/projects")
+        .then((res) => res.json())
+        .then((data) => {
+          if (isMounted) setProjects(data);
+          if (isMounted) setLoading(false);
+        });
+    })();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const goToProject = (project: number) => {
+    push(`/avaliador/projetos/${project}`);
+  };
 
   return (
     <main className="z-10 flex flex-col items-center relative px-6 pt-20 pb-10 sm:pb-10 md:pb-14 lg:pb-20">
@@ -40,15 +42,33 @@ export default function ProjetosAvaliador() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-10">
           Seus projetos para avaliação:
         </h2>
-        {projects.length > 0 ? (
-          <ProjectsList projects={projects} />
-        ) : (
-          <NoProjectsFound />
+        {projects.length > 0 && (
+          <ProjectsList projects={projects} push={goToProject} />
         )}
+        {projects.length === 0 && !loading && <NoProjectsFound />}
+        {loading && <LoadingComponent />}
       </div>
       <Footer />
-      {/* <ArrowBack /> */}
     </main>
+  );
+}
+
+function LoadingComponent() {
+  return (
+    <div className="text-center px-4">
+      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
+        ----------------------------------
+      </span>
+      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
+        ----------------------------------
+      </span>
+      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
+        ----------------------------------
+      </span>
+      <span className="flex items-center px-4 py-4 bg-gray-100 text-gray-100 rounded-lg w-full mb-2">
+        ----------------------------------
+      </span>
+    </div>
   );
 }
 
@@ -62,33 +82,62 @@ function NoProjectsFound() {
   );
 }
 
-function ProjectsList({ projects }: { projects: Project[] }) {
+function ProjectsList({
+  projects,
+  push,
+}: {
+  projects: Project[];
+  push: Function;
+}) {
   return (
     <div className="flex flex-col justify-center items-center px-4">
-      {projects.map(({ title, category, evaluated }, index) => (
-        <ProjectListItem
-          key={index}
-          title={title}
-          category={category}
-          evaluated={evaluated}
-        />
-      ))}
+      {projects
+        .sort((a, b) =>
+          a.evaluated === b.evaluated ? 0 : a.evaluated ? -1 : 1
+        )
+        .map((project) => (
+          <ProjectListItem key={project.id} project={project} push={push} />
+        ))}
     </div>
   );
 }
 
-function ProjectListItem({ title, category, evaluated }: Project) {
+function ProjectListItem({
+  project,
+  push,
+}: {
+  project: Project;
+  push: Function;
+}) {
   return (
-    <div className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-lg w-full justify-between mb-2">
+    <div
+      className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-lg w-full justify-between mb-2"
+      onClick={() => push(project.id)}
+    >
       <div className="flex flex-col items-start justify-center">
-        <h3 className="text-normal">{title}</h3>
-        <p className="text-xs text-gray-600 font-light">{category}</p>
+        <h3
+          className={`text-normal text-gray-700 ${
+            project.evaluated ? "line-through" : ""
+          }`}
+        >
+          {project.title}
+        </h3>
+        <p
+          className={`text-xs text-gray-500 font-light ${
+            project.evaluated ? "line-through" : ""
+          }`}
+        >
+          {project.category}
+        </p>
       </div>
       <div>
-        <FcOk size={32} />
-        {/* <span className="bg-gray-300 rounded-full px-5 py-3 border-2 border-gray-400">
-          x
-        </span> */}
+        {project.evaluated ? (
+          <FcOk size={42} />
+        ) : (
+          <span className="bg-gray-300 rounded-full w-10 flex items-center justify-center h-10">
+            <span className="bg-gray-200 rounded-full w-6 flex items-center justify-center h-6"></span>
+          </span>
+        )}
       </div>
     </div>
   );
