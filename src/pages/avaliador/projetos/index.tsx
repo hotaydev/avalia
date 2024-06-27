@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import LogoutComponent from "@/components/Logout/Logout";
-import { Project } from "@/lib/models/projects";
+import { Project } from "@/lib/models/project";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

@@ -137,6 +137,12 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
             disabled={
               !(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)
             }
+            onClick={() => {
+              if (!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour))
+                return;
+              if (callback)
+                callback(`${valueOne}${valueTwo}${valueThree}${valueFour}`);
+            }}
             ref={buttonRef}
           >
             Continuar

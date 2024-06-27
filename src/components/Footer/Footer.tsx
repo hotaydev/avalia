@@ -8,7 +8,7 @@ export default function Footer({ fixed = true }: { fixed?: boolean }) {
         fixed ? "md:fixed md:bottom-2" : ""
       }`}
     >
-      Desenvolvido pela{" "}
+      Desenvolvido gratuitamente pela{" "}
       <Link
         href="https://www.hotay.dev"
         target="_blank"

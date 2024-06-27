@@ -1,4 +1,4 @@
-import { Project } from "@/lib/models/projects";
+import { Project } from "@/lib/models/project";
 
 const mockData: Project[] = [
   {
