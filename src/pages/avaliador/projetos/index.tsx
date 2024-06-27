@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import LogoutComponent from "@/components/Logout/Logout";
 import { Project } from "@/lib/models/projects";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -42,7 +43,8 @@ export default function ProjetosAvaliador() {
         {projects.length === 0 && !loading && <NoProjectsFound />}
         {loading && <LoadingComponent />}
       </div>
-      <Footer />
+      <LogoutComponent />
+      <Footer fixed={projects.length > 6 ? false : true} />
     </main>
   );
 }
