@@ -6,12 +6,16 @@ import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FcLink } from "react-icons/fc";
+import Head from "next/head";
 
 export default function AdminPage() {
   const [open, setOpen] = useState(false);
 
   return (
     <main className="z-10 flex flex-col items-center relative px-6 pt-20 pb-10 sm:pb-10 md:pb-14 lg:pb-20">
+      <Head>
+        <title>Login Administrativo | Avalia</title>
+      </Head>
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">
