@@ -55,10 +55,17 @@ export default function ProjetosAvaliador() {
         )}
         {projects.length === 0 && !loading && <NoProjectsFound />}
         {loading && <LoadingComponent />}
-        <div className="text-center mt-10 font-normal text-sm text-gray-500">
-          {/* TODO: get this date correctly from admin's configuration */}
-          As avaliações encerram amanhã, às 10h
-        </div>
+        {!projects.some((q) => !q.evaluated) ? (
+          <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
+            <FcOk className="mr-2" />
+            Seus projetos já foram avaliados. Ótimo trabalho!
+          </span>
+        ) : (
+          <div className="text-center mt-10 font-normal text-sm text-gray-500">
+            {/* TODO: get this date correctly from admin's configuration */}
+            As avaliações encerram amanhã, às 10h
+          </div>
+        )}
       </div>
       <LogoutComponent />
       <Footer fixed={projects.length > 6 ? false : true} />
