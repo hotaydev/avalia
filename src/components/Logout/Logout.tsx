@@ -5,6 +5,7 @@ export default function LogoutComponent() {
 
   const handleLogout = () => {
     // TODO: handle logout
+    localStorage.removeItem("evaluatorCode");
     push("/");
   };
 

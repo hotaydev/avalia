@@ -27,6 +27,15 @@ export default function ProjetosAvaliador() {
     };
   }, []);
 
+  useEffect(() => {
+    // TODO: verify if the evaluatorCode is really from an evaluator
+    const evaluatorCode = localStorage.getItem("evaluatorCode");
+
+    if (!evaluatorCode) {
+      push("/avaliador/");
+    }
+  }, [push]);
+
   const goToProject = (project: number) => {
     push(`/avaliador/projetos/${project}`);
   };

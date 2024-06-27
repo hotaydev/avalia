@@ -42,6 +42,15 @@ export default function ProjetosAvaliador() {
     };
   }, [router.query.projeto]);
 
+  useEffect(() => {
+    // TODO: verify if the evaluatorCode is really from an evaluator
+    const evaluatorCode = localStorage.getItem("evaluatorCode");
+
+    if (!evaluatorCode) {
+      router.push("/avaliador/");
+    }
+  }, [router]);
+
   const handleQuestionScore = (id: number, score: number) => {
     const newQuestions = questions.map((quest) =>
       quest.id === id ? { ...quest, score } : quest
