@@ -7,6 +7,7 @@ import { Question } from "@/lib/models/question";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ProjetosAvaliador() {
   const router = useRouter();
@@ -49,19 +50,26 @@ export default function ProjetosAvaliador() {
     setQuestions(newQuestions);
   };
 
-  const sendScores = async () => {
-    // TODO: we need to first of all check if all the scores are filled
+  const sendScores = () => {
+    if (questions.some((q) => !q.score)) {
+      toast.error("Alguma questão não está preenchida.");
+      return;
+    }
+
+    setButtonEnabled(false);
     fetch("/api/avaliador/questions/", {
       method: "POST",
       body: JSON.stringify(questions),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (!data.success) {
-          // TODO: Throw error toast
-        } else {
-          // TODO: success! throw message and redirect
+      .then(async (data) => {
+        if (data.success) {
+          toast.success("Avaliação enviada com sucesso!");
+          await new Promise((r) => setTimeout(r, 1600)); // sleep
           router.push("/avaliador/projetos");
+        } else {
+          toast.error("Ocorreu algum erro. Tente novamente.");
+          setButtonEnabled(true);
         }
       });
   };
@@ -71,6 +79,7 @@ export default function ProjetosAvaliador() {
       <Head>
         <title>Avaliação do Projeto | Avalia</title>
       </Head>
+      <Toaster />
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-2">
