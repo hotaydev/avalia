@@ -55,12 +55,12 @@ export default function ProjetosAvaliador() {
     const newQuestions = questions.map((quest) =>
       quest.id === id ? { ...quest, score } : quest
     );
-    setButtonEnabled(!newQuestions.some((q) => !q.score));
+    setButtonEnabled(!newQuestions.some((q) => q.score === undefined));
     setQuestions(newQuestions);
   };
 
   const sendScores = () => {
-    if (questions.some((q) => !q.score)) {
+    if (questions.some((q) => q.score === undefined)) {
       toast.error("Alguma questão não está preenchida.");
       return;
     }
@@ -153,6 +153,7 @@ function QuestionsList({
           title={quest.title}
           id={quest.id}
           description={quest.description}
+          isText={quest.type === "text"}
           handleQuestionScore={handleQuestionScore}
         />
       ))}
@@ -197,11 +198,13 @@ function SingleQuestion({
   title,
   description,
   id,
+  isText,
   handleQuestionScore,
 }: {
   title: string;
   description: string;
   id: number;
+  isText: boolean;
   handleQuestionScore: Function;
 }) {
   const handle = (value: number) => handleQuestionScore(id, value);
@@ -212,7 +215,23 @@ function SingleQuestion({
         {title[title.length - 1] === ":" ? title : `${title}:`}
       </h3>
       <p className="text-sm font-light">{description}</p>
-      <PossibleScores questionId={id} handle={handle} />
+      {isText ? (
+        <TextQuestion />
+      ) : (
+        <PossibleScores questionId={id} handle={handle} />
+      )}
+    </div>
+  );
+}
+
+function TextQuestion() {
+  return (
+    <div className="flex items-center justify-between mt-4 mb-2">
+      <textarea
+        className="w-full p-2 border text-sm border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+        rows={4}
+        placeholder="Escreva aqui..."
+      ></textarea>
     </div>
   );
 }

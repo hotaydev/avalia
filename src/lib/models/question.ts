@@ -3,4 +3,5 @@ export interface Question {
   id: number;
   description: string;
   score?: number;
+  type: "score" | "text";
 }

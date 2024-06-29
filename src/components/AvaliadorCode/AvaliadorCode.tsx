@@ -25,42 +25,60 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
     if (value.length > 1) newVal = value[value.length - 1];
     setState(newVal);
 
-    if (nextInput?.current) {
+    if (nextInput && nextInput.current) {
       nextInput.current.focus();
     } else {
+      inputFourRef?.current?.blur();
       buttonRef?.current?.focus();
     }
   };
 
-  const onPaste = (e: any, position: number = 1) => {
-    const pastedText = e.clipboardData.getData("Text");
+  const onPaste = (e: any, position: number) => {
+    e.preventDefault();
+    const pastedText = e.clipboardData.getData("Text").slice(0, 4);
 
-    switch (position) {
-      case 1:
-        setValueOne(pastedText[0]);
-        setValueTwo(pastedText[1]);
-        setValueThree(pastedText[2]);
-        setValueFour(pastedText[3]);
-        break;
+    if (pastedText.length === 4) {
+      setValues(pastedText);
+    } else {
+      const newValues = [valueOne, valueTwo, valueThree, valueFour];
+      for (let i = 0; i < pastedText.length; i++) {
+        if (position - 1 + i < newValues.length) {
+          newValues[position - 1 + i] = pastedText[i];
+        }
+      }
+      setValues(newValues);
 
-      case 2:
-        setValueTwo(pastedText[1]);
-        setValueThree(pastedText[2]);
-        setValueFour(pastedText[3]);
-        break;
-      case 3:
-        setValueThree(pastedText[2]);
-        setValueFour(pastedText[3]);
-        break;
-      case 4:
-        setValueFour(pastedText[3]);
-        break;
+      if (position + pastedText.length - 1 < 4) {
+        switch (position + pastedText.length - 1) {
+          case 1:
+            inputTwoRef.current?.focus();
+            break;
+          case 2:
+            inputThreeRef.current?.focus();
+            break;
+          case 3:
+            inputFourRef.current?.focus();
+            break;
+          default:
+            buttonRef?.current?.focus();
+            break;
+        }
+      }
     }
-
     buttonRef?.current?.focus();
   };
 
-  // TODO: the paste event is not fully working, it changes the first value with the latest value
+  const setValues = (newValues: string[]) => {
+    setValueOne(newValues[0]);
+    setValueTwo(newValues[1]);
+    setValueThree(newValues[2]);
+    setValueFour(newValues[3]);
+  };
+
+  const sendButton = () => {
+    if (!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)) return;
+    if (callback) callback(`${valueOne}${valueTwo}${valueThree}${valueFour}`);
+  };
 
   return (
     <div>
@@ -78,7 +96,7 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
                   nextInput: inputTwoRef,
                 })
               }
-              onPaste={onPaste}
+              onPaste={(e) => onPaste(e, 1)}
               ref={inputOneRef}
             />
           </div>
@@ -94,7 +112,7 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
                   nextInput: inputThreeRef,
                 })
               }
-              onPaste={onPaste}
+              onPaste={(e) => onPaste(e, 2)}
               ref={inputTwoRef}
             />
           </div>
@@ -110,7 +128,7 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
                   nextInput: inputFourRef,
                 })
               }
-              onPaste={onPaste}
+              onPaste={(e) => onPaste(e, 3)}
               ref={inputThreeRef}
             />
           </div>
@@ -123,9 +141,10 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
                 handleInput({
                   value: e.target.value,
                   setState: setValueFour,
+                  nextInput: undefined,
                 })
               }
-              onPaste={onPaste}
+              onPaste={(e) => onPaste(e, 4)}
               ref={inputFourRef}
             />
           </div>
@@ -137,12 +156,7 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
             disabled={
               !(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)
             }
-            onClick={() => {
-              if (!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour))
-                return;
-              if (callback)
-                callback(`${valueOne}${valueTwo}${valueThree}${valueFour}`);
-            }}
+            onClick={sendButton}
             ref={buttonRef}
           >
             Continuar
