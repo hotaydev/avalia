@@ -9,12 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/mongodb-adapter": "^3.4.1",
     "@headlessui/react": "^2.1.0",
-    "mongodb": "^6.7.0",
+    "firebase": "^10.12.2",
     "next": "^14.2.4",
-    "next-auth": "^5.0.0-beta.19",
-    "nodemailer": "^6.9.14",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",

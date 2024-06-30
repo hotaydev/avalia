@@ -1,4 +1,3 @@
-import { signIn } from "next-auth/react";
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import DialogComponent from "@/components/Dialog/Dialog";
 import Footer from "@/components/Footer/Footer";
@@ -52,9 +51,7 @@ export default function AdminPage() {
             onClick={async () => {
               if (email !== "" && validateEmail(email)) {
                 // TODO: set a "loading" state
-                await signIn("nodemailer", {
-                  email: email,
-                });
+                // TODO: signin proccess
               } else {
                 toast.error("Preencha corretamente o seu email.");
               }
@@ -71,7 +68,7 @@ export default function AdminPage() {
           <div
             onClick={async () => {
               // TODO: add "loading" animation
-              await signIn("google");
+              // TODO: signin proccess
             }}
             className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
           >

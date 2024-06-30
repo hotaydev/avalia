@@ -1,4 +1,11 @@
-import { Dispatch, RefObject, SetStateAction, useRef, useState } from "react";
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export default function AvaliadorCode({ callback }: { callback?: Function }) {
   const [valueOne, setValueOne] = useState("");
@@ -11,6 +18,20 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
   const inputThreeRef = useRef<HTMLInputElement>(null);
   const inputFourRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    function handler(event: KeyboardEvent) {
+      if (event.code === "Enter") {
+        buttonRef?.current?.click();
+        event.preventDefault();
+      }
+    }
+    document.addEventListener("keydown", handler);
+    return () => {
+      document.removeEventListener("keydown", handler);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleInput = ({
     value,
@@ -152,7 +173,7 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
 
         <div className="flex flex-col px-4 justify-center items-center">
           <button
-            className="text-center w-3/4 rounded-xl outline-none py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed"
+            className="text-center w-3/4 rounded-xl outline-none py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-blue-300"
             disabled={
               !(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)
             }
