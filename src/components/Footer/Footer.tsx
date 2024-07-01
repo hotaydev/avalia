@@ -9,11 +9,7 @@ export default function Footer({ fixed = true }: { fixed?: boolean }) {
       }`}
     >
       Desenvolvido gratuitamente pela{" "}
-      <Link
-        href="https://www.hotay.dev"
-        target="_blank"
-        className="hover:underline font-semibold"
-      >
+      <Link href="https://www.hotay.dev" target="_blank">
         <Image
           className="ml-2"
           src="https://www.hotay.dev/assets/images/logo.svg"

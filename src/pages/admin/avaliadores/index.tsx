@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import { useRouter } from "next/router";
 
-export default function AdminPage() {
+export default function AdminAvaliadoresPage() {
   const router = useRouter();
   return (
     <main className="z-10 flex flex-col relative px-10 py-10 h-screen">
@@ -15,7 +15,7 @@ export default function AdminPage() {
         <AdminMenu path={router.pathname} pushRoute={router.push} />
         <div className="bg-white shadow-md rounded-lg px-4 py-10 w-full text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-            Classificação dos projetos
+            Lista de Avaliadores
           </h2>
         </div>
       </div>
