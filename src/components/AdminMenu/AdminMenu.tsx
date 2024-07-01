@@ -41,6 +41,21 @@ export default function AdminMenu({
             pushRoute={pushRoute}
             route="/admin/config"
           />
+          <div className="px-8 mb-8">
+            <hr />
+          </div>
+          <div
+            className="border-2 border-gray-100 hover:border-gray-200 text-gray-800 rounded-lg px-6 py-3 flex items-center justify-between transition-all cursor-pointer group"
+            onClick={() => {
+              localStorage.removeItem("adminCode");
+              pushRoute("/");
+            }}
+          >
+            Sair da sua conta{" "}
+            <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
+              &rarr;
+            </span>
+          </div>
         </div>
       </div>
       <div className="z-10 text-gray-500 text-center flex flex-col items-center justify-center py-4 w-full font-light relative">
