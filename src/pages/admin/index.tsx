@@ -28,8 +28,8 @@ export default function AdminPage() {
       {!loading && (
         <div className="flex w-full gap-x-8 h-screen">
           <AdminMenu path={router.pathname} pushRoute={router.push} />
-          <div className="bg-white shadow-md rounded-lg px-4 py-10 w-full text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+          <div className="bg-white shadow-md rounded-lg px-4 py-10 w-full">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
               Classificação dos projetos
             </h2>
           </div>
