@@ -8,6 +8,7 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [ ] Área dos avaliadores acessível via link direto
   - [ ] Área dos avaliadores acessível via código
   - [ ] Enviar link de acesso e código do avaliador via email e WhatsApp
+  - [ ] Confirmar a avaliação do projeto usando Código do Projeto (QR Code/Código numérico)
 
 - **Administração:**
   - [ ] Importar Avaliadores via Google Sheets

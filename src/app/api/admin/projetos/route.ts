@@ -1,27 +1,31 @@
-import { ProjectForEvaluator } from "@/lib/models/project";
+import { ProjectForAdmin } from "@/lib/models/project";
 
-const mockData: ProjectForEvaluator[] = [
+const mockData: ProjectForAdmin[] = [
   {
     title: "Projeto exemplo 1",
-    evaluated: false,
+    score: undefined,
+    field: "Ciências Tecnológicas",
     category: "Categoria exemplo",
     id: 1,
   },
   {
     title: "Projeto exemplo 2",
-    evaluated: false,
+    score: undefined,
+    field: "Ciências Tecnológicas",
     category: "Categoria exemplo",
     id: 2,
   },
   {
     title: "Projeto exemplo 3",
-    evaluated: false,
+    score: undefined,
+    field: "Ciências Tecnológicas",
     category: "Categoria exemplo",
     id: 3,
   },
   {
     title: "Projeto exemplo 4",
-    evaluated: false,
+    score: undefined,
+    field: "Ciências Tecnológicas",
     category: "Categoria exemplo",
     id: 4,
   },

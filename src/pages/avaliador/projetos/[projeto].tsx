@@ -2,7 +2,7 @@ import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import LogoutComponent from "@/components/Logout/Logout";
-import { Project } from "@/lib/models/project";
+import { ProjectForEvaluator } from "@/lib/models/project";
 import { Question } from "@/lib/models/question";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function ProjetosAvaliador() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
-  const [project, setProject] = useState<Project | undefined>();
+  const [project, setProject] = useState<ProjectForEvaluator | undefined>();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [buttonEnabled, setButtonEnabled] = useState<boolean>(false);
 

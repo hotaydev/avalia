@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import LogoutComponent from "@/components/Logout/Logout";
-import { Project } from "@/lib/models/project";
+import { ProjectForEvaluator } from "@/lib/models/project";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { FcOk } from "react-icons/fc";
 export default function ProjetosAvaliador() {
   const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectForEvaluator[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -106,7 +106,7 @@ function ProjectsList({
   projects,
   push,
 }: {
-  projects: Project[];
+  projects: ProjectForEvaluator[];
   push: Function;
 }) {
   return (
@@ -126,7 +126,7 @@ function ProjectListItem({
   project,
   push,
 }: {
-  project: Project;
+  project: ProjectForEvaluator;
   push: Function;
 }) {
   return (

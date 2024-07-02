@@ -1,6 +1,6 @@
-import { Project } from "@/lib/models/project";
+import { ProjectForEvaluator } from "@/lib/models/project";
 
-const mockData: Project =
+const mockData: ProjectForEvaluator =
 {
   title: "Projeto exemplo 1",
   evaluated: false,

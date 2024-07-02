@@ -1,6 +1,7 @@
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Link from "next/link";
 import Image from "next/image";
+import { IoPower } from "react-icons/io5";
 
 export default function AdminMenu({
   path,
@@ -52,8 +53,8 @@ export default function AdminMenu({
             }}
           >
             Sair da sua conta{" "}
-            <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
-              &rarr;
+            <span className="ml-2">
+              <IoPower className="group-hover:text-red-600 transition-all" />
             </span>
           </div>
         </div>
