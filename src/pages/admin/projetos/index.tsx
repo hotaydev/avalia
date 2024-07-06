@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import SortableSearchableTable from "@/components/SortableSearchableTable/SortableSearchableTable";
 
 export default function AdminProjetosPage() {
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,7 @@ export default function AdminProjetosPage() {
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
               Projetos cadastrados
             </h2>
+            <SortableSearchableTable />
           </div>
         </div>
       )}

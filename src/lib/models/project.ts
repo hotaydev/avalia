@@ -12,4 +12,5 @@ export interface ProjectForEvaluator extends Project {
 export interface ProjectForAdmin extends Project {
   field?: string;
   score?: number;
+  evaluatorsNumber?: number;
 }

@@ -5,12 +5,14 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
 ### Versão 1.0
 
 - **Avaliador:**
+
   - [ ] Área dos avaliadores acessível via link direto
   - [ ] Área dos avaliadores acessível via código
   - [ ] Enviar link de acesso e código do avaliador via email e WhatsApp
   - [ ] Confirmar a avaliação do projeto usando Código do Projeto (QR Code/Código numérico)
 
 - **Administração:**
+
   - [ ] Importar Avaliadores via Google Sheets
   - [ ] Importar Projetos via Google Sheets
   - [ ] Configurar planilha de destino das notas
@@ -26,13 +28,14 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [ ] Atribuir um projeto a um avaliador
   - [ ] Exportar lista de QR codes e códigos dos projetos
 
-
 ### Versão 2.0
 
 - **Avaliador:**
+
   - [ ] Página para cadastro de avaliadores
 
 - **Administração:**
+
   - [ ] Página para cadastro de projetos
   - [ ] Configuração do formulário do avaliador
   - [ ] Configuração de diferentes rankings
@@ -46,8 +49,24 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
 ### Versão 3.0
 
 - **Sistema:**
+
   - [ ] Migrar a pasta `/src/pages` para o padrão Next.js de `/src/app` (usando SSR)
   - [ ] Melhor componentização do conteúdo das páginas
   - [ ] Melhorar a documentação do projeto e guias de desenvolvimento para a comunidade
   - [ ] Implementar sistemas de internacionalização
   - [ ] Implementar meio de doações para o projeto além do GitHub Sponsors
+
+- **Avaliador:**
+
+  - [ ] Exportar certificado de participação como avaliador
+
+- **Administração:**
+
+  - [ ] Configurações para certificado de participação do avaliador
+
+### Versão 4.0
+
+- **Sistema:**
+
+  - [ ] Configurações de remoção da marca d'água e uso de logo customizado (escolas privadas)
+  - [ ] Sistema de pagamentos para liberação de sistema para escolas particulados (para escolas públicas sempre será gratuito)
