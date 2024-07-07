@@ -213,7 +213,6 @@ export default function SortableSearchableTable() {
         onChange={handleSearch}
         className="mb-4 p-2 border border-gray-300 rounded-lg"
       />
-      {/* TODO: improve this table heigth */}
       {heigth && (
         <div
           className="overflow-auto rounded-lg pr-3"
