@@ -29,7 +29,10 @@ export default function AdminProjetosPage() {
       {!loading && (
         <div className="flex w-full gap-x-8 h-screen">
           <AdminMenu path={router.pathname} pushRoute={router.push} />
-          <div className="bg-white shadow-md rounded-lg px-4 py-10 w-full">
+          <div
+            id="tableAvailableArea"
+            className="bg-white shadow-md rounded-lg px-4 py-10 w-full"
+          >
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
               Projetos cadastrados
             </h2>

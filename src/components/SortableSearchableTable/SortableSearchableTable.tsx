@@ -1,5 +1,5 @@
 import { ProjectForAdmin } from "@/lib/models/project";
-import React, { useState, useMemo, ChangeEvent } from "react";
+import React, { useState, useMemo, ChangeEvent, useEffect } from "react";
 
 interface SortConfig {
   key: keyof ProjectForAdmin;
@@ -7,6 +7,7 @@ interface SortConfig {
 }
 
 export default function SortableSearchableTable() {
+  const [heigth, setHeigth] = useState<number | undefined>();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [sortConfig, setSortConfig] = useState<SortConfig | null>({
     key: "id",
@@ -123,6 +124,21 @@ export default function SortableSearchableTable() {
     []
   );
 
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    handleWindowResize();
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
+  const handleWindowResize = () => {
+    const componentHeight =
+      document.getElementById("tableAvailableArea")?.clientHeight;
+    setHeigth(componentHeight ?? 300);
+  };
+
   const sortedData: ProjectForAdmin[] = useMemo(() => {
     let sortableItems = [...data];
     if (sortConfig !== null) {
@@ -198,80 +214,94 @@ export default function SortableSearchableTable() {
         className="mb-4 p-2 border border-gray-300 rounded-lg"
       />
       {/* TODO: improve this table heigth */}
-      <div className="overflow-auto max-h-[400px] border-gray-300 rounded-lg pr-3">
-        <table className="table-auto min-w-full sticky top-0">
-          <thead className="bg-gray-200 text-left tracking-wider">
-            <tr>
-              <th
-                onClick={() => requestSort("id")}
-                className="cursor-pointer py-3 pl-4 pr-2 bg-gray-200 rounded-tl-lg rounded-bl-lg"
-              >
-                ID <span className="inline-block w-4">{getArrow("id")}</span>
-              </th>
-              <th
-                onClick={() => requestSort("title")}
-                className="cursor-pointer py-3 px-2 bg-gray-200"
-              >
-                Título{" "}
-                <span className="inline-block w-4">{getArrow("title")}</span>
-              </th>
-              <th
-                onClick={() => requestSort("description")}
-                className="cursor-pointer py-3 px-2 bg-gray-200"
-              >
-                Descrição{" "}
-                <span className="inline-block w-4">
-                  {getArrow("description")}
-                </span>
-              </th>
-              <th
-                onClick={() => requestSort("category")}
-                className="cursor-pointer py-3 px-2 bg-gray-200"
-              >
-                Categoria{" "}
-                <span className="inline-block w-4">{getArrow("category")}</span>
-              </th>
-              <th
-                onClick={() => requestSort("field")}
-                className="cursor-pointer py-3 px-2 bg-gray-200"
-              >
-                Área do Projeto{" "}
-                <span className="inline-block w-4">{getArrow("field")}</span>
-              </th>
-              <th
-                onClick={() => requestSort("evaluatorsNumber")}
-                className="cursor-pointer py-3 pl-2 pr-4 bg-gray-200 rounded-tr-lg rounded-br-lg"
-              >
-                Avaliadores{" "}
-                <span className="inline-block w-4">
-                  {getArrow("evaluatorsNumber")}
-                </span>
-              </th>
-            </tr>
-          </thead>
-        </table>
-        <table className="table-auto min-w-full border-spacing-y-2 border-separate">
-          <tbody>
-            {filteredData.map((item) => (
-              <tr
-                key={item.id}
-                className="hover:bg-gray-200 bg-gray-100 rounded-lg transition-all"
-              >
-                <td className="py-3 pl-4 pr-2 rounded-tl-lg rounded-bl-lg">
-                  {item.id}
-                </td>
-                <td className="py-3 px-2">{item.title}</td>
-                <td className="py-3 px-2">{item.description}</td>
-                <td className="py-3 px-2">{item.category}</td>
-                <td className="py-3 px-2">{item.field}</td>
-                <td className="py-3 pr-4 pl-2 rounded-tr-lg rounded-br-lg">
-                  {item.evaluatorsNumber}
-                </td>
+      {heigth && (
+        <div
+          className="overflow-auto border-gray-300 rounded-lg pr-3"
+          style={{
+            maxHeight: heigth * 0.7,
+            maskImage:
+              "linear-gradient(to bottom, black calc(100% - 32px), transparent 100%)",
+          }}
+        >
+          <table className="table-auto min-w-full sticky top-0">
+            <thead className="bg-gray-200 text-left tracking-wider select-none">
+              <tr>
+                <th
+                  onClick={() => requestSort("id")}
+                  className="cursor-pointer py-3 pl-4 pr-2 bg-gray-200 rounded-tl-lg rounded-bl-lg"
+                >
+                  ID <span className="inline-block w-4">{getArrow("id")}</span>
+                </th>
+                <th
+                  onClick={() => requestSort("title")}
+                  className="cursor-pointer py-3 px-2 bg-gray-200"
+                >
+                  Título{" "}
+                  <span className="inline-block w-4">{getArrow("title")}</span>
+                </th>
+                <th
+                  onClick={() => requestSort("description")}
+                  className="cursor-pointer py-3 px-2 bg-gray-200"
+                >
+                  Descrição{" "}
+                  <span className="inline-block w-4">
+                    {getArrow("description")}
+                  </span>
+                </th>
+                <th
+                  onClick={() => requestSort("category")}
+                  className="cursor-pointer py-3 px-2 bg-gray-200"
+                >
+                  Categoria{" "}
+                  <span className="inline-block w-4">
+                    {getArrow("category")}
+                  </span>
+                </th>
+                <th
+                  onClick={() => requestSort("field")}
+                  className="cursor-pointer py-3 px-2 bg-gray-200"
+                >
+                  Área do Projeto{" "}
+                  <span className="inline-block w-4">{getArrow("field")}</span>
+                </th>
+                <th
+                  onClick={() => requestSort("evaluatorsNumber")}
+                  className="cursor-pointer py-3 pl-2 pr-4 bg-gray-200 rounded-tr-lg rounded-br-lg"
+                >
+                  Avaliadores{" "}
+                  <span className="inline-block w-4">
+                    {getArrow("evaluatorsNumber")}
+                  </span>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+          </table>
+          <table className="table-auto min-w-full border-spacing-y-2 border-separate pb-6">
+            <tbody>
+              {filteredData.map((item) => (
+                <tr
+                  key={item.id}
+                  className="hover:bg-gray-200 bg-gray-100 rounded-lg transition-all"
+                >
+                  <td className="py-3 pl-4 pr-2 rounded-tl-lg rounded-bl-lg">
+                    {item.id}
+                  </td>
+                  <td className="py-3 px-2">{item.title}</td>
+                  <td className="py-3 px-2">{item.description}</td>
+                  <td className="py-3 px-2">{item.category}</td>
+                  <td className="py-3 px-2">{item.field}</td>
+                  <td className="py-3 pr-4 pl-2 rounded-tr-lg rounded-br-lg">
+                    {item.evaluatorsNumber}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="pb-10 text-center w-full text-gray-500">
+            Exibindo todos os {filteredData.length} resultados.
+          </div>
+        </div>
+      )}
     </div>
   );
 }
