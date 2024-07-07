@@ -189,7 +189,7 @@ export default function SortableSearchableTable() {
   };
 
   return (
-    <div className="p-4">
+    <div className="pl-4 py-4 pr-1">
       <input
         type="text"
         placeholder="Pesquisar..."
@@ -198,9 +198,9 @@ export default function SortableSearchableTable() {
         className="mb-4 p-2 border border-gray-300 rounded-lg"
       />
       {/* TODO: improve this table heigth */}
-      <div className="overflow-auto max-h-[400px] border-gray-300 rounded-lg">
-        <table className="table-auto min-w-full border-spacing-y-2 border-separate">
-          <thead className="sticky top-2 bg-gray-200 text-left tracking-wider">
+      <div className="overflow-auto max-h-[400px] border-gray-300 rounded-lg pr-3">
+        <table className="table-auto min-w-full sticky top-0">
+          <thead className="bg-gray-200 text-left tracking-wider">
             <tr>
               <th
                 onClick={() => requestSort("id")}
@@ -249,6 +249,8 @@ export default function SortableSearchableTable() {
               </th>
             </tr>
           </thead>
+        </table>
+        <table className="table-auto min-w-full border-spacing-y-2 border-separate">
           <tbody>
             {filteredData.map((item) => (
               <tr
