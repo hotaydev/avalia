@@ -216,15 +216,18 @@ export default function SortableSearchableTable() {
       {/* TODO: improve this table heigth */}
       {heigth && (
         <div
-          className="overflow-auto border-gray-300 rounded-lg pr-3"
+          className="overflow-auto rounded-lg pr-3"
           style={{
             maxHeight: heigth * 0.7,
             maskImage:
               "linear-gradient(to bottom, black calc(100% - 32px), transparent 100%)",
           }}
         >
-          <table className="table-auto min-w-full sticky top-0">
-            <thead className="bg-gray-200 text-left tracking-wider select-none">
+          <table className="table-auto min-w-full pb-6 border-separate border-spacing-y-2">
+            <tr className="top-0 sticky">
+              <th colSpan={6} className="h-2 bg-white w-full"></th>
+            </tr>
+            <thead className="bg-gray-100 sticky top-2 text-left select-none">
               <tr>
                 <th
                   onClick={() => requestSort("id")}
@@ -275,13 +278,11 @@ export default function SortableSearchableTable() {
                 </th>
               </tr>
             </thead>
-          </table>
-          <table className="table-auto min-w-full border-spacing-y-2 border-separate pb-6">
             <tbody>
               {filteredData.map((item) => (
                 <tr
                   key={item.id}
-                  className="hover:bg-gray-200 bg-gray-100 rounded-lg transition-all"
+                  className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all"
                 >
                   <td className="py-3 pl-4 pr-2 rounded-tl-lg rounded-bl-lg">
                     {item.id}
