@@ -4,4 +4,5 @@ export interface Evaluator {
   email?: string;
   phone?: string;
   field?: string;
+  projects?: number;
 }
