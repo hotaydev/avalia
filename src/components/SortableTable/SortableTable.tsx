@@ -104,7 +104,7 @@ function EvaluatorsTable({
   searchTerm,
   getArrow,
 }: Readonly<{ heigth: number; searchTerm: string; getArrow: Function }>) {
-  const [sortConfig, setSortConfig] = useState<SortConfigForEvaluators | null>({
+  const [sortConfig, setSortConfig] = useState<SortConfigForEvaluators>({
     key: "id",
     direction: "ascending",
   });
@@ -258,9 +258,7 @@ function EvaluatorsTable({
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      "" ||
-      item.field?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ""
+      item.field?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const requestSort = (key: keyof Evaluator) => {
@@ -276,75 +274,14 @@ function EvaluatorsTable({
   };
 
   return (
-    <div
-      className="overflow-auto rounded-lg pr-3"
-      style={{
-        maxHeight: heigth * 0.7,
-        maskImage:
-          "linear-gradient(to bottom, black calc(100% - 32px), transparent 100%)",
-      }}
-    >
-      <table className="table-auto min-w-full pb-6 border-separate border-spacing-y-2">
-        <tr className="top-0 sticky">
-          <th colSpan={6} className="h-2 bg-white w-full"></th>
-        </tr>
-        <thead className="bg-gray-100 sticky top-2 text-left select-none">
-          <tr>
-            {evaluatorsTableColumns.map((column, index) => {
-              const isFirstElement: string | null =
-                index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
-              const isLastElement: string | null =
-                index === evaluatorsTableColumns.length - 1
-                  ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg"
-                  : null;
-              return (
-                <th
-                  key={column.key}
-                  onClick={() => requestSort(column.key)}
-                  className={`cursor-pointer py-3 bg-gray-200 ${
-                    isFirstElement ?? isLastElement ?? "px-2"
-                  }`}
-                >
-                  {column.title}{" "}
-                  <span className="inline-block w-4">
-                    {getArrow(column.key, sortConfig)}
-                  </span>
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((item) => (
-            <tr
-              key={item.id}
-              className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all"
-            >
-              {evaluatorsTableColumns.map((column, index) => {
-                const isFirstElement: string | null =
-                  index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
-                const isLastElement: string | null =
-                  index === evaluatorsTableColumns.length - 1
-                    ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg"
-                    : null;
-
-                return (
-                  <td
-                    key={column.key}
-                    className={`py-3 ${
-                      isFirstElement ?? isLastElement ?? "px-2"
-                    }`}
-                  >
-                    {item[column.key]}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <ShowingAllData size={filteredData.length} />
-    </div>
+    <TableContent
+      requestSort={requestSort}
+      filteredData={filteredData}
+      heigth={heigth}
+      getArrow={getArrow}
+      sortConfig={sortConfig}
+      columns={evaluatorsTableColumns}
+    />
   );
 }
 
@@ -353,7 +290,7 @@ function ProjectsTable({
   searchTerm,
   getArrow,
 }: Readonly<{ heigth: number; searchTerm: string; getArrow: Function }>) {
-  const [sortConfig, setSortConfig] = useState<SortConfigForProjects | null>({
+  const [sortConfig, setSortConfig] = useState<SortConfigForProjects>({
     key: "id",
     direction: "ascending",
   });
@@ -506,9 +443,8 @@ function ProjectsTable({
     (item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      "" ||
-      item.field?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ""
+      item.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.field?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const requestSort = (key: keyof ProjectForAdmin) => {
@@ -524,6 +460,33 @@ function ProjectsTable({
   };
 
   return (
+    <TableContent
+      requestSort={requestSort}
+      filteredData={filteredData}
+      heigth={heigth}
+      getArrow={getArrow}
+      sortConfig={sortConfig}
+      columns={projectsTableColumns}
+    />
+  );
+}
+
+function TableContent({
+  filteredData,
+  heigth,
+  columns,
+  getArrow,
+  sortConfig,
+  requestSort,
+}: Readonly<{
+  filteredData: any[];
+  heigth: number;
+  columns: { key: string; title: string }[];
+  getArrow: Function;
+  sortConfig: SortConfig | SortConfigForEvaluators | SortConfigForProjects;
+  requestSort: Function;
+}>) {
+  return (
     <div
       className="overflow-auto rounded-lg pr-3"
       style={{
@@ -538,13 +501,14 @@ function ProjectsTable({
         </tr>
         <thead className="bg-gray-100 sticky top-2 text-left select-none">
           <tr>
-            {projectsTableColumns.map((column, index) => {
+            {columns.map((column, index) => {
               const isFirstElement: string | null =
                 index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
               const isLastElement: string | null =
-                index === projectsTableColumns.length - 1
+                index === columns.length - 1
                   ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg"
                   : null;
+
               return (
                 <th
                   key={column.key}
@@ -568,11 +532,11 @@ function ProjectsTable({
               key={item.id}
               className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all"
             >
-              {projectsTableColumns.map((column, index) => {
+              {columns.map((column, index) => {
                 const isFirstElement: string | null =
                   index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
                 const isLastElement: string | null =
-                  index === projectsTableColumns.length - 1
+                  index === columns.length - 1
                     ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg"
                     : null;
 
