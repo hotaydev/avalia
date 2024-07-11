@@ -20,7 +20,7 @@ export default function ProjetosAvaliador() {
     let isMounted = true;
     (async () => {
       const projeto = router.query.projeto;
-      fetch("/api/avaliador/projects/" + projeto)
+      fetch("/api/evaluator/projects/" + projeto)
         .then((res) => res.json())
         .then(async (data) => {
           if (isMounted) setProject(data);
@@ -29,7 +29,7 @@ export default function ProjetosAvaliador() {
           // because we need to first get the project data
           // for then get the questions about that project
           if (isMounted)
-            fetch("/api/avaliador/questions/")
+            fetch("/api/evaluator/questions/")
               .then((res) => res.json())
               .then((data) => {
                 if (isMounted) setQuestions(data);

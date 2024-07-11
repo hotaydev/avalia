@@ -6,10 +6,10 @@ import { IoPower } from "react-icons/io5";
 export default function AdminMenu({
   path,
   pushRoute,
-}: {
+}: Readonly<{
   path: string;
   pushRoute: Function;
-}) {
+}>) {
   return (
     <div className="bg-white flex flex-col justify-between shadow-md rounded-lg px-4 pt-8 pb-4 max-w-xs w-full">
       <div>
@@ -84,19 +84,19 @@ function MenuItem({
   selected = false,
   pushRoute,
   route,
-}: {
+}: Readonly<{
   name: string;
   selected?: boolean;
   pushRoute: Function;
   route: string;
-}) {
+}>) {
+  const extraClass = selected
+    ? "border-l-blue-500 border-l-4 bg-blue-100 hover:bg-blue-200"
+    : "bg-gray-100 hover:bg-gray-200";
+
   return (
     <div
-      className={`${
-        selected
-          ? "border-l-blue-500 border-l-4 bg-blue-100 hover:bg-blue-200"
-          : "bg-gray-100 hover:bg-gray-200"
-      } text-gray-800 rounded-lg px-6 py-3 flex items-center justify-between transition-all cursor-pointer`}
+      className={`${extraClass} text-gray-800 rounded-lg px-6 py-3 flex items-center justify-between transition-all cursor-pointer`}
       onClick={() => pushRoute(route)}
     >
       {name}

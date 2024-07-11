@@ -108,117 +108,21 @@ function EvaluatorsTable({
     key: "id",
     direction: "ascending",
   });
+  const [data, setData] = useState<Evaluator[]>([]);
 
-  const data: Evaluator[] = useMemo(
-    // TODO: load this data programmatically
-    () => [
-      {
-        id: 1,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 2,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 3,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 4,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 5,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 6,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 7,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 8,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 9,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 10,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 11,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 12,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-      {
-        id: 13,
-        name: "Avaliador Teste",
-        email: "teste@email.com",
-        phone: "51999999999",
-        field: "Ciência",
-        projects: 3,
-      },
-    ],
-    []
-  );
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      fetch("/api/admin/evaluators/")
+        .then((res) => res.json())
+        .then(async (data) => {
+          if (isMounted) setData(data);
+        });
+    })();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const sortedData: Evaluator[] = useMemo(() => {
     let sortableItems = [...data];
@@ -294,117 +198,21 @@ function ProjectsTable({
     key: "id",
     direction: "ascending",
   });
+  const [data, setData] = useState<ProjectForAdmin[]>([]);
 
-  const data: ProjectForAdmin[] = useMemo(
-    // TODO: load this data programmatically
-    () => [
-      {
-        id: 1,
-        title: "Physics",
-        description: "Study of matter",
-        category: "Ensino Fundamental",
-        field: "Science",
-        evaluatorsNumber: 5,
-      },
-      {
-        id: 2,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 3,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 4,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 5,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 6,
-        title: "Physics",
-        description: "Study of matter",
-        category: "Ensino Fundamental",
-        field: "Science",
-        evaluatorsNumber: 5,
-      },
-      {
-        id: 7,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 8,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 9,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 10,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 11,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 12,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-      {
-        id: 13,
-        title: "Biology",
-        description: "Study of life",
-        category: "Ensino Médio",
-        field: "Science",
-        evaluatorsNumber: 8,
-      },
-    ],
-    []
-  );
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      fetch("/api/admin/projects/")
+        .then((res) => res.json())
+        .then(async (data) => {
+          if (isMounted) setData(data);
+        });
+    })();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const sortedData: ProjectForAdmin[] = useMemo(() => {
     let sortableItems = [...data];

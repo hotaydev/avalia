@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,19 @@ export default function AdminPage() {
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
               Classificação dos projetos
             </h2>
+            <div className="flex flex-col justify-center items-center h-full w-full gap-20">
+              <Image
+                src="/images/empty.svg"
+                alt="Sem dados atualmente"
+                width={647.63626 / 2}
+                height={632.17383 / 2}
+              />
+              <p className="text-gray-500 text-center font-light">
+                Para ver as informações aqui, configure as diferentes categorias
+                <br />
+                de projetos na aba &quot;Configurações&quot;.
+              </p>
+            </div>
           </div>
         </div>
       )}
