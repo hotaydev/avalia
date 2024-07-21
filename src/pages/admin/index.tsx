@@ -1,9 +1,9 @@
-import Head from "next/head";
-import { Toaster } from "react-hot-toast";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import { Toaster } from "react-hot-toast";
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -30,16 +30,9 @@ export default function AdminPage() {
         <div className="flex w-full gap-x-8 h-screen">
           <AdminMenu path={router.pathname} pushRoute={router.push} />
           <div className="bg-white shadow-md rounded-lg px-4 py-10 w-full">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              Classificação dos projetos
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Classificação dos projetos</h2>
             <div className="flex flex-col justify-center items-center h-full w-full gap-20">
-              <Image
-                src="/images/empty.svg"
-                alt="Sem dados atualmente"
-                width={647.63626 / 2}
-                height={632.17383 / 2}
-              />
+              <Image src="/images/empty.svg" alt="Sem dados atualmente" width={647.63626 / 2} height={632.17383 / 2} />
               <p className="text-gray-500 text-center font-light">
                 Para ver as informações aqui, configure as diferentes categorias
                 <br />

@@ -1,0 +1,30 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"useKeyWithClickEvents": "info",
+				"useKeyWithMouseEvents": "info"
+			},
+			"suspicious": {
+				"noExplicitAny": "info"
+			}
+		}
+	},
+	"formatter": {
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineWidth": 120
+	},
+	"files": {
+		"ignoreUnknown": true
+	},
+	"vcs": {
+		"useIgnoreFile": true
+	}
+}

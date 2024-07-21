@@ -1,6 +1,6 @@
-import { Evaluator } from "@/lib/models/evaluator";
-import { ProjectForAdmin } from "@/lib/models/project";
-import React, { useState, useMemo, ChangeEvent, useEffect } from "react";
+import type { Evaluator } from "@/lib/models/evaluator";
+import type { ProjectForAdmin } from "@/lib/models/project";
+import React, { useState, useMemo, type ChangeEvent, useEffect } from "react";
 
 interface SortConfig {
   key: string;
@@ -40,9 +40,7 @@ const projectsTableColumns: {
   { key: "evaluatorsNumber", title: "Avaliadores" },
 ];
 
-export default function SortableTable({
-  table,
-}: Readonly<{ table: "evaluators" | "projects" }>) {
+export default function SortableTable({ table }: Readonly<{ table: "evaluators" | "projects" }>) {
   const [heigth, setHeigth] = useState<number | undefined>();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -56,8 +54,7 @@ export default function SortableTable({
   }, []);
 
   const handleWindowResize = () => {
-    const componentHeight =
-      document.getElementById("tableAvailableArea")?.clientHeight;
+    const componentHeight = document.getElementById("tableAvailableArea")?.clientHeight;
     setHeigth(componentHeight ?? 300);
   };
 
@@ -65,7 +62,7 @@ export default function SortableTable({
     setSearchTerm(event.target.value);
   };
 
-  const getArrow = (key: string, sortConfig: SortConfig) => {
+  const getArrow = (key: string, sortConfig: SortConfig): string => {
     if (sortConfig?.key === key) {
       return sortConfig.direction === "ascending" ? "↑" : "↓";
     }
@@ -83,17 +80,9 @@ export default function SortableTable({
       />
       {heigth &&
         (table === "evaluators" ? (
-          <EvaluatorsTable
-            heigth={heigth}
-            searchTerm={searchTerm}
-            getArrow={getArrow}
-          />
+          <EvaluatorsTable heigth={heigth} searchTerm={searchTerm} getArrow={getArrow} />
         ) : (
-          <ProjectsTable
-            heigth={heigth}
-            searchTerm={searchTerm}
-            getArrow={getArrow}
-          />
+          <ProjectsTable heigth={heigth} searchTerm={searchTerm} getArrow={getArrow} />
         ))}
     </div>
   );
@@ -103,7 +92,7 @@ function EvaluatorsTable({
   heigth,
   searchTerm,
   getArrow,
-}: Readonly<{ heigth: number; searchTerm: string; getArrow: Function }>) {
+}: Readonly<{ heigth: number; searchTerm: string; getArrow: (key: string, sortConfig: SortConfig) => string }>) {
   const [sortConfig, setSortConfig] = useState<SortConfigForEvaluators>({
     key: "id",
     direction: "ascending",
@@ -125,17 +114,13 @@ function EvaluatorsTable({
   }, []);
 
   const sortedData: Evaluator[] = useMemo(() => {
-    let sortableItems = [...data];
+    const sortableItems = [...data];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
 
-        if (
-          aValue === null ||
-          (aValue === undefined && bValue === null) ||
-          bValue === undefined
-        ) {
+        if (aValue === null || (aValue === undefined && bValue === null) || bValue === undefined) {
           return 0;
         }
         if (aValue === null || aValue === undefined) {
@@ -162,16 +147,12 @@ function EvaluatorsTable({
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.field?.toLowerCase().includes(searchTerm.toLowerCase())
+      item.field?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const requestSort = (key: keyof Evaluator) => {
+  const requestSort = (key: keyof Evaluator): void => {
     let direction: "ascending" | "descending" = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    ) {
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
     }
     setSortConfig({ key, direction });
@@ -193,7 +174,7 @@ function ProjectsTable({
   heigth,
   searchTerm,
   getArrow,
-}: Readonly<{ heigth: number; searchTerm: string; getArrow: Function }>) {
+}: Readonly<{ heigth: number; searchTerm: string; getArrow: (key: string, sortConfig: SortConfig) => string }>) {
   const [sortConfig, setSortConfig] = useState<SortConfigForProjects>({
     key: "id",
     direction: "ascending",
@@ -215,17 +196,13 @@ function ProjectsTable({
   }, []);
 
   const sortedData: ProjectForAdmin[] = useMemo(() => {
-    let sortableItems = [...data];
+    const sortableItems = [...data];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
 
-        if (
-          aValue === null ||
-          (aValue === undefined && bValue === null) ||
-          bValue === undefined
-        ) {
+        if (aValue === null || (aValue === undefined && bValue === null) || bValue === undefined) {
           return 0;
         }
         if (aValue === null || aValue === undefined) {
@@ -252,16 +229,12 @@ function ProjectsTable({
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.field?.toLowerCase().includes(searchTerm.toLowerCase())
+      item.field?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const requestSort = (key: keyof ProjectForAdmin) => {
     let direction: "ascending" | "descending" = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    ) {
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
     }
     setSortConfig({ key, direction });
@@ -290,45 +263,36 @@ function TableContent({
   filteredData: any[];
   heigth: number;
   columns: { key: string; title: string }[];
-  getArrow: Function;
+  getArrow: (key: string, sortConfig: SortConfig) => string;
   sortConfig: SortConfig | SortConfigForEvaluators | SortConfigForProjects;
-  requestSort: Function;
+  requestSort: (key: any) => void;
 }>) {
   return (
     <div
       className="overflow-auto rounded-lg pr-3"
       style={{
         maxHeight: heigth * 0.7,
-        maskImage:
-          "linear-gradient(to bottom, black calc(100% - 32px), transparent 100%)",
+        maskImage: "linear-gradient(to bottom, black calc(100% - 32px), transparent 100%)",
       }}
     >
       <table className="table-auto min-w-full pb-6 border-separate border-spacing-y-2">
         <tr className="top-0 sticky">
-          <th colSpan={6} className="h-2 bg-white w-full"></th>
+          <th colSpan={6} className="h-2 bg-white w-full" />
         </tr>
         <thead className="bg-gray-100 sticky top-2 text-left select-none">
           <tr>
             {columns.map((column, index) => {
-              const isFirstElement: string | null =
-                index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
+              const isFirstElement: string | null = index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
               const isLastElement: string | null =
-                index === columns.length - 1
-                  ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg"
-                  : null;
+                index === columns.length - 1 ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg" : null;
 
               return (
                 <th
                   key={column.key}
                   onClick={() => requestSort(column.key)}
-                  className={`cursor-pointer py-3 bg-gray-200 ${
-                    isFirstElement ?? isLastElement ?? "px-2"
-                  }`}
+                  className={`cursor-pointer py-3 bg-gray-200 ${isFirstElement ?? isLastElement ?? "px-2"}`}
                 >
-                  {column.title}{" "}
-                  <span className="inline-block w-4">
-                    {getArrow(column.key, sortConfig)}
-                  </span>
+                  {column.title} <span className="inline-block w-4">{getArrow(column.key, sortConfig)}</span>
                 </th>
               );
             })}
@@ -336,25 +300,14 @@ function TableContent({
         </thead>
         <tbody>
           {filteredData.map((item) => (
-            <tr
-              key={item.id}
-              className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all"
-            >
+            <tr key={item.id} className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all">
               {columns.map((column, index) => {
-                const isFirstElement: string | null =
-                  index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
+                const isFirstElement: string | null = index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
                 const isLastElement: string | null =
-                  index === columns.length - 1
-                    ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg"
-                    : null;
+                  index === columns.length - 1 ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg" : null;
 
                 return (
-                  <td
-                    key={column.key}
-                    className={`py-3 ${
-                      isFirstElement ?? isLastElement ?? "px-2"
-                    }`}
-                  >
+                  <td key={column.key} className={`py-3 ${isFirstElement ?? isLastElement ?? "px-2"}`}>
                     {item[column.key] ?? "---"}
                   </td>
                 );
@@ -369,9 +322,5 @@ function TableContent({
 }
 
 function ShowingAllData({ size }: Readonly<{ size: number }>) {
-  return (
-    <div className="pb-10 text-center w-full text-gray-500">
-      Exibindo todos os {size} resultados.
-    </div>
-  );
+  return <div className="pb-10 text-center w-full text-gray-500">Exibindo todos os {size} resultados.</div>;
 }

@@ -1,7 +1,7 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import LogoutComponent from "@/components/Logout/Logout";
-import { ProjectForEvaluator } from "@/lib/models/project";
+import type { ProjectForEvaluator } from "@/lib/models/project";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -36,8 +36,8 @@ export default function ProjetosAvaliador() {
     }
   }, [push]);
 
-  const goToProject = (project: number) => {
-    push(`/avaliador/projetos/${project}`);
+  const goToProject = (project: number): Promise<boolean> => {
+    return push(`/avaliador/projetos/${project}`);
   };
 
   return (
@@ -47,12 +47,8 @@ export default function ProjetosAvaliador() {
       </Head>
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-10">
-          Seus projetos para avaliação:
-        </h2>
-        {projects.length > 0 && (
-          <ProjectsList projects={projects} push={goToProject} />
-        )}
+        <h2 className="text-2xl font-semibold text-gray-800 mb-10">Seus projetos para avaliação:</h2>
+        {projects.length > 0 && <ProjectsList projects={projects} push={goToProject} />}
         {projects.length === 0 && !loading && <NoProjectsFound />}
         {loading && <LoadingComponent />}
         {!projects.some((q) => !q.evaluated) ? (
@@ -68,7 +64,7 @@ export default function ProjetosAvaliador() {
         )}
       </div>
       <LogoutComponent />
-      <Footer fixed={projects.length > 6 ? false : true} />
+      <Footer fixed={projects.length <= 6} />
     </main>
   );
 }
@@ -105,19 +101,20 @@ function NoProjectsFound() {
 function ProjectsList({
   projects,
   push,
-}: {
+}: Readonly<{
   projects: ProjectForEvaluator[];
-  push: Function;
-}) {
+  push: (a: number) => Promise<boolean>;
+}>) {
+  const sortProjects = (a: ProjectForEvaluator, b: ProjectForEvaluator) => {
+    if (a.evaluated === b.evaluated) return 0;
+    return a.evaluated ? -1 : 1;
+  };
+
   return (
     <div className="flex flex-col justify-center items-center px-4">
-      {projects
-        .sort((a, b) =>
-          a.evaluated === b.evaluated ? 0 : a.evaluated ? -1 : 1
-        )
-        .map((project) => (
-          <ProjectListItem key={project.id} project={project} push={push} />
-        ))}
+      {projects.toSorted(sortProjects).map((project) => (
+        <ProjectListItem key={project.id} project={project} push={push} />
+      ))}
     </div>
   );
 }
@@ -125,28 +122,18 @@ function ProjectsList({
 function ProjectListItem({
   project,
   push,
-}: {
+}: Readonly<{
   project: ProjectForEvaluator;
-  push: Function;
-}) {
+  push: (a: number) => Promise<boolean>;
+}>) {
   return (
     <div
       className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-lg w-full justify-between mb-2"
       onClick={() => push(project.id)}
     >
       <div className="flex flex-col items-start justify-center">
-        <h3
-          className={`text-normal text-gray-700 ${
-            project.evaluated ? "line-through" : ""
-          }`}
-        >
-          {project.title}
-        </h3>
-        <p
-          className={`text-xs text-gray-500 font-light ${
-            project.evaluated ? "line-through" : ""
-          }`}
-        >
+        <h3 className={`text-normal text-gray-700 ${project.evaluated ? "line-through" : ""}`}>{project.title}</h3>
+        <p className={`text-xs text-gray-500 font-light ${project.evaluated ? "line-through" : ""}`}>
           {project.category}
         </p>
       </div>
@@ -155,7 +142,7 @@ function ProjectListItem({
           <FcOk size={42} />
         ) : (
           <span className="bg-gray-300 rounded-full w-10 flex items-center justify-center h-10">
-            <span className="bg-gray-200 rounded-full w-6 flex items-center justify-center h-6"></span>
+            <span className="bg-gray-200 rounded-full w-6 flex items-center justify-center h-6" />
           </span>
         )}
       </div>

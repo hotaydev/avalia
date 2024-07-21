@@ -1,8 +1,8 @@
-import Head from "next/head";
-import { Toaster } from "react-hot-toast";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function AdminConfigPage() {
   const [loading, setLoading] = useState(true);
@@ -29,9 +29,7 @@ export default function AdminConfigPage() {
         <div className="flex w-full gap-x-8 h-screen">
           <AdminMenu path={router.pathname} pushRoute={router.push} />
           <div className="bg-white shadow-md rounded-lg px-4 py-10 w-full">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              Configuração
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Configuração</h2>
           </div>
         </div>
       )}

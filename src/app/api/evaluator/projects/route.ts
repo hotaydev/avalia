@@ -1,4 +1,4 @@
-import { ProjectForEvaluator } from "@/lib/models/project";
+import type { ProjectForEvaluator } from "@/lib/models/project";
 
 const mockData: ProjectForEvaluator[] = [
   {

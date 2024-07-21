@@ -2,12 +2,12 @@ import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import DialogComponent from "@/components/Dialog/Dialog";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { FcLink } from "react-icons/fc";
-import Head from "next/head";
-import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
 
 const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
@@ -45,9 +45,7 @@ export default function AdminLoginPage() {
       <HeaderTitle />
       {!loading && (
         <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-            Como deseja acessar sua conta?
-          </h2>
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Como deseja acessar sua conta?</h2>
           <div className="px-4">
             <div className="w-full mb-2 flex flex-col">
               <input
@@ -58,9 +56,7 @@ export default function AdminLoginPage() {
                 className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
               />
               {email !== "" && !validateEmail(email) && (
-                <span className="w-full text-left text-red-600 text-xs font-light ml-1 pt-1 mb-2">
-                  Email inválido
-                </span>
+                <span className="w-full text-left text-red-600 text-xs font-light ml-1 pt-1 mb-2">Email inválido</span>
               )}
             </div>
             <div
@@ -80,9 +76,7 @@ export default function AdminLoginPage() {
             >
               <FcLink />
               Receber link por e-mail{" "}
-              <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
-                &rarr;
-              </span>
+              <span className="ml-2 transform group-hover:translate-x-2 transition-transform">&rarr;</span>
             </div>
             <p className="text-gray-500 font-light text-sm my-4">- ou -</p>
             <div
@@ -98,9 +92,7 @@ export default function AdminLoginPage() {
             >
               <FcGoogle />
               Login com Google{" "}
-              <span className="ml-2 transform group-hover:translate-x-2 transition-transform">
-                &rarr;
-              </span>
+              <span className="ml-2 transform group-hover:translate-x-2 transition-transform">&rarr;</span>
             </div>
           </div>
           <div className="text-center mt-10 font-normal text-sm text-gray-500">
@@ -122,18 +114,12 @@ export default function AdminLoginPage() {
       )}
       <Footer />
       <ArrowBack />
-      <DialogComponent
-        open={open}
-        setOpen={setOpen}
-        title="Por que não usamos senhas?"
-      >
-        A segurança de uma senha é fácil de ser burlada. Processos de
-        autorização e login sem senha passam a camada de segurança diretamente
-        para o Google ou seu e-mail.
+      <DialogComponent open={open} setOpen={setOpen} title="Por que não usamos senhas?">
+        A segurança de uma senha é fácil de ser burlada. Processos de autorização e login sem senha passam a camada de
+        segurança diretamente para o Google ou seu e-mail.
         <br />
         <br />
-        Acaba sendo uma senha a menos para se lembrar e um processo de
-        autorização mais seguro.
+        Acaba sendo uma senha a menos para se lembrar e um processo de autorização mais seguro.
       </DialogComponent>
     </main>
   );

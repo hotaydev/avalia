@@ -1,6 +1,7 @@
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
-import Link from "next/link";
+import type { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
+import Link from "next/link";
 import { IoPower } from "react-icons/io5";
 
 export default function AdminMenu({
@@ -8,7 +9,7 @@ export default function AdminMenu({
   pushRoute,
 }: Readonly<{
   path: string;
-  pushRoute: Function;
+  pushRoute: (a: Url) => Promise<boolean>;
 }>) {
   return (
     <div className="bg-white flex flex-col justify-between shadow-md rounded-lg px-4 pt-8 pb-4 max-w-xs w-full">
@@ -18,12 +19,7 @@ export default function AdminMenu({
           <hr />
         </div>
         <div className="space-y-4">
-          <MenuItem
-            name="Classificação"
-            selected={path === "/admin"}
-            pushRoute={pushRoute}
-            route="/admin"
-          />
+          <MenuItem name="Classificação" selected={path === "/admin"} pushRoute={pushRoute} route="/admin" />
           <MenuItem
             name="Avaliadores"
             selected={path === "/admin/avaliadores"}
@@ -61,18 +57,8 @@ export default function AdminMenu({
       </div>
       <div className="z-10 text-gray-500 text-center flex flex-col items-center justify-center py-4 w-full font-light relative">
         Desenvolvido gratuitamente pela
-        <Link
-          href="https://www.hotay.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2"
-        >
-          <Image
-            src="https://www.hotay.dev/assets/images/logo.svg"
-            alt="Logo da Hotay"
-            width={70}
-            height={23}
-          />
+        <Link href="https://www.hotay.dev" target="_blank" rel="noopener noreferrer" className="mt-2">
+          <Image src="https://www.hotay.dev/assets/images/logo.svg" alt="Logo da Hotay" width={70} height={23} />
         </Link>
       </div>
     </div>
@@ -87,7 +73,7 @@ function MenuItem({
 }: Readonly<{
   name: string;
   selected?: boolean;
-  pushRoute: Function;
+  pushRoute: (a: Url) => Promise<boolean>;
   route: string;
 }>) {
   const extraClass = selected

@@ -1,13 +1,6 @@
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type Dispatch, type RefObject, type SetStateAction, useEffect, useRef, useState } from "react";
 
-export default function AvaliadorCode({ callback }: { callback?: Function }) {
+export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code: string) => void }>) {
   const [valueOne, setValueOne] = useState("");
   const [valueTwo, setValueTwo] = useState("");
   const [valueThree, setValueThree] = useState("");
@@ -46,7 +39,7 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
     if (value.length > 1) newVal = value[value.length - 1];
     setState(newVal);
 
-    if (nextInput && nextInput.current) {
+    if (nextInput?.current) {
       nextInput.current.focus();
     } else {
       inputFourRef?.current?.blur();
@@ -174,11 +167,10 @@ export default function AvaliadorCode({ callback }: { callback?: Function }) {
         <div className="flex flex-col px-4 justify-center items-center">
           <button
             className="text-center w-3/4 rounded-xl outline-none py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-blue-300"
-            disabled={
-              !(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)
-            }
+            disabled={!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)}
             onClick={sendButton}
             ref={buttonRef}
+            type="button"
           >
             Continuar
           </button>

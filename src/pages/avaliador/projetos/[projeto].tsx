@@ -2,8 +2,8 @@ import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import LogoutComponent from "@/components/Logout/Logout";
-import { ProjectForEvaluator } from "@/lib/models/project";
-import { Question } from "@/lib/models/question";
+import type { ProjectForEvaluator } from "@/lib/models/project";
+import type { Question } from "@/lib/models/question";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function ProjetosAvaliador() {
     let isMounted = true;
     (async () => {
       const projeto = router.query.projeto;
-      fetch("/api/evaluator/projects/" + projeto)
+      fetch(`/api/evaluator/projects/${projeto}`)
         .then((res) => res.json())
         .then(async (data) => {
           if (isMounted) setProject(data);
@@ -51,15 +51,13 @@ export default function ProjetosAvaliador() {
     }
   }, [router]);
 
-  const handleQuestionScore = (id: number, score: number) => {
-    const newQuestions = questions.map((quest) =>
-      quest.id === id ? { ...quest, score } : quest
-    );
+  const handleQuestionScore = (id: number, score: number): void => {
+    const newQuestions = questions.map((quest) => (quest.id === id ? { ...quest, score } : quest));
     setButtonEnabled(!newQuestions.some((q) => q.score === undefined));
     setQuestions(newQuestions);
   };
 
-  const sendScores = () => {
+  const sendScores = (): void => {
     if (questions.some((q) => q.score === undefined)) {
       toast.error("Alguma questão não está preenchida.");
       return;
@@ -91,16 +89,12 @@ export default function ProjetosAvaliador() {
       <Toaster />
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-          Avaliação do projeto
-        </h2>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Avaliação do projeto</h2>
         <h3 className="font-normal text-gray-500 mb-6">
-          {project && project?.title ? (
-            project?.title
+          {project?.title ? (
+            project.title
           ) : loading ? (
-            <span className="rounded-lg bg-gray-100 text-gray-100">
-              ------------------------------
-            </span>
+            <span className="rounded-lg bg-gray-100 text-gray-100">------------------------------</span>
           ) : (
             "Projeto não encontrado"
           )}
@@ -141,9 +135,9 @@ function QuestionsList({
   sendScores,
 }: {
   questions: Question[];
-  handleQuestionScore: Function;
+  handleQuestionScore: (id: number, score: number) => void;
   buttonEnabled: boolean;
-  sendScores: Function;
+  sendScores: () => void;
 }) {
   return (
     <div className="flex flex-col justify-center items-center px-4 mt-10">
@@ -161,13 +155,10 @@ function QuestionsList({
         className="bg-blue-500 mt-8 text-white rounded-lg px-6 py-2 flex items-center justify-between hover:bg-blue-600 transition-all cursor-pointer group disabled:bg-gray-400 disabled:hover:bg-gray-400 disabled:cursor-not-allowed"
         disabled={!buttonEnabled}
         onClick={() => sendScores()}
+        type="button"
       >
         Enviar{" "}
-        <span
-          className={`ml-2 transform transition-transform ${
-            buttonEnabled ? "group-hover:translate-x-2" : ""
-          }`}
-        >
+        <span className={`ml-2 transform transition-transform ${buttonEnabled ? "group-hover:translate-x-2" : ""}`}>
           &rarr;
         </span>
       </button>
@@ -205,21 +196,15 @@ function SingleQuestion({
   description: string;
   id: number;
   isText: boolean;
-  handleQuestionScore: Function;
+  handleQuestionScore: (id: number, score: number) => void;
 }) {
-  const handle = (value: number) => handleQuestionScore(id, value);
+  const handle = (value: number): void => handleQuestionScore(id, value);
 
   return (
     <div className="border border-gray-200 border-b-blue-500 border-b-4 px-5 py-4 rounded-lg mb-2 w-full text-left">
-      <h3 className="font-bold text-gray-700">
-        {title[title.length - 1] === ":" ? title : `${title}:`}
-      </h3>
+      <h3 className="font-bold text-gray-700">{title[title.length - 1] === ":" ? title : `${title}:`}</h3>
       <p className="text-sm font-light">{description}</p>
-      {isText ? (
-        <TextQuestion />
-      ) : (
-        <PossibleScores questionId={id} handle={handle} />
-      )}
+      {isText ? <TextQuestion /> : <PossibleScores questionId={id} handle={handle} />}
     </div>
   );
 }
@@ -231,7 +216,7 @@ function TextQuestion() {
         className="w-full p-2 border text-sm border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
         rows={4}
         placeholder="Escreva aqui..."
-      ></textarea>
+      />
     </div>
   );
 }
@@ -241,40 +226,15 @@ function PossibleScores({
   handle,
 }: {
   questionId: number;
-  handle: Function;
+  handle: (value: number) => void;
 }) {
   return (
     <div className="flex items-center justify-between px-10 mt-8 mb-2">
-      <SinglePossibleScore
-        score={5}
-        id={`score-option-5-${questionId}`}
-        questionId={questionId}
-        handle={handle}
-      />
-      <SinglePossibleScore
-        score={4}
-        id={`score-option-4-${questionId}`}
-        questionId={questionId}
-        handle={handle}
-      />
-      <SinglePossibleScore
-        score={3}
-        id={`score-option-3-${questionId}`}
-        questionId={questionId}
-        handle={handle}
-      />
-      <SinglePossibleScore
-        score={2}
-        id={`score-option-2-${questionId}`}
-        questionId={questionId}
-        handle={handle}
-      />
-      <SinglePossibleScore
-        score={1}
-        id={`score-option-6-${questionId}`}
-        questionId={questionId}
-        handle={handle}
-      />
+      <SinglePossibleScore score={5} id={`score-option-5-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={4} id={`score-option-4-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={3} id={`score-option-3-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={2} id={`score-option-2-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={1} id={`score-option-6-${questionId}`} questionId={questionId} handle={handle} />
     </div>
   );
 }
@@ -288,7 +248,7 @@ function SinglePossibleScore({
   score: number;
   id: string;
   questionId: number;
-  handle: Function;
+  handle: (value: number) => void;
 }) {
   return (
     <div className="flex flex-col items-center justify-center text-center mb-2">
@@ -301,10 +261,7 @@ function SinglePossibleScore({
         type="radio"
         className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-500 text-blue-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-10 before:w-10 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-500 before:opacity-0 before:transition-opacity checked:border-blue-500 hover:before:opacity-10 accent-blue-500 before:accent-blue-500 checked:bg-blue-600"
       />
-      <label
-        htmlFor={id}
-        className="block mt-2 text-sm font-medium text-gray-700"
-      >
+      <label htmlFor={id} className="block mt-2 text-sm font-medium text-gray-700">
         {score}
       </label>
     </div>

@@ -1,22 +1,17 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
+import { type Dispatch, type ReactNode, type SetStateAction, useState } from "react";
 
 export default function DialogComponent({
   open,
   setOpen,
   title,
   children,
-}: {
+}: Readonly<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
   children?: ReactNode;
-}) {
+}>) {
   return (
     <Dialog className="relative z-10" open={open} onClose={setOpen}>
       <DialogBackdrop
@@ -33,10 +28,7 @@ export default function DialogComponent({
             <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                  <DialogTitle
-                    as="h3"
-                    className="text-base font-semibold leading-6 text-gray-900"
-                  >
+                  <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
                     {title}
                   </DialogTitle>
                   <div className="mt-2">

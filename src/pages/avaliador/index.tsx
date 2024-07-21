@@ -21,7 +21,7 @@ export default function Login() {
     }
   }, [push]);
 
-  const handleLogin = (code: string) => {
+  const handleLogin = (code: string): void => {
     // TODO: implement login logic for evaluators
     localStorage.setItem("evaluatorCode", code);
     push("/avaliador/projetos");
@@ -36,9 +36,7 @@ export default function Login() {
         <>
           <HeaderTitle />
           <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-10">
-              Qual seu código de avaliador?
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-10">Qual seu código de avaliador?</h2>
             <AvaliadorCode callback={handleLogin} />
             <div className="text-center mt-10 font-normal text-sm hover:underline cursor-pointer text-gray-500">
               Precisa de ajuda?

@@ -1,4 +1,4 @@
-import { ProjectForAdmin } from "@/lib/models/project";
+import type { ProjectForAdmin } from "@/lib/models/project";
 
 const mockData: ProjectForAdmin[] = [
   {
@@ -7,7 +7,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Exploring various sources of renewable energy and their impact on the environment.",
     category: "Environmental Science",
     field: "Energy",
-    evaluatorsNumber: 3
+    evaluatorsNumber: 3,
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Implementing artificial intelligence to improve diagnostic accuracy in healthcare.",
     category: "Computer Science",
     field: "Artificial Intelligence",
-    evaluatorsNumber: 4
+    evaluatorsNumber: 4,
   },
   {
     id: 3,
@@ -23,7 +23,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Analyzing different methods for purifying water and their effectiveness.",
     category: "Chemistry",
     field: "Environmental Chemistry",
-    evaluatorsNumber: 2
+    evaluatorsNumber: 2,
   },
   {
     id: 4,
@@ -31,7 +31,7 @@ const mockData: ProjectForAdmin[] = [
     description: "A study on the principles of quantum computing and its potential applications.",
     category: "Physics",
     field: "Quantum Mechanics",
-    evaluatorsNumber: 5
+    evaluatorsNumber: 5,
   },
   {
     id: 5,
@@ -39,7 +39,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Strategies for conserving biodiversity in tropical rainforests.",
     category: "Biology",
     field: "Ecology",
-    evaluatorsNumber: 3
+    evaluatorsNumber: 3,
   },
   {
     id: 6,
@@ -47,7 +47,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Using nanotechnology for targeted drug delivery systems.",
     category: "Engineering",
     field: "Biomedical Engineering",
-    evaluatorsNumber: 4
+    evaluatorsNumber: 4,
   },
   {
     id: 7,
@@ -55,7 +55,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Developing a smart home automation system using IoT devices.",
     category: "Computer Science",
     field: "Internet of Things",
-    evaluatorsNumber: 2
+    evaluatorsNumber: 2,
   },
   {
     id: 8,
@@ -63,7 +63,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Assessing the impact of climate change on coastal regions.",
     category: "Environmental Science",
     field: "Climate Science",
-    evaluatorsNumber: 3
+    evaluatorsNumber: 3,
   },
   {
     id: 9,
@@ -71,7 +71,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Creating sustainable materials from renewable resources.",
     category: "Chemistry",
     field: "Materials Science",
-    evaluatorsNumber: 4
+    evaluatorsNumber: 4,
   },
   {
     id: 10,
@@ -79,7 +79,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Designing robots to assist in agricultural tasks to improve efficiency.",
     category: "Engineering",
     field: "Robotics",
-    evaluatorsNumber: 5
+    evaluatorsNumber: 5,
   },
   {
     id: 11,
@@ -87,7 +87,7 @@ const mockData: ProjectForAdmin[] = [
     description: "Exploring the potential and ethics of genetic engineering in humans.",
     category: "Biology",
     field: "Genetics",
-    evaluatorsNumber: 3
+    evaluatorsNumber: 3,
   },
   {
     id: 12,
@@ -95,7 +95,7 @@ const mockData: ProjectForAdmin[] = [
     description: "The future of human space exploration and potential colonization of other planets.",
     category: "Physics",
     field: "Astrophysics",
-    evaluatorsNumber: 4
+    evaluatorsNumber: 4,
   },
 ];
 
