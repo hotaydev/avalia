@@ -36,7 +36,7 @@ export default function ProjetosAvaliador() {
     }
   }, [push]);
 
-  const goToProject = (project: number): Promise<boolean> => {
+  const goToProject = (project: string): Promise<boolean> => {
     return push(`/avaliador/projetos/${project}`);
   };
 
@@ -103,7 +103,7 @@ function ProjectsList({
   push,
 }: Readonly<{
   projects: ProjectForEvaluator[];
-  push: (a: number) => Promise<boolean>;
+  push: (a: string) => Promise<boolean>;
 }>) {
   const sortProjects = (a: ProjectForEvaluator, b: ProjectForEvaluator) => {
     if (a.evaluated === b.evaluated) return 0;
@@ -124,7 +124,7 @@ function ProjectListItem({
   push,
 }: Readonly<{
   project: ProjectForEvaluator;
-  push: (a: number) => Promise<boolean>;
+  push: (a: string) => Promise<boolean>;
 }>) {
   return (
     <div

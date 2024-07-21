@@ -2,7 +2,7 @@ import type { ProjectForAdmin } from "@/lib/models/project";
 
 const mockData: ProjectForAdmin[] = [
   {
-    id: 1,
+    id: "abt3",
     title: "Fontes de Energia Renovável",
     description: "Explorando várias fontes de energia renovável e seu impacto no meio ambiente.",
     category: "Ciências Ambientais",
@@ -10,7 +10,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 3,
   },
   {
-    id: 2,
+    id: "a2tr",
     title: "IA na Saúde",
     description: "Implementando inteligência artificial para melhorar a precisão diagnóstica na saúde.",
     category: "Ciência da Computação",
@@ -18,7 +18,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 4,
   },
   {
-    id: 3,
+    id: "vb43",
     title: "Técnicas de Purificação de Água",
     description: "Analisando diferentes métodos de purificação de água e sua eficácia.",
     category: "Química",
@@ -26,7 +26,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 2,
   },
   {
-    id: 4,
+    id: "ut5b",
     title: "Computação Quântica",
     description: "Um estudo sobre os princípios da computação quântica e suas potenciais aplicações.",
     category: "Física",
@@ -34,7 +34,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 5,
   },
   {
-    id: 5,
+    id: "kl4d",
     title: "Conservação da Biodiversidade",
     description: "Estratégias para conservar a biodiversidade em florestas tropicais.",
     category: "Biologia",
@@ -42,7 +42,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 3,
   },
   {
-    id: 6,
+    id: "aab7",
     title: "Nanotecnologia na Medicina",
     description: "Usando nanotecnologia para sistemas de entrega de medicamentos direcionados.",
     category: "Engenharia",
@@ -50,7 +50,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 4,
   },
   {
-    id: 7,
+    id: "pp67",
     title: "Automação de Casas Inteligentes",
     description: "Desenvolvendo um sistema de automação residencial inteligente usando dispositivos IoT.",
     category: "Ciência da Computação",
@@ -58,7 +58,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 2,
   },
   {
-    id: 8,
+    id: "pqr1",
     title: "Impacto das Mudanças Climáticas",
     description: "Avaliando o impacto das mudanças climáticas em regiões costeiras.",
     category: "Ciências Ambientais",
@@ -66,7 +66,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 3,
   },
   {
-    id: 9,
+    id: "akrt",
     title: "Materiais Renováveis",
     description: "Criando materiais sustentáveis a partir de recursos renováveis.",
     category: "Química",
@@ -74,7 +74,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 4,
   },
   {
-    id: 10,
+    id: "athl",
     title: "Robótica na Agricultura",
     description: "Projetando robôs para auxiliar em tarefas agrícolas para melhorar a eficiência.",
     category: "Engenharia",
@@ -82,7 +82,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 5,
   },
   {
-    id: 11,
+    id: "309f",
     title: "Engenharia Genética",
     description: "Explorando o potencial e a ética da engenharia genética em humanos.",
     category: "Biologia",
@@ -90,7 +90,7 @@ const mockData: ProjectForAdmin[] = [
     evaluatorsNumber: 3,
   },
   {
-    id: 12,
+    id: "ahr6",
     title: "Exploração Espacial",
     description: "O futuro da exploração espacial humana e a potencial colonização de outros planetas.",
     category: "Física",

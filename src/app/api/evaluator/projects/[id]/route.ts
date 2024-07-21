@@ -4,7 +4,7 @@ const mockData: ProjectForEvaluator = {
   title: "Projeto exemplo 1",
   evaluated: false,
   category: "Categoria exemplo",
-  id: 1,
+  id: "ut5b",
 };
 
 export async function GET() {

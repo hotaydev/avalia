@@ -1,6 +1,6 @@
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
-import React, { useState, useMemo, type ChangeEvent, useEffect, Component } from "react";
+import React, { useState, useMemo, type ChangeEvent, useEffect, type Dispatch, type SetStateAction } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 
@@ -44,7 +44,12 @@ const projectsTableColumns: {
 export default function SortableTable({
   table,
   extraComponent,
-}: Readonly<{ table: "evaluators" | "projects"; extraComponent?: JSX.Element }>) {
+  setPreviousData,
+}: Readonly<{
+  table: "evaluators" | "projects";
+  extraComponent?: JSX.Element;
+  setPreviousData?: Dispatch<SetStateAction<any[]>>;
+}>) {
   const [heigth, setHeigth] = useState<number | undefined>();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -89,7 +94,12 @@ export default function SortableTable({
         (table === "evaluators" ? (
           <EvaluatorsTable heigth={heigth} searchTerm={searchTerm} getArrow={getArrow} />
         ) : (
-          <ProjectsTable heigth={heigth} searchTerm={searchTerm} getArrow={getArrow} />
+          <ProjectsTable
+            setPreviousData={setPreviousData}
+            heigth={heigth}
+            searchTerm={searchTerm}
+            getArrow={getArrow}
+          />
         ))}
     </div>
   );
@@ -181,7 +191,13 @@ function ProjectsTable({
   heigth,
   searchTerm,
   getArrow,
-}: Readonly<{ heigth: number; searchTerm: string; getArrow: (key: string, sortConfig: SortConfig) => string }>) {
+  setPreviousData,
+}: Readonly<{
+  heigth: number;
+  searchTerm: string;
+  getArrow: (key: string, sortConfig: SortConfig) => string;
+  setPreviousData?: Dispatch<SetStateAction<any[]>>;
+}>) {
   const [sortConfig, setSortConfig] = useState<SortConfigForProjects>({
     key: "id",
     direction: "ascending",
@@ -194,13 +210,16 @@ function ProjectsTable({
       fetch("/api/admin/projects/")
         .then((res) => res.json())
         .then(async (data) => {
-          if (isMounted) setData(data);
+          if (isMounted) {
+            setData(data);
+            if (setPreviousData) setPreviousData(data);
+          }
         });
     })();
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [setPreviousData]);
 
   const sortedData: ProjectForAdmin[] = useMemo(() => {
     const sortableItems = [...data];

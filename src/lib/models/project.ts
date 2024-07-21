@@ -2,7 +2,7 @@ export interface Project {
   title: string;
   description?: string;
   category?: string;
-  id: number;
+  id: string;
 }
 
 export interface ProjectForEvaluator extends Project {
