@@ -64,7 +64,7 @@ export default function ProjetosAvaliador() {
     }
 
     setButtonEnabled(false);
-    fetch("/api/avaliador/questions/", {
+    fetch("/api/evaluator/questions/", {
       method: "POST",
       body: JSON.stringify(questions),
     })
