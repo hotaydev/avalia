@@ -1,6 +1,8 @@
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
-import React, { useState, useMemo, type ChangeEvent, useEffect } from "react";
+import React, { useState, useMemo, type ChangeEvent, useEffect, Component } from "react";
+import { FaWhatsapp } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
 
 interface SortConfig {
   key: string;
@@ -16,15 +18,14 @@ interface SortConfigForEvaluators extends SortConfig {
 }
 
 const evaluatorsTableColumns: {
-  key: keyof Evaluator;
+  key: keyof Evaluator | "__send__";
   title: string;
 }[] = [
   { key: "id", title: "ID" },
   { key: "name", title: "Nome" },
-  { key: "email", title: "E-mail" },
-  { key: "phone", title: "Telefone" },
   { key: "field", title: "Área de Atuação" },
   { key: "projects", title: "Projetos" },
+  { key: "__send__", title: "Contato" },
 ];
 
 const projectsTableColumns: {
@@ -40,7 +41,10 @@ const projectsTableColumns: {
   { key: "evaluatorsNumber", title: "Avaliadores" },
 ];
 
-export default function SortableTable({ table }: Readonly<{ table: "evaluators" | "projects" }>) {
+export default function SortableTable({
+  table,
+  extraComponent,
+}: Readonly<{ table: "evaluators" | "projects"; extraComponent?: JSX.Element }>) {
   const [heigth, setHeigth] = useState<number | undefined>();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -71,13 +75,16 @@ export default function SortableTable({ table }: Readonly<{ table: "evaluators" 
 
   return (
     <div className="pl-4 py-4 pr-1">
-      <input
-        type="text"
-        placeholder="Pesquisar..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="mb-4 p-2 border border-gray-300 rounded-lg"
-      />
+      <div className="w-full flex justify-between items-center">
+        <input
+          type="text"
+          placeholder="Pesquisar..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="mb-4 p-2 border border-gray-300 rounded-lg"
+        />
+        {extraComponent}
+      </div>
       {heigth &&
         (table === "evaluators" ? (
           <EvaluatorsTable heigth={heigth} searchTerm={searchTerm} getArrow={getArrow} />
@@ -308,7 +315,11 @@ function TableContent({
 
                 return (
                   <td key={column.key} className={`py-3 ${isFirstElement ?? isLastElement ?? "px-2"}`}>
-                    {item[column.key] ?? "---"}
+                    {column.key === "__send__" ? (
+                      <SendMessageContact phone={item.phone} email={item.email} />
+                    ) : (
+                      item[column.key] ?? "---"
+                    )}
                   </td>
                 );
               })}
@@ -317,6 +328,29 @@ function TableContent({
         </tbody>
       </table>
       <ShowingAllData size={filteredData.length} />
+    </div>
+  );
+}
+
+function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?: string }>) {
+  return (
+    <div className="flex space-x-2">
+      <div
+        className={`p-2 bg-gray-200 transition-all rounded-md ${phone ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
+        onClick={() => {
+          if (phone) window.open(`https://wa.me/55${phone.replace(/\D/g, "")}`, "_blank")?.focus();
+        }}
+      >
+        <FaWhatsapp />
+      </div>
+      <div
+        className={`p-2 bg-gray-200 transition-all rounded-md ${email ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
+        onClick={() => {
+          if (email) window.open(`mailto:${email}`, "_blank")?.focus();
+        }}
+      >
+        <HiOutlineMail />
+      </div>
     </div>
   );
 }
