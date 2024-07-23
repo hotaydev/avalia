@@ -8,6 +8,7 @@ import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { BsQrCode } from "react-icons/bs";
+import { IoReload } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 
 export default function AdminProjetosPage() {
@@ -51,14 +52,26 @@ export default function AdminProjetosPage() {
 
 function ExtraComponentForTable({ projects }: Readonly<{ projects: ProjectForAdmin[] }>) {
   return (
-    <div
-      className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
-      data-tooltip-id="projects-qr-codes"
-      data-tooltip-content="Baixar códigos dos projetos"
-      onClick={async () => await craftHTMLForThePDF(projects)}
-    >
-      <BsQrCode size={24} />
-      <Tooltip id="projects-qr-codes" />
+    <div className="flex items-center">
+      <div
+        className="mr-4 p-2 bg-white hover:bg-gray-100 transition-all cursor-pointer rounded-md"
+        data-tooltip-id="reload-projects-list"
+        data-tooltip-content="Última atualização há 10 minutos"
+        data-tooltip-place="left"
+      >
+        <IoReload size={18} />
+        <Tooltip id="reload-projects-list" />
+      </div>
+      <div
+        className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
+        data-tooltip-id="projects-qr-codes"
+        data-tooltip-content="Baixar códigos dos projetos"
+        data-tooltip-place="left"
+        onClick={async () => await craftHTMLForThePDF(projects)}
+      >
+        <BsQrCode size={24} />
+        <Tooltip id="projects-qr-codes" />
+      </div>
     </div>
   );
 }
