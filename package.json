@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "npx @biomejs/biome check --write ./src/"
+    "format": "npx @biomejs/biome check --write ./src/",
+    "prepare": "git config --local core.hooksPath .hooks/"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.0",

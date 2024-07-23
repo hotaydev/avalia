@@ -1,14 +1,14 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import SortableTable from "@/components/SortableTable/SortableTable";
+import { HotayLogoSVG } from "@/lib/constants/hotay-logo";
+import type { ProjectForAdmin } from "@/lib/models/project";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { BsQrCode } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
-import QRCode from "qrcode";
-import type { ProjectForAdmin } from "@/lib/models/project";
-import { HotayLogoSVG } from "@/lib/constants/hotay-logo";
 
 export default function AdminProjetosPage() {
   const [loading, setLoading] = useState(true);

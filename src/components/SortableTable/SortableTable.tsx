@@ -48,6 +48,7 @@ export default function SortableTable({
 }: Readonly<{
   table: "evaluators" | "projects";
   extraComponent?: JSX.Element;
+  // biome-ignore lint/suspicious/noExplicitAny: The type is ProjectForAdmin[] | Evaluator[], but cannot be explicity set due to object type errors below
   setPreviousData?: Dispatch<SetStateAction<any[]>>;
 }>) {
   const [heigth, setHeigth] = useState<number | undefined>();
@@ -167,12 +168,12 @@ function EvaluatorsTable({
       item.field?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const requestSort = (key: keyof Evaluator): void => {
+  const requestSort = (key: string): void => {
     let direction: "ascending" | "descending" = "ascending";
     if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
     }
-    setSortConfig({ key, direction });
+    setSortConfig({ key, direction } as SortConfigForEvaluators);
   };
 
   return (
@@ -196,6 +197,7 @@ function ProjectsTable({
   heigth: number;
   searchTerm: string;
   getArrow: (key: string, sortConfig: SortConfig) => string;
+  // biome-ignore lint/suspicious/noExplicitAny: The type is ProjectForAdmin[] | Evaluator[], but cannot be explicity set due to object type errors below
   setPreviousData?: Dispatch<SetStateAction<any[]>>;
 }>) {
   const [sortConfig, setSortConfig] = useState<SortConfigForProjects>({
@@ -258,12 +260,12 @@ function ProjectsTable({
       item.field?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const requestSort = (key: keyof ProjectForAdmin) => {
+  const requestSort = (key: string) => {
     let direction: "ascending" | "descending" = "ascending";
     if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
     }
-    setSortConfig({ key, direction });
+    setSortConfig({ key, direction } as SortConfigForProjects);
   };
 
   return (
@@ -286,12 +288,13 @@ function TableContent({
   sortConfig,
   requestSort,
 }: Readonly<{
+  // biome-ignore lint/suspicious/noExplicitAny: The type is ProjectForAdmin[] | Evaluator[], but cannot be explicity set due to object type errors below
   filteredData: any[];
   heigth: number;
   columns: { key: string; title: string }[];
   getArrow: (key: string, sortConfig: SortConfig) => string;
   sortConfig: SortConfig | SortConfigForEvaluators | SortConfigForProjects;
-  requestSort: (key: any) => void;
+  requestSort: (key: string) => void;
 }>) {
   return (
     <div

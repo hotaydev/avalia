@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ConfigItem from "./ConfigItem";
 import DialogComponent from "../Dialog/Dialog";
+import ConfigItem from "./ConfigItem";
 
 export default function EvaluatorsQuestionaire() {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);

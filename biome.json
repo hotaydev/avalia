@@ -8,8 +8,8 @@
 		"rules": {
 			"recommended": true,
 			"a11y": {
-				"useKeyWithClickEvents": "info",
-				"useKeyWithMouseEvents": "info"
+				"useKeyWithClickEvents": "off",
+				"useKeyWithMouseEvents": "off"
 			},
 			"suspicious": {
 				"noExplicitAny": "info"

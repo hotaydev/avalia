@@ -1,4 +1,12 @@
-import { type Dispatch, type RefObject, type SetStateAction, useEffect, useRef, useState } from "react";
+import {
+  type ClipboardEvent,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code: string) => void }>) {
   const [valueOne, setValueOne] = useState("");
@@ -47,12 +55,12 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
     }
   };
 
-  const onPaste = (e: any, position: number) => {
+  const onPaste = (e: ClipboardEvent<HTMLInputElement>, position: number) => {
     e.preventDefault();
     const pastedText = e.clipboardData.getData("Text").slice(0, 4);
 
     if (pastedText.length === 4) {
-      setValues(pastedText);
+      setValues(pastedText.split(""));
     } else {
       const newValues = [valueOne, valueTwo, valueThree, valueFour];
       for (let i = 0; i < pastedText.length; i++) {
