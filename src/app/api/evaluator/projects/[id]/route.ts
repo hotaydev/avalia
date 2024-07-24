@@ -1,12 +1,5 @@
-import type { ProjectForEvaluator } from "@/lib/models/project";
-
-const mockData: ProjectForEvaluator = {
-  title: "Projeto exemplo 1",
-  evaluated: false,
-  category: "Categoria exemplo",
-  id: "ut5b",
-};
+import { mockedProjectsForEvaluator } from "@/lib/mock/projects";
 
 export async function GET() {
-  return Response.json(mockData);
+  return Response.json(mockedProjectsForEvaluator[0]);
 }

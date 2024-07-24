@@ -19,7 +19,7 @@ export default function SheetsData() {
           <SingleSheet />
           <div className="w-full text-center flex items-center justify-center pt-8 font-light text-xs">
             {/* TODO: ajustar link */}
-            {/* TODO: Criar planilha de template */}
+            {/* TODO: Criar planilha de template, contendo "avaliadores", "projetos", "respostas" e "categorias" */}
             <Link href={"https://github.com/hotaydev/avalia/wiki"} target="_blank" className="w-3/4">
               Clique aqui para instruções completas da configuração.
             </Link>
