@@ -4,7 +4,7 @@ import { HotayLogoSVG } from "@/lib/constants/hotay-logo";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { type NextRouter, useRouter } from "next/router";
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -42,7 +42,7 @@ export default function AdminProjetosPage() {
             <SortableTable
               table="projects"
               setPreviousData={setProjects}
-              extraComponent={<ExtraComponentForTable projects={projects} />}
+              extraComponent={<ExtraComponentForTable projects={projects} router={router} />}
             />
           </div>
         </div>
@@ -51,7 +51,17 @@ export default function AdminProjetosPage() {
   );
 }
 
-function ExtraComponentForTable({ projects }: Readonly<{ projects: ProjectForAdmin[] }>) {
+function ExtraComponentForTable({ projects, router }: Readonly<{ projects: ProjectForAdmin[]; router: NextRouter }>) {
+  const updateTableContent = async () => {
+    fetch("/api/admin/projects/")
+      .then((res) => res.json())
+      .then(async (data) => {
+        localStorage.setItem("projectsList", JSON.stringify(data));
+        localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+        router.reload();
+      });
+  };
+
   return (
     <div className="flex items-center">
       <div
@@ -59,6 +69,7 @@ function ExtraComponentForTable({ projects }: Readonly<{ projects: ProjectForAdm
         data-tooltip-id="reload-projects-list"
         data-tooltip-content={`Última atualização há ${getLastTime("projectsListLastUpdated")}`}
         data-tooltip-place="left"
+        onClick={updateTableContent}
       >
         <IoReload size={18} />
         <Tooltip id="reload-projects-list" />
