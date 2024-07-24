@@ -23,18 +23,23 @@ export default function ProjetosAvaliador() {
       fetch(`/api/evaluator/projects/${projeto}`)
         .then((res) => res.json())
         .then(async (data) => {
-          if (isMounted) setProject(data);
+          if (isMounted) {
+            setProject(data);
+          }
 
           // It really needs to be inside the other fetch
           // because we need to first get the project data
           // for then get the questions about that project
-          if (isMounted)
+          if (isMounted) {
             fetch("/api/evaluator/questions/")
               .then((res) => res.json())
               .then((data) => {
-                if (isMounted) setQuestions(data);
-                if (isMounted) setLoading(false);
+                if (isMounted) {
+                  setQuestions(data);
+                  setLoading(false);
+                }
               });
+          }
         });
     })();
     return () => {

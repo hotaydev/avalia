@@ -1,6 +1,8 @@
 export const getLastTime = (key: string) => {
   const value = localStorage.getItem(key);
-  if (!value) return "0 minutos";
+  if (!value) {
+    return "0 minutos";
+  }
 
   const oldTime = new Date(Number.parseInt(value));
   const newTime = new Date();

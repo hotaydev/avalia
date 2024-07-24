@@ -18,8 +18,10 @@ export default function ProjetosAvaliador() {
       fetch("/api/evaluator/projects")
         .then((res) => res.json())
         .then((data) => {
-          if (isMounted) setProjects(data);
-          if (isMounted) setLoading(false);
+          if (isMounted) {
+            setProjects(data);
+            setLoading(false);
+          }
         });
     })();
     return () => {
@@ -51,16 +53,16 @@ export default function ProjetosAvaliador() {
         {projects.length > 0 && <ProjectsList projects={projects} push={goToProject} />}
         {projects.length === 0 && !loading && <NoProjectsFound />}
         {loading && <LoadingComponent />}
-        {!projects.some((q) => !q.evaluated) ? (
-          <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
-            <FcOk className="mr-2" />
-            Seus projetos já foram avaliados. Ótimo trabalho!
-          </span>
-        ) : (
+        {projects.some((q) => !q.evaluated) ? (
           <div className="text-center mt-10 font-normal text-sm text-gray-500">
             {/* TODO: get this date correctly from admin's configuration */}
             As avaliações encerram amanhã, às 10h
           </div>
+        ) : (
+          <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
+            <FcOk className="mr-2" />
+            Seus projetos já foram avaliados. Ótimo trabalho!
+          </span>
         )}
       </div>
       <LogoutComponent />
@@ -106,7 +108,9 @@ function ProjectsList({
   push: (a: string) => Promise<boolean>;
 }>) {
   const sortProjects = (a: ProjectForEvaluator, b: ProjectForEvaluator) => {
-    if (a.evaluated === b.evaluated) return 0;
+    if (a.evaluated === b.evaluated) {
+      return 0;
+    }
     return a.evaluated ? -1 : 1;
   };
 

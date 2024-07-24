@@ -50,10 +50,12 @@ const mockData: Question[] = [
   },
 ];
 
+// biome-ignore lint/suspicious/useAwait: Needs to be async
 export async function GET() {
   return Response.json(mockData);
 }
 
-export async function POST(request: Request) {
+// biome-ignore lint/suspicious/useAwait: Needs to be async
+export async function POST() {
   return Response.json({ success: true });
 }

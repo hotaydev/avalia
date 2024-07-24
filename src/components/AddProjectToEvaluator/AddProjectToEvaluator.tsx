@@ -5,7 +5,7 @@ import DialogComponent from "../Dialog/Dialog";
 
 export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evaluator }) {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
-  const [projects, setProjects] = useState<ProjectForEvaluator[]>([]);
+  const [_projects, setProjects] = useState<ProjectForEvaluator[]>([]);
   // TODO: os projetos podem ser pegos localmente usando o localStorage e, se não estiverem no localStorage, fazer o fetch.
   // Detalhe: Não usar useEffect, ou ele carregaria todos os dados para todos os avaliadores (consumo excessivo de memória)
 
@@ -18,7 +18,7 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
 
     return await fetch("/api/admin/projects/")
       .then((res) => res.json())
-      .then(async (data) => {
+      .then((data) => {
         return data;
       });
   };

@@ -11,7 +11,7 @@ interface DateTimeConfiguration {
 
 export default function EventDates() {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
-  const [dateConfig, setDateConfig] = useState<DateTimeConfiguration>({});
+  const [_dateConfig, setDateConfig] = useState<DateTimeConfiguration>({});
 
   const handleDateChange = (value: string, type: keyof DateTimeConfiguration): void => {
     setDateConfig((prevConfig) => ({
@@ -20,9 +20,7 @@ export default function EventDates() {
     }));
   };
 
-  const saveDates = () => {
-    console.log(dateConfig);
-  };
+  const saveDates = () => {};
 
   return (
     <>

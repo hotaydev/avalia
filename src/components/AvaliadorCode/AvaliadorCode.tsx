@@ -31,7 +31,6 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
     return () => {
       document.removeEventListener("keydown", handler);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleInput = ({
@@ -44,7 +43,9 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
     setState: Dispatch<SetStateAction<string>>;
   }) => {
     let newVal = value;
-    if (value.length > 1) newVal = value[value.length - 1];
+    if (value.length > 1) {
+      newVal = value[value.length - 1];
+    }
     setState(newVal);
 
     if (nextInput?.current) {
@@ -98,8 +99,9 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
   };
 
   const sendButton = () => {
-    if (!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)) return;
-    if (callback) callback(`${valueOne}${valueTwo}${valueThree}${valueFour}`);
+    if (!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour) && callback) {
+      callback(`${valueOne}${valueTwo}${valueThree}${valueFour}`);
+    }
   };
 
   return (

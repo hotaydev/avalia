@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
               )}
             </div>
             <div
-              onClick={async () => {
+              onClick={() => {
                 if (email !== "" && validateEmail(email)) {
                   // TODO: set a "loading" state
                   // TODO: signin proccess
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
             </div>
             <p className="text-gray-500 font-light text-sm my-4">- ou -</p>
             <div
-              onClick={async () => {
+              onClick={() => {
                 // TODO: add "loading" animation
                 // TODO: signin proccess
 

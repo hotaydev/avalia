@@ -16,10 +16,10 @@ export default function AdminAvaliadoresPage() {
     // TODO: use a real auth method
     const adminCode = localStorage.getItem("adminCode");
 
-    if (!adminCode) {
-      router.push("/admin/login");
-    } else {
+    if (adminCode) {
       setLoading(false);
+    } else {
+      router.push("/admin/login");
     }
   }, [router]);
 
@@ -46,7 +46,7 @@ function ExtraComponentForTable({ router }: { router: NextRouter }) {
   const updateTableContent = async () => {
     fetch("/api/admin/evaluators/")
       .then((res) => res.json())
-      .then(async (data) => {
+      .then((data) => {
         localStorage.setItem("evaluatorsList", JSON.stringify(data));
         localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
         router.reload();

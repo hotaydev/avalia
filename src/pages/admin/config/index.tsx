@@ -13,10 +13,10 @@ export default function AdminConfigPage() {
     // TODO: use a real auth method
     const adminCode = localStorage.getItem("adminCode");
 
-    if (!adminCode) {
-      router.push("/admin/login");
-    } else {
+    if (adminCode) {
       setLoading(false);
+    } else {
+      router.push("/admin/login");
     }
   }, [router]);
 

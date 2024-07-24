@@ -1,6 +1,7 @@
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
-import React, { useState, useMemo, type ChangeEvent, useEffect, type Dispatch, type SetStateAction } from "react";
+import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
+import type { JSX } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import AddProjectToEvaluator from "../AddProjectToEvaluator/AddProjectToEvaluator";
@@ -129,8 +130,10 @@ function EvaluatorsTable({
       (async () => {
         fetch("/api/admin/evaluators/")
           .then((res) => res.json())
-          .then(async (data) => {
-            if (isMounted) setData(data);
+          .then((data) => {
+            if (isMounted) {
+              setData(data);
+            }
             localStorage.setItem("evaluatorsList", JSON.stringify(data));
             localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
           });
@@ -224,15 +227,19 @@ function ProjectsTable({
 
     if (projectsList) {
       setData(JSON.parse(projectsList));
-      if (setPreviousData) setPreviousData(JSON.parse(projectsList));
+      if (setPreviousData) {
+        setPreviousData(JSON.parse(projectsList));
+      }
     } else {
       (async () => {
         fetch("/api/admin/projects/")
           .then((res) => res.json())
-          .then(async (data) => {
+          .then((data) => {
             if (isMounted) {
               setData(data);
-              if (setPreviousData) setPreviousData(data);
+              if (setPreviousData) {
+                setPreviousData(data);
+              }
               localStorage.setItem("projectsList", JSON.stringify(data));
               localStorage.setItem("projectsListLastUpdated", Date.now().toString());
             }
@@ -385,7 +392,9 @@ function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?:
       <div
         className={`p-2 bg-gray-200 transition-all rounded-md ${phone ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
         onClick={() => {
-          if (phone) window.open(`https://wa.me/55${phone.replace(/\D/g, "")}`, "_blank")?.focus();
+          if (phone) {
+            window.open(`https://wa.me/55${phone.replace(/\D/g, "")}`, "_blank")?.focus();
+          }
         }}
       >
         <FaWhatsapp />
@@ -393,7 +402,9 @@ function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?:
       <div
         className={`p-2 bg-gray-200 transition-all rounded-md ${email ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
         onClick={() => {
-          if (email) window.open(`mailto:${email}`, "_blank")?.focus();
+          if (email) {
+            window.open(`mailto:${email}`, "_blank")?.focus();
+          }
         }}
       >
         <HiOutlineMail />
