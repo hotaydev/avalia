@@ -3,6 +3,7 @@ import type { ProjectForAdmin } from "@/lib/models/project";
 import React, { useState, useMemo, type ChangeEvent, useEffect, type Dispatch, type SetStateAction } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import AddProjectToEvaluator from "../AddProjectToEvaluator/AddProjectToEvaluator";
 
 interface SortConfig {
   key: string;
@@ -362,6 +363,7 @@ function TableContent({
                     ) : (
                       item[column.key] ?? "---"
                     )}
+                    {column.key === "projects" && <AddProjectToEvaluator evaluator={item} />}
                   </td>
                 );
               })}

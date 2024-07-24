@@ -1,11 +1,11 @@
 export const getLastTime = (key: string) => {
-  const value = localStorage.getItem("evaluatorsListLastUpdated");
+  const value = localStorage.getItem(key);
   if (!value) return "0 minutos";
 
   const oldTime = new Date(Number.parseInt(value));
   const newTime = new Date();
 
-  const seconds = Math.floor(((newTime.getTime() - oldTime.getTime()) / 1000) % 60);
+  const seconds = Math.floor((newTime.getTime() - oldTime.getTime()) / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
 
