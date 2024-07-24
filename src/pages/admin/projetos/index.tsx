@@ -2,6 +2,7 @@ import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import SortableTable from "@/components/SortableTable/SortableTable";
 import { HotayLogoSVG } from "@/lib/constants/hotay-logo";
 import type { ProjectForAdmin } from "@/lib/models/project";
+import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import QRCode from "qrcode";
@@ -56,7 +57,7 @@ function ExtraComponentForTable({ projects }: Readonly<{ projects: ProjectForAdm
       <div
         className="mr-4 p-2 bg-white hover:bg-gray-100 transition-all cursor-pointer rounded-md"
         data-tooltip-id="reload-projects-list"
-        data-tooltip-content="Última atualização há 10 minutos"
+        data-tooltip-content={`Última atualização há ${getLastTime("projectsListLastUpdated")}`}
         data-tooltip-place="left"
       >
         <IoReload size={18} />

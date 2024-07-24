@@ -1,5 +1,6 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import SortableTable from "@/components/SortableTable/SortableTable";
+import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -47,7 +48,7 @@ function ExtraComponentForTable() {
       <div
         className="mr-4 p-2 bg-white hover:bg-gray-100 transition-all cursor-pointer rounded-md"
         data-tooltip-id="reload-projects-list"
-        data-tooltip-content="Última atualização há 10 minutos"
+        data-tooltip-content={`Última atualização há ${getLastTime("evaluatorsListLastUpdated")}`}
         data-tooltip-place="left"
       >
         <IoReload size={18} />

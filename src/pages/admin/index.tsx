@@ -82,14 +82,16 @@ function RankingContent({ ranking }: Readonly<{ ranking: Category[] }>) {
             maskImage: "linear-gradient(to bottom, black calc(100% - 24px), transparent 100%)",
           }}
         >
-          {ranking.map((rank) => (
-            <div key={rank.title} className="bg-gray-50 rounded-md px-4 text-center pt-4 pb-6">
-              <p className="font-semibold mb-6">{rank.title}</p>
-              <div className="flex flex-col space-y-2 px-4">
-                {rank.projects
-                  .toSorted((a, b) => ((a.score ?? 0) > (b.score ?? 0) ? -1 : 1))
-                  .slice(0, 5)
-                  .map((project, index) => {
+          {ranking.map((rank) => {
+            const sortedRanking = rank.projects
+              .toSorted((a, b) => ((a.score ?? 0) > (b.score ?? 0) ? -1 : 1))
+              .slice(0, 5);
+            let rankingModifier = 1;
+            return (
+              <div key={rank.title} className="bg-gray-50 rounded-md px-4 text-center pt-4 pb-6">
+                <p className="font-semibold mb-6">{rank.title}</p>
+                <div className="flex flex-col space-y-2 px-4">
+                  {sortedRanking.map((project, index) => {
                     let medal = "";
 
                     switch (index) {
@@ -113,13 +115,25 @@ function RankingContent({ ranking }: Readonly<{ ranking: Category[] }>) {
                         break;
                     }
 
+                    if (index !== 0 && sortedRanking[index].score === sortedRanking[index - 1].score) {
+                      rankingModifier--;
+                    }
+
                     return (
                       <div
                         key={project.id}
                         className={`flex justify-between gap-2 bg-white items-center px-4 py-2 rounded-md ${medal}`}
                       >
                         <div className="flex justify-start items-center gap-4">
-                          <p className="font-semibold">{index + 1}º</p>
+                          {index === 0 && <p className="font-semibold">1º</p>}
+                          {index !== 0 && (
+                            <p className="font-semibold">
+                              {sortedRanking[index].score === sortedRanking[index - 1].score
+                                ? index
+                                : index + rankingModifier}
+                              º
+                            </p>
+                          )}
                           <p className="text-gray-700 text-sm" title={project.title}>
                             {project.title.substring(0, 35)}
                             {project.title.length > 35 ? "..." : ""}
@@ -129,9 +143,10 @@ function RankingContent({ ranking }: Readonly<{ ranking: Category[] }>) {
                       </div>
                     );
                   })}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

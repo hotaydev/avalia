@@ -119,13 +119,23 @@ function EvaluatorsTable({
 
   useEffect(() => {
     let isMounted = true;
-    (async () => {
-      fetch("/api/admin/evaluators/")
-        .then((res) => res.json())
-        .then(async (data) => {
-          if (isMounted) setData(data);
-        });
-    })();
+
+    const evaluatorsList = localStorage.getItem("evaluatorsList");
+
+    if (evaluatorsList) {
+      setData(JSON.parse(evaluatorsList));
+    } else {
+      (async () => {
+        fetch("/api/admin/evaluators/")
+          .then((res) => res.json())
+          .then(async (data) => {
+            if (isMounted) setData(data);
+            localStorage.setItem("evaluatorsList", JSON.stringify(data));
+            localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
+          });
+      })();
+    }
+
     return () => {
       isMounted = false;
     };
@@ -208,16 +218,26 @@ function ProjectsTable({
 
   useEffect(() => {
     let isMounted = true;
-    (async () => {
-      fetch("/api/admin/projects/")
-        .then((res) => res.json())
-        .then(async (data) => {
-          if (isMounted) {
-            setData(data);
-            if (setPreviousData) setPreviousData(data);
-          }
-        });
-    })();
+
+    const projectsList = localStorage.getItem("projectsList");
+
+    if (projectsList) {
+      setData(JSON.parse(projectsList));
+    } else {
+      (async () => {
+        fetch("/api/admin/projects/")
+          .then((res) => res.json())
+          .then(async (data) => {
+            if (isMounted) {
+              setData(data);
+              if (setPreviousData) setPreviousData(data);
+              localStorage.setItem("projectsList", JSON.stringify(data));
+              localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+            }
+          });
+      })();
+    }
+
     return () => {
       isMounted = false;
     };
