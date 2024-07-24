@@ -104,15 +104,6 @@ async function craftHTMLForThePDF(projects: ProjectForAdmin[]) {
     htmlItems += `<div class="item"><img src="${qrcode}" alt="QR Code"><p style="font-weight: bold;">${project.id.toUpperCase()}</p><p style="font-size:8px; color: #888;">Desenvolvido pela</p>${logoSVG}</div>`;
   }
 
-  for (const project of projects) {
-    const qrcode = await QRCode.toDataURL(project.id.toUpperCase(), {
-      errorCorrectionLevel: "M",
-      width: 500,
-      margin: 3,
-    });
-    htmlItems += `<div class="item"><img src="${qrcode}" alt="QR Code"><p style="font-weight: bold;">${project.id.toUpperCase()}</p><p style="font-size:8px; color: #888;">Desenvolvido pela</p>${logoSVG}</div>`;
-  }
-
   const htmlContent = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Códigos dos Projetos da Feira</title>${htmlStyles}</head><body onafterprint="self.close()">${htmlItems}</body></html>`;
 
   printContent(htmlContent);

@@ -1,4 +1,32 @@
 import type { Evaluator } from "../models/evaluator";
+import type { ProjectForEvaluator } from "../models/project";
+
+const mockedProjectsForEvaluator: ProjectForEvaluator[] = [
+  {
+    title: "Fontes de Energia Renovável",
+    evaluated: false,
+    category: "Fundamental Anos Iniciais",
+    id: "abt3",
+  },
+  {
+    title: "IA na Saúde",
+    evaluated: false,
+    category: "Ensino Médio",
+    id: "a2tr",
+  },
+  {
+    title: "Técnicas de Purificação de Água",
+    evaluated: false,
+    category: "Fundamental Anos Finais",
+    id: "vb43",
+  },
+  {
+    title: "Computação Quântica",
+    evaluated: false,
+    category: "Ensino Médio",
+    id: "ut5b",
+  },
+];
 
 export const evaluatorsMock: Evaluator[] = [
   {
@@ -7,7 +35,7 @@ export const evaluatorsMock: Evaluator[] = [
     email: "alice.johnson@exemplo.com",
     phone: "555-1234",
     field: "Física",
-    projects: 5,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 2,
@@ -15,33 +43,33 @@ export const evaluatorsMock: Evaluator[] = [
     email: "bob.smith@exemplo.com",
     phone: "555-5678",
     field: "Química",
-    projects: 3,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 3,
     name: "Carol White",
     field: "Biologia",
-    projects: 4,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 4,
     name: "David Brown",
     email: "david.brown@exemplo.com",
-    projects: 2,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 5,
     name: "Profa. Emily Green",
     phone: "555-8765",
     field: "Matemática",
-    projects: 1,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 6,
     name: "Frank Black",
     email: "frank.black@exemplo.com",
     phone: "555-4321",
-    projects: 0,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 7,
@@ -49,34 +77,34 @@ export const evaluatorsMock: Evaluator[] = [
     email: "grace.lee@exemplo.com",
     phone: "555-9988",
     field: "Ciência da Computação",
-    projects: 6,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 8,
     name: "Henry Wilson",
     phone: "555-7766",
     field: "Engenharia",
-    projects: 2,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 9,
     name: "Isabella Martinez",
     email: "isabella.martinez@exemplo.com",
     field: "Ciências Ambientais",
-    projects: 3,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 10,
     name: "Jack Davis",
     phone: "555-3344",
     field: "Geologia",
-    projects: 4,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 11,
     name: "Karen Rodriguez",
     email: "karen.rodriguez@exemplo.com",
-    projects: 5,
+    projects: mockedProjectsForEvaluator,
   },
   {
     id: 12,
@@ -84,6 +112,6 @@ export const evaluatorsMock: Evaluator[] = [
     email: "liam.harris@exemplo.com",
     phone: "555-4455",
     field: "Astronomia",
-    projects: 0,
+    projects: mockedProjectsForEvaluator,
   },
 ];

@@ -1,4 +1,14 @@
+import type { Evaluator } from "../models/evaluator";
 import type { ProjectForAdmin, ProjectForEvaluator } from "../models/project";
+import { evaluatorsMock } from "./evaluators";
+
+function getRandomEvaluators(): Evaluator[] {
+  return [
+    evaluatorsMock[Math.floor(Math.random() * evaluatorsMock.length)],
+    evaluatorsMock[Math.floor(Math.random() * evaluatorsMock.length)],
+    evaluatorsMock[Math.floor(Math.random() * evaluatorsMock.length)],
+  ];
+}
 
 export const mockedProjects: ProjectForAdmin[] = [
   {
@@ -7,7 +17,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Explorando várias fontes de energia renovável e seu impacto no meio ambiente.",
     category: "Fundamental Anos Iniciais",
     field: "Energia",
-    evaluatorsNumber: 3,
+    evaluators: getRandomEvaluators(),
+    score: 4.9,
   },
   {
     id: "a2tr",
@@ -15,7 +26,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Implementando inteligência artificial para melhorar a precisão diagnóstica na saúde.",
     category: "Ensino Médio",
     field: "Inteligência Artificial",
-    evaluatorsNumber: 4,
+    evaluators: getRandomEvaluators(),
+    score: 4.2,
   },
   {
     id: "vb43",
@@ -23,7 +35,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Analisando diferentes métodos de purificação de água e sua eficácia.",
     category: "Fundamental Anos Finais",
     field: "Química Ambiental",
-    evaluatorsNumber: 2,
+    evaluators: getRandomEvaluators(),
+    score: 3.6,
   },
   {
     id: "ut5b",
@@ -31,7 +44,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Um estudo sobre os princípios da computação quântica e suas potenciais aplicações.",
     category: "Ensino Médio",
     field: "Mecânica Quântica",
-    evaluatorsNumber: 5,
+    evaluators: getRandomEvaluators(),
+    score: 2.9,
   },
   {
     id: "kl4d",
@@ -39,7 +53,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Estratégias para conservar a biodiversidade em florestas tropicais.",
     category: "Fundamental Anos Iniciais",
     field: "Ecologia",
-    evaluatorsNumber: 3,
+    evaluators: getRandomEvaluators(),
+    score: 2.9,
   },
   {
     id: "aab7",
@@ -47,7 +62,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Usando nanotecnologia para sistemas de entrega de medicamentos direcionados.",
     category: "Ensino Médio",
     field: "Engenharia Biomédica",
-    evaluatorsNumber: 4,
+    evaluators: getRandomEvaluators(),
+    score: 4.1,
   },
   {
     id: "pp67",
@@ -55,7 +71,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Desenvolvendo um sistema de automação residencial inteligente usando dispositivos IoT.",
     category: "Fundamental Anos Finais",
     field: "Internet das Coisas",
-    evaluatorsNumber: 2,
+    evaluators: getRandomEvaluators(),
+    score: 3,
   },
   {
     id: "pqr1",
@@ -63,7 +80,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Avaliando o impacto das mudanças climáticas em regiões costeiras.",
     category: "Fundamental Anos Iniciais",
     field: "Ciência do Clima",
-    evaluatorsNumber: 3,
+    evaluators: getRandomEvaluators(),
+    score: 2.7,
   },
   {
     id: "akrt",
@@ -71,7 +89,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Criando materiais sustentáveis a partir de recursos renováveis.",
     category: "Ensino Médio",
     field: "Ciência dos Materiais",
-    evaluatorsNumber: 4,
+    evaluators: getRandomEvaluators(),
+    score: 2.1,
   },
   {
     id: "athl",
@@ -79,7 +98,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Projetando robôs para auxiliar em tarefas agrícolas para melhorar a eficiência.",
     category: "Fundamental Anos Finais",
     field: "Robótica",
-    evaluatorsNumber: 5,
+    evaluators: getRandomEvaluators(),
+    score: 3.4,
   },
   {
     id: "309f",
@@ -87,7 +107,8 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "Explorando o potencial e a ética da engenharia genética em humanos.",
     category: "Ensino Médio",
     field: "Genética",
-    evaluatorsNumber: 3,
+    evaluators: getRandomEvaluators(),
+    score: 3.7,
   },
   {
     id: "ahr6",
@@ -95,33 +116,34 @@ export const mockedProjects: ProjectForAdmin[] = [
     description: "O futuro da exploração espacial humana e a potencial colonização de outros planetas.",
     category: "Fundamental Anos Iniciais",
     field: "Astrofísica",
-    evaluatorsNumber: 4,
+    evaluators: getRandomEvaluators(),
+    score: 4.3,
   },
 ];
 
 export const mockedProjectsForEvaluator: ProjectForEvaluator[] = [
   {
-    title: "Projeto exemplo 1",
+    title: "Fontes de Energia Renovável",
     evaluated: false,
-    category: "Categoria exemplo",
+    category: "Fundamental Anos Iniciais",
     id: "abt3",
   },
   {
-    title: "Projeto exemplo 2",
+    title: "IA na Saúde",
     evaluated: false,
-    category: "Categoria exemplo",
+    category: "Ensino Médio",
     id: "a2tr",
   },
   {
-    title: "Projeto exemplo 3",
+    title: "Técnicas de Purificação de Água",
     evaluated: false,
-    category: "Categoria exemplo",
+    category: "Fundamental Anos Finais",
     id: "vb43",
   },
   {
-    title: "Projeto exemplo 4",
+    title: "Computação Quântica",
     evaluated: false,
-    category: "Categoria exemplo",
+    category: "Ensino Médio",
     id: "ut5b",
   },
 ];

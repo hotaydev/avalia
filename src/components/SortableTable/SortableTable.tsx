@@ -39,7 +39,7 @@ const projectsTableColumns: {
   { key: "category", title: "Categoria" },
   { key: "field", title: "Área do Projeto" },
   { key: "score", title: "Nota atual" },
-  { key: "evaluatorsNumber", title: "Avaliadores" },
+  { key: "evaluators", title: "Avaliadores" },
 ];
 
 export default function SortableTable({
@@ -224,6 +224,7 @@ function ProjectsTable({
 
     if (projectsList) {
       setData(JSON.parse(projectsList));
+      if (setPreviousData) setPreviousData(JSON.parse(projectsList));
     } else {
       (async () => {
         fetch("/api/admin/projects/")
@@ -360,6 +361,8 @@ function TableContent({
                   <td key={column.key} className={`py-3 ${isFirstElement ?? isLastElement ?? "px-2"}`}>
                     {column.key === "__send__" ? (
                       <SendMessageContact phone={item.phone} email={item.email} />
+                    ) : Array.isArray(item[column.key]) ? (
+                      item[column.key].length
                     ) : (
                       item[column.key] ?? "---"
                     )}

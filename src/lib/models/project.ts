@@ -1,3 +1,5 @@
+import type { Evaluator } from "./evaluator";
+
 export interface Project {
   title: string;
   description?: string;
@@ -12,5 +14,5 @@ export interface ProjectForEvaluator extends Project {
 export interface ProjectForAdmin extends Project {
   field?: string;
   score?: number;
-  evaluatorsNumber: number;
+  evaluators?: Evaluator[];
 }
