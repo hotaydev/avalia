@@ -101,7 +101,7 @@ async function craftHtmlForThePdf(projects: ProjectForAdmin[]) {
       width: 500,
       margin: 3,
     });
-    htmlItems += `<div class="item"><img src="${qrcode}" alt="QR Code"><p style="font-weight: bold;">${project.id.toUpperCase()}</p><p style="font-size:8px; color: #888;">Desenvolvido pela</p>${logoSvg}</div>`;
+    htmlItems += `<div class="item"><img src="${qrcode}" alt="QR Code"><p style="font-weight: semi-bold; font-size: 12px;">${project.title}</p><p style="font-weight: bold;">${project.id.toUpperCase()}</p><p style="font-size:8px; color: #888;">Desenvolvido pela</p>${logoSvg}</div>`;
   }
 
   const htmlContent = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Códigos dos Projetos da Feira</title>${htmlStyles}</head><body onafterprint="self.close()">${htmlItems}</body></html>`;
