@@ -326,6 +326,13 @@ function TableContent({
   sortConfig: SortConfig | SortConfigForEvaluators | SortConfigForProjects;
   requestSort: (key: string) => void;
 }>) {
+  const classesIfIsFirstElement = (index: number): string | null => {
+    return index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
+  };
+
+  const classesIfIsLastElement = (index: number): string | null => {
+    return index === columns.length - 1 ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg" : null;
+  };
   return (
     <div
       className="overflow-auto rounded-lg pr-3"
@@ -361,12 +368,11 @@ function TableContent({
           {filteredData.map((item) => (
             <tr key={item.id} className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all">
               {columns.map((column, index) => {
-                const isFirstElement: string | null = index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
-                const isLastElement: string | null =
-                  index === columns.length - 1 ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg" : null;
-
                 return (
-                  <td key={column.key} className={`py-3 ${isFirstElement ?? isLastElement ?? "px-2"}`}>
+                  <td
+                    key={column.key}
+                    className={`py-3 ${classesIfIsFirstElement(index) ?? classesIfIsLastElement(index) ?? "px-2"}`}
+                  >
                     {column.key === "__send__" ? (
                       <SendMessageContact phone={item.phone} email={item.email} />
                     ) : Array.isArray(item[column.key]) ? (

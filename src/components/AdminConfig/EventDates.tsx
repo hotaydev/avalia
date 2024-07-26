@@ -20,8 +20,6 @@ export default function EventDates() {
     }));
   };
 
-  const saveDates = () => {};
-
   return (
     <>
       <ConfigItem text="Datas da Feira" onClick={() => setDialogIsOpen(true)} />
@@ -31,7 +29,7 @@ export default function EventDates() {
         titleCentered={true}
         title="Configurar Datas da Feira"
         buttonText="Salvar alterações"
-        onClick={saveDates}
+        // onClick={() => {}}
       >
         <div className="flex space-y-4 px-6 flex-col mt-8 mb-2 w-full">
           <DateRow text="Data de início:" handleDateChange={handleDateChange} initOrEnd="init" />

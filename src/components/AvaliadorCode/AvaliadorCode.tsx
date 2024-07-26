@@ -65,30 +65,35 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
     } else {
       const newValues = [valueOne, valueTwo, valueThree, valueFour];
       for (let i = 0; i < pastedText.length; i++) {
-        if (position - 1 + i < newValues.length) {
-          newValues[position - 1 + i] = pastedText[i];
+        const positionIndex = position - 1 + i;
+        if (positionIndex < newValues.length) {
+          newValues[positionIndex] = pastedText[i];
         }
       }
       setValues(newValues);
 
       if (position + pastedText.length - 1 < 4) {
-        switch (position + pastedText.length - 1) {
-          case 1:
-            inputTwoRef.current?.focus();
-            break;
-          case 2:
-            inputThreeRef.current?.focus();
-            break;
-          case 3:
-            inputFourRef.current?.focus();
-            break;
-          default:
-            buttonRef?.current?.focus();
-            break;
-        }
+        focusOnInputAfterPaste(pastedText, position);
       }
     }
     buttonRef?.current?.focus();
+  };
+
+  const focusOnInputAfterPaste = (pastedText: string, position: number) => {
+    switch (position + pastedText.length - 1) {
+      case 1:
+        inputTwoRef.current?.focus();
+        break;
+      case 2:
+        inputThreeRef.current?.focus();
+        break;
+      case 3:
+        inputFourRef.current?.focus();
+        break;
+      default:
+        buttonRef?.current?.focus();
+        break;
+    }
   };
 
   const setValues = (newValues: string[]) => {
