@@ -4,6 +4,7 @@ import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMem
 import type { JSX } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import AddEvaluatorToProject from "../AddEvaluatorToProject/AddEvaluatorToProject";
 import AddProjectToEvaluator from "../AddProjectToEvaluator/AddProjectToEvaluator";
 
 interface SortConfig {
@@ -374,6 +375,7 @@ function TableContent({
                       item[column.key] ?? "---"
                     )}
                     {column.key === "projects" && <AddProjectToEvaluator evaluator={item} />}
+                    {column.key === "evaluators" && <AddEvaluatorToProject project={item} />}
                   </td>
                 );
               })}

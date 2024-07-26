@@ -1,23 +1,23 @@
 import type { Evaluator } from "@/lib/models/evaluator";
-import type { ProjectForEvaluator } from "@/lib/models/project";
+import type { ProjectForAdmin } from "@/lib/models/project";
 import { useState } from "react";
 import Select from "react-tailwindcss-select";
 import type { SelectValue } from "react-tailwindcss-select/dist/components/type";
 import DialogComponent from "../Dialog/Dialog";
 
-export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evaluator }) {
+export default function AddEvaluatorToProject({ project }: { project: ProjectForAdmin }) {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
-  const [projects, setProjects] = useState<ProjectForEvaluator[]>([]);
+  const [evaluators, setEvaluators] = useState<Evaluator[]>([]);
   const [selectedEvaluators, setSelectedEvaluators] = useState<SelectValue>([]);
 
-  const getProjects = async (): Promise<ProjectForEvaluator[]> => {
-    const projectsGetted = localStorage.getItem("projectsList");
+  const getEvaluators = async (): Promise<Evaluator[]> => {
+    const evaluatorGetted = localStorage.getItem("evaluatorsList");
 
-    if (projectsGetted) {
-      return JSON.parse(projectsGetted);
+    if (evaluatorGetted) {
+      return JSON.parse(evaluatorGetted);
     }
 
-    return await fetch("/api/admin/projects/")
+    return await fetch("/api/admin/evaluators/")
       .then((res) => res.json())
       .then((data) => {
         return data;
@@ -27,8 +27,8 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
   const openDialog = async (): Promise<void> => {
     // Abre primeiro o modal e depois carrega os projetos, para que seja mostrado primeiramente um loader e, após, trocado o estado
     setDialogIsOpen(true);
-    const projectsGetted = await getProjects();
-    setProjects(projectsGetted);
+    const evaluatorGetted = await getEvaluators();
+    setEvaluators(evaluatorGetted);
   };
 
   return (
@@ -42,7 +42,7 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
       <DialogComponent
         open={dialogIsOpen}
         setOpen={setDialogIsOpen}
-        title={`Selecione os projetos para ${evaluator.name.split(" ")[0]}`}
+        title={`Selecione os avaliadores para o projeto ${project.id}`}
         buttonText="Salvar"
       >
         <div style={{ height: "calc(100vh * 0.5)" }}>
@@ -51,17 +51,14 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
             primaryColor="blue"
             value={selectedEvaluators}
             onChange={(val) => setSelectedEvaluators(val)}
-            options={projects.map((project) => {
-              return {
-                value: project.id.toUpperCase(),
-                label: `${project.title.substring(0, 30)}${project.title.length > 30 ? "..." : ""} (${project.id.toUpperCase()})`,
-              };
+            options={evaluators.map((evaluator) => {
+              return { value: evaluator.id.toUpperCase(), label: `${evaluator.name} (${evaluator.id.toUpperCase()})` };
             })}
             isMultiple={true}
             isSearchable={true}
             placeholder="Selecione..."
-            searchInputPlaceholder="Buscar projetos"
-            noOptionsMessage="Nenhum projeto encontrado."
+            searchInputPlaceholder="Buscar avaliadores"
+            noOptionsMessage="Nenhum avaliador encontrado."
           />
         </div>
       </DialogComponent>

@@ -1,7 +1,7 @@
 import type { ProjectForEvaluator } from "./project";
 
 export interface Evaluator {
-  id: number;
+  id: string;
   name: string;
   email?: string;
   phone?: string;
