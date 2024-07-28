@@ -2,6 +2,7 @@ import ConfigItem from "./ConfigItem";
 import EvaluatorsQuestionaire from "./EvaluatorsQuestionaire";
 import EventDates from "./EventDates";
 import SheetsData from "./SheetsData";
+import UsersConfiguration from "./UsersConfiguration";
 
 export default function ConfigOptions() {
   return (
@@ -9,6 +10,7 @@ export default function ConfigOptions() {
       <SheetsData />
       <EventDates />
       <EvaluatorsQuestionaire />
+      <UsersConfiguration />
       <ConfigItem text="Página de Cadastro de Avaliadores" soon={true} />
       <ConfigItem text="Página de Cadastro de Projetos" soon={true} />
     </div>
