@@ -2,8 +2,10 @@ import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
+import toast from "react-hot-toast";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import { Tooltip } from "react-tooltip";
 import AddEvaluatorToProject from "../AddEvaluatorToProject/AddEvaluatorToProject";
 import AddProjectToEvaluator from "../AddProjectToEvaluator/AddProjectToEvaluator";
 
@@ -160,6 +162,7 @@ function EvaluatorsTable({
 
   const filteredData = sortedData.filter(
     (item) =>
+      item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.phone?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -250,6 +253,7 @@ function ProjectsTable({
 
   const filteredData = sortedData.filter(
     (item) =>
+      item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -301,7 +305,24 @@ function TableContent({
   };
 
   const idUppercaseOrValue = (columnKey: string, itemVal: string | number) => {
-    return columnKey === "id" ? itemVal.toString().toUpperCase() : itemVal;
+    return columnKey === "id" ? clickToCopyIdSection(itemVal.toString().toUpperCase()) : itemVal;
+  };
+
+  const clickToCopyIdSection = (id: string) => {
+    return (
+      <div
+        className="cursor-default w-min"
+        data-tooltip-id="click-to-copy-the-id"
+        data-tooltip-content="Clique para copiar"
+        data-tooltip-place="right"
+        onClick={() => {
+          navigator.clipboard.writeText(id);
+          toast.success("Copiado!");
+        }}
+      >
+        {id}
+      </div>
+    );
   };
 
   const blankItemIfNoValue = (columnKey: string) => {
@@ -316,6 +337,7 @@ function TableContent({
         maskImage: "linear-gradient(to bottom, black calc(100% - 32px), transparent 100%)",
       }}
     >
+      <Tooltip id="click-to-copy-the-id" />
       <table className="table-auto min-w-full pb-6 border-separate border-spacing-y-2">
         <tr className="top-0 sticky">
           <th colSpan={6} className="h-2 bg-white w-full" />

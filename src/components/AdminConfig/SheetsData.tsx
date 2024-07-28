@@ -39,7 +39,7 @@ function SingleSheet() {
         <p className="ml-1 mb-1 font-light text-gray-500 text-sm">
           1. Copie{" "}
           <Link
-            href={"https://github.com/hotaydev/avalia/wiki"}
+            href={`https://docs.google.com/spreadsheets/d/${process.env.NEXT_PUBLIC_SPREADSHEET_TEMPLATE_ID}/template/preview`}
             target="_blank"
             className="text-blue-500 font-semibold"
           >
