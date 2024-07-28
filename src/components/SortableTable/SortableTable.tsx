@@ -152,24 +152,7 @@ function EvaluatorsTable({
       sortableItems.sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
-
-        if (aValue === null || (aValue === undefined && bValue === null) || bValue === undefined) {
-          return 0;
-        }
-        if (aValue === null || aValue === undefined) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (bValue === null || bValue === undefined) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-
-        if (aValue < bValue) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        return 0;
+        return compareValues(aValue, bValue, sortConfig.direction);
       });
     }
     return sortableItems;
@@ -259,24 +242,7 @@ function ProjectsTable({
       sortableItems.sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
-
-        if (aValue === null || (aValue === undefined && bValue === null) || bValue === undefined) {
-          return 0;
-        }
-        if (aValue === null || aValue === undefined) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (bValue === null || bValue === undefined) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-
-        if (aValue < bValue) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
-        return 0;
+        return compareValues(aValue, bValue, sortConfig.direction);
       });
     }
     return sortableItems;
@@ -333,6 +299,15 @@ function TableContent({
   const classesIfIsLastElement = (index: number): string | null => {
     return index === columns.length - 1 ? "pr-4 pl-2 rounded-tr-lg rounded-br-lg" : null;
   };
+
+  const idUppercaseOrValue = (columnKey: string, itemVal: string | number) => {
+    return columnKey === "id" ? itemVal.toString().toUpperCase() : itemVal;
+  };
+
+  const blankItemIfNoValue = (columnKey: string) => {
+    return columnKey === "__send__" ? "" : "---";
+  };
+
   return (
     <div
       className="overflow-auto rounded-lg pr-3"
@@ -368,18 +343,16 @@ function TableContent({
           {filteredData.map((item) => (
             <tr key={item.id} className="hover:bg-gray-100 bg-gray-50 rounded-lg transition-all">
               {columns.map((column, index) => {
+                const itemVal = item[column.key];
                 return (
                   <td
                     key={column.key}
                     className={`py-3 ${classesIfIsFirstElement(index) ?? classesIfIsLastElement(index) ?? "px-2"}`}
                   >
-                    {column.key === "__send__" ? (
-                      <SendMessageContact phone={item.phone} email={item.email} />
-                    ) : Array.isArray(item[column.key]) ? (
-                      item[column.key].length
-                    ) : (
-                      item[column.key] ?? "---"
-                    )}
+                    {Array.isArray(itemVal)
+                      ? itemVal.length
+                      : idUppercaseOrValue(column.key, itemVal) ?? blankItemIfNoValue(column.key)}
+                    {column.key === "__send__" && <SendMessageContact phone={item.phone} email={item.email} />}
                     {column.key === "projects" && <AddProjectToEvaluator evaluator={item} />}
                     {column.key === "evaluators" && <AddEvaluatorToProject project={item} />}
                   </td>
@@ -424,3 +397,41 @@ function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?:
 function ShowingAllData({ size }: Readonly<{ size: number }>) {
   return <div className="pb-10 text-center w-full text-gray-500">Exibindo todos os {size} resultados.</div>;
 }
+
+type SortValueType = string | undefined | null | Evaluator[] | ProjectForAdmin[] | number;
+
+const isValueNullOrUndefined = (value: SortValueType): boolean => {
+  return value === null || value === undefined;
+};
+
+const handleNullOrUndefined = (
+  aValue: SortValueType,
+  bValue: SortValueType,
+  direction: "ascending" | "descending",
+): number | null => {
+  if (isValueNullOrUndefined(aValue) && isValueNullOrUndefined(bValue)) {
+    return 0;
+  }
+  if (isValueNullOrUndefined(aValue)) {
+    return direction === "ascending" ? -1 : 1;
+  }
+  if (isValueNullOrUndefined(bValue)) {
+    return direction === "ascending" ? 1 : -1;
+  }
+  return null; // Use null to indicate that both values are valid for comparison
+};
+
+const compareValues = (aValue: SortValueType, bValue: SortValueType, direction: "ascending" | "descending"): number => {
+  const nullOrUndefinedComparison = handleNullOrUndefined(aValue, bValue, direction);
+  if (nullOrUndefinedComparison !== null) {
+    return nullOrUndefinedComparison;
+  }
+
+  if ((aValue || "") < (bValue || "")) {
+    return direction === "ascending" ? -1 : 1;
+  }
+  if ((aValue || "") > (bValue || "")) {
+    return direction === "ascending" ? 1 : -1;
+  }
+  return 0;
+};

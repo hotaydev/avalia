@@ -104,7 +104,7 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
   };
 
   const sendButton = () => {
-    if (!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour) && callback) {
+    if (!!valueOne && !!valueTwo && !!valueThree && !!valueFour && callback) {
       callback(`${valueOne}${valueTwo}${valueThree}${valueFour}`);
     }
   };
