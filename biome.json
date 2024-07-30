@@ -17,6 +17,9 @@
 			"style": {
 				"noDefaultExport": "off",
 				"useFilenamingConvention": "off"
+			},
+			"correctness": {
+				"noNodejsModules": "off"
 			}
 		}
 	},

@@ -90,24 +90,23 @@ function UserListItem({
   return (
     <div className="border rounded-md border-gray-200 py-2 px-3 flex items-center justify-between">
       <p className="flex flex-col">
-        <span>
-          <span className="text-gray-700">{user.name}</span>
-          {!user.inviteAccepted && (
-            <span className="ml-2 p-1 rounded-md text-xs font-light text-yellow-800 ring-1 ring-inset ring-yellow-600/20 bg-yellow-50">
-              Convite pendente
-            </span>
-          )}
-        </span>
-        <span className="text-xs font-light text-gray-500">{user.email}</span>
+        <span className="text-gray-700">{user.email}</span>
+        {!user.inviteAccepted && (
+          <span className="py-1 px-2 mt-1 rounded-md text-xs font-light text-yellow-800 ring-1 ring-inset ring-yellow-600/20 bg-yellow-50">
+            Convite pendente
+          </span>
+        )}
       </p>
       <div className="flex space-x-2">
-        <button
-          type="button"
-          className="border border-gray-200 text-gray-600 rounded-md px-2 py-1 bg-gray-100 hover:bg-gray-200 hover:border-gray-300 transition-all"
-          onClick={() => copyInviteLink()}
-        >
-          Link de Convite
-        </button>
+        {!user.inviteAccepted && (
+          <button
+            type="button"
+            className="border border-gray-200 text-gray-600 rounded-md px-2 py-1 bg-gray-100 hover:bg-gray-200 hover:border-gray-300 transition-all"
+            onClick={() => copyInviteLink()}
+          >
+            Link de Convite
+          </button>
+        )}
         <button
           type="button"
           className="border border-red-500 text-white rounded-md px-2 py-1 bg-red-400 hover:bg-red-500 hover:border-red-600 transition-all"
