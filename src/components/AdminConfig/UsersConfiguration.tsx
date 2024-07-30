@@ -56,37 +56,49 @@ function UsersList() {
   return (
     <div className="flex flex-col w-100 space-y-2 mt-6">
       {users.length > 0 ? (
-        users.map((u) => <UserListItem key={u.email} name={u.name} email={u.email} />)
+        users.map((u) => <UserListItem key={u.email} user={u} />)
       ) : (
         <p className="flex items-center justify-center font-light text-xs pt-4">Nenhum usuário encontrado.</p>
       )}
-      {users.length > 0 && (
+      {users.length > 0 ? (
         <p className="flex items-center justify-center font-light text-xs pt-4">
           Mostrando todos os {users.length} usuários.
         </p>
+      ) : (
+        <p className="flex items-center justify-center font-light text-xs">
+          Nenhum usuário adicionado (você não será listado)
+        </p>
       )}
+      <p className="flex items-center justify-center font-light text-xs">
+        Convide apenas os usuários realmente necessários.
+      </p>
     </div>
   );
 }
 
 function UserListItem({
-  name,
-  email,
+  user,
 }: Readonly<{
-  name: string;
-  email: string;
+  user: FairUser;
 }>) {
   const copyInviteLink = () => {
     // TODO: it's actually copying the email, which doesn't make sense, it's only symbolic. Change to copy an invite link.
-    navigator.clipboard.writeText(email);
+    navigator.clipboard.writeText(user.email);
     toast.success("Link de convite copiado!");
   };
 
   return (
     <div className="border rounded-md border-gray-200 py-2 px-3 flex items-center justify-between">
       <p className="flex flex-col">
-        <span className="text-gray-700">{name}</span>
-        <span className="text-xs font-light text-gray-500">{email}</span>
+        <span>
+          <span className="text-gray-700">{user.name}</span>
+          {!user.inviteAccepted && (
+            <span className="ml-2 p-1 rounded-md text-xs font-light text-yellow-800 ring-1 ring-inset ring-yellow-600/20 bg-yellow-50">
+              Convite pendente
+            </span>
+          )}
+        </span>
+        <span className="text-xs font-light text-gray-500">{user.email}</span>
       </p>
       <div className="flex space-x-2">
         <button
