@@ -3,21 +3,13 @@ import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetRow, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import type { ScienceFair } from "../models/scienceFair";
 
-// biome-ignore lint/correctness/noUnusedVariables: It'll be used soon
-const fairsSpreadsheetTitlesOfSheets = {
-  evaluators: "Avaliadores",
-  projects: "Projetos",
-  categories: "Categorias",
-  answers: "Resostas",
-};
-
 const adminSpreadsheetTitlesOfSheets = {
   fairs: "Science Fairs",
   users: "Users",
 };
 
 export default class AvaliaSpreadsheet {
-  private token;
+  public token;
 
   constructor() {
     if (!(process.env.SERVICE_ACCOUNT_EMAIL && process.env.SERVICE_ACCOUNT_PRIVATE_KEY)) {
@@ -29,13 +21,6 @@ export default class AvaliaSpreadsheet {
       key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY,
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
-  }
-
-  private getFairDocument(spreadsheetId: string): GoogleSpreadsheet {
-    // TODO: test use cases when the sheet is not shared with the service account email, to properly handle this exception
-    const document = new GoogleSpreadsheet(spreadsheetId, this.token);
-    document.loadInfo();
-    return document;
   }
 
   // NOTE: we don't store it in a class-defined property to properly handle changes.

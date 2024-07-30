@@ -1,9 +1,10 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function AdminInitialSetupPage() {
   const [loading, setLoading] = useState(true);
@@ -23,9 +24,33 @@ export default function AdminInitialSetupPage() {
     }
   }, [push]);
 
-  const sendData = () => {
-    // TODO: implement the logic to save fair data
-    push("/admin");
+  const sendData = async () => {
+    // TODO: while loading, disable "send button"
+    const toastId = toast.loading("Salvando informações...");
+
+    await fetch("/api/auth/fairs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fairSchool,
+        fairName,
+        adminEmail: "", // TODO: get this info from user authentication provider
+      }),
+    })
+      .then((res) => res.json())
+      .then((data: AvaliaApiResponse) => {
+        toast.dismiss(toastId);
+        if (data.status === "success") {
+          // TODO: get fair information based in the ID, and save all info from the fair, not only the ID
+          localStorage.setItem("fairId", data.data as string);
+          push("/admin");
+        } else {
+          // TODO: handle possible error types
+          toast.error("Ocorreu algum problema. Tente novamente mais tarde.");
+        }
+      });
   };
 
   return (
