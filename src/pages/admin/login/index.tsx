@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
 
                   // Example login process for testing purposes
                   localStorage.setItem("adminCode", "example");
-                  push("/admin");
+                  push("/admin/setup");
                 } else {
                   toast.error("Preencha corretamente o seu email.");
                 }
@@ -86,7 +86,7 @@ export default function AdminLoginPage() {
 
                 // Example login process for testing purposes
                 localStorage.setItem("adminCode", "example");
-                push("/admin");
+                push("/admin/setup");
               }}
               className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
             >
