@@ -12,7 +12,7 @@ export default function SheetsData() {
   const saveLink = async () => {
     const toastId = toast.loading("Salvando informações...");
 
-    const fairId = localStorage.getItem("fairId");
+    const fairId = JSON.parse(localStorage.getItem("fairInfo") ?? "{}").fairId;
     const sheetId = link.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
 
     await fetch(`/api/admin/fairs/sheet-id?fairId=${fairId}&sheetId=${sheetId}`)

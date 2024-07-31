@@ -26,7 +26,7 @@ export default function EventDates() {
   const saveDates = async () => {
     const toastId = toast.loading("Salvando informações...");
 
-    const fairId = localStorage.getItem("fairId");
+    const fairId = JSON.parse(localStorage.getItem("fairInfo") ?? "{}").fairId;
     await fetch(
       `/api/admin/fairs/time?fairId=${fairId}&initDate=${dateConfig.initDate}&endDate=${dateConfig.endDate}&initTime=${dateConfig.initTime}&endTime=${dateConfig.endTime}`,
     )

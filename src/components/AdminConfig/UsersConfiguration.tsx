@@ -38,12 +38,10 @@ function UsersList() {
   useEffect(() => {
     let mounted = true;
 
-    const fairId = localStorage.getItem("fairId");
+    const fairId = JSON.parse(localStorage.getItem("fairInfo") ?? "{}").fairId;
     const userInfo = JSON.parse(localStorage.getItem("userInfo") ?? "{}");
 
     (async () => {
-      // TODO: implement on server-side the validation:
-      // A user can only retrieve users that are from the same Science Fair of himself
       fetch(`/api/auth/users?fairId=${fairId}&user=${userInfo.email}`)
         .then((res) => res.json())
         .then((data: AvaliaApiResponse) => {
@@ -99,8 +97,9 @@ function UserListItem({
   user: FairUser;
 }>) {
   const copyInviteLink = () => {
-    // TODO: it's actually copying the email, which doesn't make sense, it's only symbolic. Change to copy an invite link.
-    navigator.clipboard.writeText(user.email);
+    const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+    const link = `${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/admin/login/invite?fair=${fairInfo?.fairName}&email=${user.email}`;
+    navigator.clipboard.writeText(link);
     toast.success("Link de convite copiado!");
   };
 
@@ -124,6 +123,7 @@ function UserListItem({
             Link de Convite
           </button>
         )}
+        {/* TODO: we don't want to show the "delete" button to the admin user */}
         <button
           type="button"
           className="border border-red-500 text-white rounded-md px-2 py-1 bg-red-400 hover:bg-red-500 hover:border-red-600 transition-all"

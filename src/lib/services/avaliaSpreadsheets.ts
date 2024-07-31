@@ -96,16 +96,74 @@ export default class AvaliaSpreadsheet {
     return returnValue;
   }
 
-  public async getFairFromUser(email: string): Promise<ScienceFair> {
+  public async getFairFromUserOrId(email: string, fairId: string): Promise<ScienceFair> {
+    if (fairId) {
+      return await this.getFairFromId(fairId);
+    }
+
+    if (email) {
+      return await this.getFairFromEmail(email);
+    }
+
+    throw new Error(ErrorMessage.lackOfParameters);
+  }
+
+  private async getFairFromEmail(email: string): Promise<ScienceFair> {
     if (!email) {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
     const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
-    const fairId = await this.checkIfValueExists("email", email, usersSheet);
+    let row: GoogleSpreadsheetRow | undefined = undefined;
+    let fairId = "";
+    for (const singleValue of await usersSheet.getRows()) {
+      if (singleValue.get("email") === email) {
+        fairId = singleValue.get("fairId");
+        if (singleValue.get("inviteAccepted")) {
+          row = singleValue;
+        }
+        break;
+      }
+    }
+
     if (!fairId) {
       throw new Error(ErrorMessage.fairNotFound);
+    }
+
+    const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+
+    let foundFair: GoogleSpreadsheetRow | undefined = undefined;
+    for (const fair of await fairsSheet.getRows()) {
+      if (fair.get("fairId") === fairId) {
+        foundFair = fair;
+        break;
+      }
+    }
+
+    if (!foundFair) {
+      throw new Error(ErrorMessage.fairNotFound);
+    }
+
+    if (row) {
+      row.set("inviteAccepted", 1);
+      row.save();
+    }
+
+    return {
+      adminEmail: foundFair.get("adminEmail"),
+      fairName: foundFair.get("fairName"),
+      fairId: foundFair.get("fairId"),
+      fairSchool: foundFair.get("fairSchool"),
+      spreadsheetId: foundFair.get("spreadsheetId"),
+      startDate: foundFair.get("startDate"),
+      endDate: foundFair.get("endDate"),
+    };
+  }
+
+  private async getFairFromId(fairId: string): Promise<ScienceFair> {
+    if (!fairId) {
+      throw new Error(ErrorMessage.lackOfParameters);
     }
 
     const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);

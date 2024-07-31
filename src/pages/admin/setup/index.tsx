@@ -66,13 +66,22 @@ export default function AdminInitialSetupPage() {
       }),
     })
       .then((res) => res.json())
-      .then((data: AvaliaApiResponse) => {
-        toast.dismiss(toastId);
+      .then(async (data: AvaliaApiResponse) => {
         if (data.status === "success") {
-          // TODO: get fair information based in the ID, and save all info from the fair, not only the ID
-          localStorage.setItem("fairId", data.data as string);
-          push("/admin");
+          await fetch(`/api/auth/fairs?fairId=${data.data}`)
+            .then((res) => res.json())
+            .then((data: AvaliaApiResponse) => {
+              if (data.status === "success" && data.data) {
+                localStorage.setItem("fairInfo", JSON.stringify(data.data));
+                push("/admin");
+              } else {
+                toast.dismiss(toastId);
+                toast.error(data.message ?? "Ocorreu algum problema. Tente novamente mais tarde.");
+                setSendingInformation(false);
+              }
+            });
         } else {
+          toast.dismiss(toastId);
           toast.error(data.message ?? "Ocorreu algum problema. Tente novamente mais tarde.");
           setSendingInformation(false);
         }

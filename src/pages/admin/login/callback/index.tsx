@@ -8,7 +8,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function AdminLoginPage() {
+export default function EmailLinkCallbackPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>("");
   const { push, query } = useRouter();
 

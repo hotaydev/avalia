@@ -8,16 +8,17 @@ import AvaliaSpreadsheet from "@/lib/services/avaliaSpreadsheets";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const email = searchParams.get("email");
+  const fairId = searchParams.get("fairId");
 
-  if (!email) {
+  if (!(email || fairId)) {
     return Response.json({
       status: "error",
-      message: "O email não foi informado, não foi possível buscar informações sobre a feira.",
+      message: "Nenhum dado de busca foi informado, não foi possível buscar informações sobre a feira.",
     } as AvaliaApiResponse);
   }
 
   try {
-    const fairInfo: ScienceFair = await new AvaliaSpreadsheet().getFairFromUser(email);
+    const fairInfo: ScienceFair = await new AvaliaSpreadsheet().getFairFromUserOrId(email ?? "", fairId ?? "");
 
     return Response.json({
       status: "success",
