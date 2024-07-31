@@ -9,8 +9,8 @@ export default function ConfigOptions() {
     <div className="space-y-3 flex flex-col justify-center items-center">
       <SheetsData />
       <EventDates />
-      <EvaluatorsQuestionaire />
       <UsersConfiguration />
+      <EvaluatorsQuestionaire />
       <ConfigItem text="Página de Cadastro de Avaliadores" soon={true} />
       <ConfigItem text="Página de Cadastro de Projetos" soon={true} />
     </div>

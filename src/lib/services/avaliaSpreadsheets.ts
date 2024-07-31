@@ -3,6 +3,7 @@ import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetRow, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import { ErrorMessage } from "../constants/errors";
 import type { ScienceFair } from "../models/scienceFair";
+import type { FairUser } from "../models/user";
 
 const adminSpreadsheetTitlesOfSheets = {
   fairs: "Science Fairs",
@@ -129,5 +130,31 @@ export default class AvaliaSpreadsheet {
       startDate: foundFair.get("startDate"),
       endDate: foundFair.get("endDate"),
     };
+  }
+
+  public async getFairUsers(fairId: string, email: string): Promise<FairUser[]> {
+    if (!(fairId && email)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+
+    const users = [];
+    for (const row of await usersSheet.getRows()) {
+      if (row.get("fairId") === fairId) {
+        users.push({
+          fairId: fairId,
+          inviteAccepted: row.get("inviteAccepted") === 1 || row.get("inviteAccepted") === "1",
+          email: row.get("email"),
+        });
+      }
+    }
+
+    const isRequestingUserInTheFair: boolean = users.some((user) => user.email === email);
+    if (!isRequestingUserInTheFair) {
+      throw new Error("Você só pode buscar outros usuários da mesma feira.");
+    }
+
+    return users.filter((user) => user.email !== email);
   }
 }

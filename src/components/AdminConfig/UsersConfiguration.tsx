@@ -1,7 +1,9 @@
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { FairUser } from "@/lib/models/user";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import DialogComponent from "../Dialog/Dialog";
+import Spinner from "../Spinner";
 import ConfigItem from "./ConfigItem";
 
 export default function UsersConfiguration() {
@@ -31,19 +33,26 @@ export default function UsersConfiguration() {
 }
 
 function UsersList() {
-  const [users, setUsers] = useState<FairUser[]>([]);
+  const [users, setUsers] = useState<FairUser[] | undefined>();
 
   useEffect(() => {
     let mounted = true;
 
+    const fairId = localStorage.getItem("fairId");
+    const userInfo = JSON.parse(localStorage.getItem("userInfo") ?? "{}");
+
     (async () => {
       // TODO: implement on server-side the validation:
       // A user can only retrieve users that are from the same Science Fair of himself
-      fetch("/api/auth/users")
+      fetch(`/api/auth/users?fairId=${fairId}&user=${userInfo.email}`)
         .then((res) => res.json())
-        .then((data) => {
+        .then((data: AvaliaApiResponse) => {
           if (mounted) {
-            setUsers(data);
+            if (data.status === "success") {
+              setUsers(data.data as FairUser[]);
+            } else {
+              toast.error(data.message ?? "Não foi possível recuperar os usuários administradores da feira.");
+            }
           }
         });
     })();
@@ -55,19 +64,27 @@ function UsersList() {
 
   return (
     <div className="flex flex-col w-100 space-y-2 mt-6">
-      {users.length > 0 ? (
-        users.map((u) => <UserListItem key={u.email} user={u} />)
+      {users ? (
+        <>
+          {users && users.length > 0 ? (
+            users.map((u) => <UserListItem key={u.email} user={u} />)
+          ) : (
+            <p className="flex items-center justify-center font-light text-xs pt-4">Nenhum usuário encontrado.</p>
+          )}
+          {users && users.length > 0 ? (
+            <p className="flex items-center justify-center font-light text-xs pt-4">
+              Mostrando todos os {users.length} usuários (você não será listado)
+            </p>
+          ) : (
+            <p className="flex items-center justify-center font-light text-xs">
+              Nenhum usuário adicionado (você não será listado)
+            </p>
+          )}
+        </>
       ) : (
-        <p className="flex items-center justify-center font-light text-xs pt-4">Nenhum usuário encontrado.</p>
-      )}
-      {users.length > 0 ? (
-        <p className="flex items-center justify-center font-light text-xs pt-4">
-          Mostrando todos os {users.length} usuários.
-        </p>
-      ) : (
-        <p className="flex items-center justify-center font-light text-xs">
-          Nenhum usuário adicionado (você não será listado)
-        </p>
+        <div className="w-full text-center flex items-center justify-center">
+          <Spinner />
+        </div>
       )}
       <p className="flex items-center justify-center font-light text-xs">
         Convide apenas os usuários realmente necessários.
