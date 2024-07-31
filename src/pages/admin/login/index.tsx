@@ -33,7 +33,12 @@ export default function AdminLoginPage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        push("/admin");
+        const fairInfo = localStorage.getItem("fairInfo");
+        if (fairInfo) {
+          push("/admin");
+        } else {
+          push("/admin/setup");
+        }
       } else {
         setLoading(false);
       }
@@ -99,7 +104,6 @@ export default function AdminLoginPage() {
                   localStorage.setItem("accessToken", userResult.token ?? "");
                   localStorage.setItem("userInfo", JSON.stringify(userResult.user) ?? "");
 
-                  // TODO: also verify if the email already is in the admin spreadhseet, validating the need of going to /setup
                   push("/admin/setup");
                 }
               }}

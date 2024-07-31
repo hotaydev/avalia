@@ -1,13 +1,35 @@
-import { mockedScienceFairs } from "@/lib/mock/scienceFair";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import type { ScienceFair } from "@/lib/models/scienceFair";
 import AvaliaSpreadsheet from "@/lib/services/avaliaSpreadsheets";
 
 /**
- * Get a fair by it's ID
+ * Get a fair by user email
  */
-// biome-ignore lint/suspicious/useAwait: Needs to be async
-export async function GET() {
-  return Response.json(mockedScienceFairs);
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const email = searchParams.get("email");
+
+  if (!email) {
+    return Response.json({
+      status: "error",
+      message: "O email não foi informado, não foi possível buscar informações sobre a feira.",
+    } as AvaliaApiResponse);
+  }
+
+  try {
+    const fairInfo: ScienceFair = await new AvaliaSpreadsheet().getFairFromUser(email);
+
+    return Response.json({
+      status: "success",
+      message: "Science Fair found within user",
+      data: fairInfo,
+    } as AvaliaApiResponse);
+  } catch (error) {
+    return Response.json({
+      status: "error",
+      message: (error as Error).message,
+    } as AvaliaApiResponse);
+  }
 }
 
 /**

@@ -18,16 +18,21 @@ export default function AdminPage() {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        (async () => {
-          await fetch("/api/admin/ranking")
-            .then((res) => res.json())
-            .then((data) => {
-              if (mounted) {
-                setRanking(data);
-                setLoading(false);
-              }
-            });
-        })();
+        const fairInfo = localStorage.getItem("fairInfo");
+        if (fairInfo) {
+          (async () => {
+            await fetch("/api/admin/ranking")
+              .then((res) => res.json())
+              .then((data) => {
+                if (mounted) {
+                  setRanking(data);
+                  setLoading(false);
+                }
+              });
+          })();
+        } else {
+          router.push("/admin/setup");
+        }
       } else {
         router.push("/admin/login");
       }

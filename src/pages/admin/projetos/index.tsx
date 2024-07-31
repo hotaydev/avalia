@@ -22,7 +22,12 @@ export default function AdminProjetosPage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoading(false);
+        const fairInfo = localStorage.getItem("fairInfo");
+        if (fairInfo) {
+          setLoading(false);
+        } else {
+          router.push("/admin/setup");
+        }
       } else {
         router.push("/admin/login");
       }

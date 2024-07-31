@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import { auth } from "@/lib/firebase/config";
 import AvaliaAuthentication from "@/lib/services/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -11,35 +13,41 @@ export default function AdminLoginPage() {
 
   useEffect(() => {
     let mounted = true;
-    const isAuthenticated = new AvaliaAuthentication().isAuthenticated();
 
-    if (isAuthenticated) {
-      push("/admin");
-    } else if (query.email) {
-      setErrorMessage(null);
-      // try to do login with the link
-
-      (async () => {
-        const loginResult = await new AvaliaAuthentication().doLoginWithEmailLink(
-          query.email as string,
-          window.location.href,
-        );
-
-        if (!mounted) {
-          return;
-        }
-
-        if (loginResult.error) {
-          setErrorMessage(loginResult.error);
-        } else {
-          localStorage.setItem("userInfo", JSON.stringify(loginResult.user));
-          localStorage.setItem("refreshToken", JSON.stringify(loginResult.refreshToken));
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const fairInfo = localStorage.getItem("fairInfo");
+        if (fairInfo) {
           push("/admin");
+        } else {
+          push("/admin/setup");
         }
-      })();
-    } else {
-      setErrorMessage("Link inválido ou expirado");
-    }
+      } else if (query.email) {
+        setErrorMessage(null);
+        // try to do login with the link
+
+        (async () => {
+          const loginResult = await new AvaliaAuthentication().doLoginWithEmailLink(
+            query.email as string,
+            window.location.href,
+          );
+
+          if (!mounted) {
+            return;
+          }
+
+          if (loginResult.error) {
+            setErrorMessage(loginResult.error);
+          } else {
+            localStorage.setItem("userInfo", JSON.stringify(loginResult.user));
+            localStorage.setItem("refreshToken", JSON.stringify(loginResult.refreshToken));
+            push("/admin/setup");
+          }
+        })();
+      } else {
+        setErrorMessage("Link inválido ou expirado");
+      }
+    });
 
     return () => {
       mounted = false;

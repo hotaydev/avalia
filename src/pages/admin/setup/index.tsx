@@ -17,13 +17,36 @@ export default function AdminInitialSetupPage() {
   const { push } = useRouter();
 
   useEffect(() => {
+    let mounted = true;
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoading(false);
+        const fairInfo = localStorage.getItem("fairInfo");
+        if (fairInfo) {
+          push("/admin");
+        } else {
+          (async () => {
+            await fetch(`/api/auth/fairs?email=${user.email}`) // used to get info from the fair
+              .then((res) => res.json())
+              .then((data: AvaliaApiResponse) => {
+                if (mounted) {
+                  if (data.status === "success" && data.data) {
+                    localStorage.setItem("fairInfo", JSON.stringify(data.data));
+                    push("/admin");
+                  } else {
+                    setLoading(false);
+                  }
+                }
+              });
+          })();
+        }
       } else {
         push("/admin/login");
       }
     });
+
+    return () => {
+      mounted = false;
+    };
   }, [push]);
 
   const sendData = async () => {
@@ -38,7 +61,7 @@ export default function AdminInitialSetupPage() {
       body: JSON.stringify({
         fairSchool,
         fairName,
-        adminEmail: "", // TODO: get this info from user authentication provider
+        adminEmail: auth.currentUser?.email,
       }),
     })
       .then((res) => res.json())
@@ -62,7 +85,17 @@ export default function AdminInitialSetupPage() {
       </Head>
       <Toaster />
       <HeaderTitle />
-      {!loading && (
+      {loading ? (
+        <div className="bg-white shadow-md rounded-lg px-4 pt-12 py-12 max-w-lg w-full text-center flex items-center justify-center">
+          <svg width="36" height="36" className="animate-spin" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <title>spinner</title>
+            <path
+              fill="#333"
+              d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+            />
+          </svg>
+        </div>
+      ) : (
         <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Vamos configurar sua conta</h2>
           <div className="text-center font-normal text-sm text-gray-500 mb-8">
