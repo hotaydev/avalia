@@ -10,6 +10,7 @@ export default function AdminInitialSetupPage() {
   const [loading, setLoading] = useState(true);
   const [fairSchool, setFairSchool] = useState("");
   const [fairName, setFairName] = useState("");
+  const [sendingInformation, setSendingInformation] = useState<boolean>(false);
 
   const { push } = useRouter();
 
@@ -25,8 +26,8 @@ export default function AdminInitialSetupPage() {
   }, [push]);
 
   const sendData = async () => {
-    // TODO: while loading, disable "send button"
     const toastId = toast.loading("Salvando informações...");
+    setSendingInformation(true);
 
     await fetch("/api/auth/fairs", {
       method: "POST",
@@ -47,8 +48,8 @@ export default function AdminInitialSetupPage() {
           localStorage.setItem("fairId", data.data as string);
           push("/admin");
         } else {
-          // TODO: handle possible error types
-          toast.error("Ocorreu algum problema. Tente novamente mais tarde.");
+          toast.error(data.message ?? "Ocorreu algum problema. Tente novamente mais tarde.");
+          setSendingInformation(false);
         }
       });
   };
@@ -92,7 +93,7 @@ export default function AdminInitialSetupPage() {
             <button
               type="button"
               className="text-center w-3/4 rounded-xl outline-none py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-blue-300 mt-10"
-              disabled={fairSchool.length < 5 || fairName.length < 4}
+              disabled={fairSchool.length < 5 || fairName.length < 4 || sendingInformation}
               onClick={sendData}
             >
               Concluir configuração

@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   } catch (error) {
     return Response.json({
       status: "error",
-      message: error,
+      message: (error as Error).message,
     } as AvaliaApiResponse);
   }
 }

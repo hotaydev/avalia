@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetRow, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
+import { ErrorMessage } from "../constants/errors";
 import type { ScienceFair } from "../models/scienceFair";
 
 const adminSpreadsheetTitlesOfSheets = {
@@ -40,18 +41,21 @@ export default class AvaliaSpreadsheet {
     return document.sheetsByTitle[title];
   }
 
-  public async saveNewFair(fairName: string, fairSchool: string, adminEmail: string): Promise<Error | string> {
+  public async saveNewFair(fairName: string, fairSchool: string, adminEmail: string): Promise<string> {
     if (!(fairName && fairSchool && adminEmail)) {
-      return new Error("Parameters need to be passed");
+      throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    // TODO: we can also check if the user don't already exists (double-check)
-
-    const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
-    const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
-    const fairId = randomUUID();
-
     try {
+      const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+      const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+      const fairId = randomUUID();
+
+      const emailAlreadyInUse = await this.checkIfValueExists("email", adminEmail, usersSheet);
+      if (emailAlreadyInUse) {
+        throw new Error(ErrorMessage.emailAlreadyInUse);
+      }
+
       await fairsSheet.addRow({
         adminEmail: adminEmail,
         fairName: fairName,
@@ -70,27 +74,36 @@ export default class AvaliaSpreadsheet {
 
       return fairId;
     } catch (error) {
-      return new Error(`ERROR: ${error}`);
+      throw new Error((error as Error).message ?? error);
     }
   }
 
-  public async getFairFromUser(email: string): Promise<Error | ScienceFair> {
-    if (!email) {
-      return new Error("Parameter need to be passed");
-    }
-
-    const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
-
-    let fairId = "";
-    for (const user of await usersSheet.getRows()) {
-      if (user.get("email") === email) {
-        fairId = user.get("fairId");
+  private async checkIfValueExists(
+    key: string,
+    value: string,
+    sheet: GoogleSpreadsheetWorksheet,
+  ): Promise<number | string | undefined | null | boolean> {
+    let returnValue = "";
+    for (const singleValue of await sheet.getRows()) {
+      if (singleValue.get(key) === value) {
+        returnValue = singleValue.get("fairId");
         break;
       }
     }
 
+    return returnValue;
+  }
+
+  public async getFairFromUser(email: string): Promise<ScienceFair> {
+    if (!email) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+
+    const fairId = await this.checkIfValueExists("email", email, usersSheet);
     if (!fairId) {
-      return new Error("Fair not found");
+      throw new Error(ErrorMessage.fairNotFound);
     }
 
     const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
@@ -104,7 +117,7 @@ export default class AvaliaSpreadsheet {
     }
 
     if (!foundFair) {
-      return new Error("Fair not found");
+      throw new Error(ErrorMessage.fairNotFound);
     }
 
     return {
