@@ -21,6 +21,7 @@ export default function SheetsData() {
         toast.dismiss(toastId);
         if (data.status === "success") {
           toast.success("Fonte de dados salva com sucesso!");
+          updateFairDataLocally(sheetId);
           setLink("");
         } else {
           toast.error(data.message ?? "Algo deu errado na hora de salvar. Tente novamente mais tarde.");
@@ -28,9 +29,29 @@ export default function SheetsData() {
       });
   };
 
+  const updateFairDataLocally = (id: string) => {
+    const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+
+    localStorage.setItem(
+      "fairInfo",
+      JSON.stringify({
+        ...fairInfo,
+        spreadsheetId: id,
+      }),
+    );
+  };
+
+  const openDialog = () => {
+    const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+    if (fairInfo?.spreadsheetId) {
+      setLink(`https://docs.google.com/spreadsheets/d/${fairInfo.spreadsheetId}/edit`);
+    }
+    setDialogIsOpen(true);
+  };
+
   return (
     <>
-      <ConfigItem text="Fontes de Dados" onClick={() => setDialogIsOpen(true)} />
+      <ConfigItem text="Fontes de Dados" onClick={openDialog} />
       <DialogComponent
         open={dialogIsOpen}
         setOpen={setDialogIsOpen}
