@@ -1,8 +1,10 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import SortableTable from "@/components/SortableTable/SortableTable";
 import { HotayLogoSvg } from "@/lib/constants/hotay-logo";
+import { auth } from "@/lib/firebase/config";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import { getLastTime } from "@/lib/utils/lastUpdateTime";
+import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { type NextRouter, useRouter } from "next/router";
 import qrCode from "qrcode";
@@ -18,14 +20,13 @@ export default function AdminProjetosPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // TODO: use a real auth method
-    const adminCode = localStorage.getItem("adminCode");
-
-    if (adminCode) {
-      setLoading(false);
-    } else {
-      router.push("/admin/login");
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoading(false);
+      } else {
+        router.push("/admin/login");
+      }
+    });
   }, [router]);
 
   return (

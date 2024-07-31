@@ -1,4 +1,5 @@
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import AvaliaAuthentication from "@/lib/services/auth";
 import type { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,7 +45,7 @@ export default function AdminMenu({
           <div
             className="border-2 border-gray-100 hover:border-gray-200 text-gray-800 rounded-lg px-6 py-3 flex items-center justify-between transition-all cursor-pointer group"
             onClick={() => {
-              localStorage.removeItem("adminCode");
+              new AvaliaAuthentication().logout();
               pushRoute("/");
             }}
           >

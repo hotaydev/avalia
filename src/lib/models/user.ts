@@ -1,3 +1,5 @@
+import type { User } from "firebase/auth";
+
 export interface FairUser {
   email: string;
   fairId: string;
@@ -5,9 +7,8 @@ export interface FairUser {
 }
 
 export interface AdminUser {
-  email?: string | null;
+  user?: User | null;
   token?: string;
   refreshToken?: string;
-  uid?: string;
   error?: string;
 }

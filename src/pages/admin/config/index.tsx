@@ -1,5 +1,7 @@
 import ConfigOptions from "@/components/AdminConfig/ConfigOptions";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import { auth } from "@/lib/firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -10,14 +12,13 @@ export default function AdminConfigPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // TODO: use a real auth method
-    const adminCode = localStorage.getItem("adminCode");
-
-    if (adminCode) {
-      setLoading(false);
-    } else {
-      router.push("/admin/login");
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoading(false);
+      } else {
+        router.push("/admin/login");
+      }
+    });
   }, [router]);
 
   return (

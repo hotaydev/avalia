@@ -1,5 +1,7 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import { auth } from "@/lib/firebase/config";
 import type { Category } from "@/lib/models/category";
+import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -13,23 +15,23 @@ export default function AdminPage() {
 
   useEffect(() => {
     let mounted = true;
-    // TODO: use a real auth method
-    const adminCode = localStorage.getItem("adminCode");
 
-    if (!adminCode) {
-      router.push("/admin/login");
-    }
-
-    (async () => {
-      await fetch("/api/admin/ranking")
-        .then((res) => res.json())
-        .then((data) => {
-          if (mounted) {
-            setRanking(data);
-            setLoading(false);
-          }
-        });
-    })();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        (async () => {
+          await fetch("/api/admin/ranking")
+            .then((res) => res.json())
+            .then((data) => {
+              if (mounted) {
+                setRanking(data);
+                setLoading(false);
+              }
+            });
+        })();
+      } else {
+        router.push("/admin/login");
+      }
+    });
 
     return () => {
       mounted = false;

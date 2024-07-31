@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -15,14 +17,13 @@ export default function AdminInitialSetupPage() {
   const { push } = useRouter();
 
   useEffect(() => {
-    // TODO: use a real auth method
-    const adminCode = localStorage.getItem("adminCode");
-
-    if (adminCode) {
-      setLoading(false);
-    } else {
-      push("/admin/login");
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoading(false);
+      } else {
+        push("/admin/login");
+      }
+    });
   }, [push]);
 
   const sendData = async () => {
