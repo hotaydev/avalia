@@ -1,10 +1,32 @@
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import Link from "next/link";
-import { useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
+import toast from "react-hot-toast";
 import DialogComponent from "../Dialog/Dialog";
 import ConfigItem from "./ConfigItem";
 
 export default function SheetsData() {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
+  const [link, setLink] = useState("");
+
+  const saveLink = async () => {
+    const toastId = toast.loading("Salvando informações...");
+
+    const fairId = localStorage.getItem("fairId");
+    const sheetId = link.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
+
+    await fetch(`/api/admin/fairs/sheet-id?fairId=${fairId}&sheetId=${sheetId}`)
+      .then((res) => res.json())
+      .then((data: AvaliaApiResponse) => {
+        toast.dismiss(toastId);
+        if (data.status === "success") {
+          toast.success("Fonte de dados salva com sucesso!");
+          setLink("");
+        } else {
+          toast.error(data.message ?? "Algo deu errado na hora de salvar. Tente novamente mais tarde.");
+        }
+      });
+  };
 
   return (
     <>
@@ -14,12 +36,12 @@ export default function SheetsData() {
         setOpen={setDialogIsOpen}
         title="Configurar Fontes de Dados"
         buttonText="Salvar alterações"
+        onClick={saveLink}
       >
         <div className="flex flex-col pr-6 mb-2 w-full mt-4">
-          <SingleSheet />
+          <SingleSheet link={link} setLink={setLink} />
           <div className="w-full text-center flex items-center justify-center pt-8 font-light text-xs">
             {/* TODO: ajustar link */}
-            {/* TODO: Criar planilha de template, contendo "avaliadores", "projetos", "respostas" e "categorias" */}
             <Link href={"https://github.com/hotaydev/avalia/wiki"} target="_blank" className="w-3/4">
               Clique aqui para instruções completas da configuração.
             </Link>
@@ -30,8 +52,7 @@ export default function SheetsData() {
   );
 }
 
-// TODO: Adicionar icones de ajuda para entender o que são as "abas"
-function SingleSheet() {
+function SingleSheet({ link, setLink }: { link: string; setLink: Dispatch<SetStateAction<string>> }) {
   return (
     <div className="w-full">
       <div>
@@ -67,6 +88,8 @@ function SingleSheet() {
 
       <p className="ml-1 mb-1 font-semibold text-gray-600 mt-8">Link da Planilha do Google:</p>
       <input
+        value={link}
+        onChange={(e) => setLink(e.target.value)}
         type="text"
         placeholder="Ex. https://docs.google.com/spreadsheets/d/xxxxxx/edit"
         className="p-2 border border-gray-300 rounded-lg w-full"

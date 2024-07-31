@@ -10,6 +10,7 @@ const adminSpreadsheetTitlesOfSheets = {
   users: "Users",
 };
 
+// TODO: all methods of this class can verify the user validity by its access token. Maybe using a middleware?
 export default class AvaliaSpreadsheet {
   public token;
 
@@ -156,5 +157,58 @@ export default class AvaliaSpreadsheet {
     }
 
     return users.filter((user) => user.email !== email);
+  }
+
+  public async saveFairDates(
+    fairId: string,
+    dates: { initDate?: string | null; endDate?: string | null; initTime?: string | null; endTime?: string | null },
+  ): Promise<boolean> {
+    if (!fairId) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    if (!(dates.initDate || dates.endDate)) {
+      return true; // success (ignored)
+    }
+
+    const startDateString = dates.initDate ? `${dates.initDate}T${dates.initTime ?? "00:00"}:00.000-03:00` : "";
+    const endDateString = dates.endDate ? `${dates.endDate}T${dates.endTime ?? "00:00"}:00.000-03:00` : "";
+
+    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+
+    let changed = false;
+    for (const row of await fairSheet.getRows()) {
+      if (row.get("fairId") === fairId) {
+        row.set("startDate", startDateString);
+        row.set("endDate", endDateString);
+        row.save();
+        changed = true;
+        break;
+      }
+    }
+
+    return changed;
+  }
+
+  public async saveFairSpreadsheetId(fairId: string, linkId: string): Promise<boolean> {
+    if (!(fairId && linkId)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    const sheetId = linkId.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
+
+    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+
+    let changed = false;
+    for (const row of await fairSheet.getRows()) {
+      if (row.get("fairId") === fairId) {
+        row.set("spreadsheetId", sheetId);
+        row.save();
+        changed = true;
+        break;
+      }
+    }
+
+    return changed;
   }
 }

@@ -1,4 +1,6 @@
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import DialogComponent from "../Dialog/Dialog";
 import ConfigItem from "./ConfigItem";
 
@@ -11,13 +13,32 @@ interface DateTimeConfiguration {
 
 export default function EventDates() {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
-  const [_dateConfig, setDateConfig] = useState<DateTimeConfiguration>({});
+  const [dateConfig, setDateConfig] = useState<DateTimeConfiguration>({});
 
   const handleDateChange = (value: string, type: keyof DateTimeConfiguration): void => {
     setDateConfig((prevConfig) => ({
       ...prevConfig,
       [type]: value,
     }));
+  };
+
+  const saveDates = async () => {
+    const toastId = toast.loading("Salvando informações...");
+
+    const fairId = localStorage.getItem("fairId");
+    await fetch(
+      `/api/admin/fairs/time?fairId=${fairId}&initDate=${dateConfig.initDate}&endDate=${dateConfig.endDate}&initTime=${dateConfig.initTime}&endTime=${dateConfig.endTime}`,
+    )
+      .then((res) => res.json())
+      .then((data: AvaliaApiResponse) => {
+        toast.dismiss(toastId);
+        if (data.status === "success") {
+          toast.success("Datas salvas com sucesso!");
+          setDateConfig({});
+        } else {
+          toast.error(data.message ?? "Algo deu errado na hora de salvar. Tente novamente mais tarde.");
+        }
+      });
   };
 
   return (
@@ -29,7 +50,7 @@ export default function EventDates() {
         titleCentered={true}
         title="Configurar Datas da Feira"
         buttonText="Salvar alterações"
-        // onClick={() => {}}
+        onClick={saveDates}
       >
         <div className="flex space-y-4 px-6 flex-col mt-8 mb-2 w-full">
           <DateRow text="Data de início:" handleDateChange={handleDateChange} initOrEnd="init" />
