@@ -1,11 +1,11 @@
+import wipeLocalStorage from "@/lib/services/wipeLocalStorage";
 import { useRouter } from "next/router";
 
-export default function LogoutComponent() {
+export default function EvaluatorLogoutComponent() {
   const { push } = useRouter();
 
   const handleLogout = () => {
-    // TODO: handle logout
-    localStorage.removeItem("evaluatorCode");
+    wipeLocalStorage();
     push("/");
   };
 

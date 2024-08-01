@@ -1,11 +1,14 @@
+import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
-import LogoutComponent from "@/components/Logout/Logout";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FcOk } from "react-icons/fc";
+
+// TODO: salvar localmente os projetos, de forma que a cada 10x novas requisições ele atualize os dados dos projetos.
+//       isso implica na necessidade de, ao avaliar um projeto, os valores da avaliação sejama tualizados na lista local.
 
 export default function ProjetosAvaliador() {
   const { push } = useRouter();
@@ -65,7 +68,7 @@ export default function ProjetosAvaliador() {
           </span>
         )}
       </div>
-      <LogoutComponent />
+      <EvaluatorLogoutComponent />
       <Footer fixed={projects.length <= 6} />
     </main>
   );

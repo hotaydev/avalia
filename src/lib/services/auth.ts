@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/config";
 import type { AdminUser } from "../models/user";
+import wipeLocalStorage from "./wipeLocalStorage";
 
 export default class AvaliaAuthentication {
   private firebaseAuth;
@@ -97,14 +98,7 @@ export default class AvaliaAuthentication {
   public async logout(): Promise<void> {
     signOut(auth)
       .then(() => {
-        localStorage.removeItem("userInfo");
-        localStorage.removeItem("fairInfo");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("projectsList");
-        localStorage.removeItem("projectsListLastUpdated");
-        localStorage.removeItem("evaluatorsList");
-        localStorage.removeItem("evaluatorsListLastUpdated");
+        wipeLocalStorage();
       })
       .catch((_error) => {
         // TODO: handle here

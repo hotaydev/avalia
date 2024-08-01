@@ -1,7 +1,7 @@
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
+import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
-import LogoutComponent from "@/components/Logout/Logout";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { Question } from "@/lib/models/question";
 import Head from "next/head";
@@ -114,7 +114,7 @@ export default function ProjetosAvaliador() {
           )}
         </h3>
       </div>
-      <LogoutComponent />
+      <EvaluatorLogoutComponent />
       <Footer fixed={false} />
       <ArrowBack />
     </main>
