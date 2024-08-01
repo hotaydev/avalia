@@ -12,7 +12,7 @@ const adminSpreadsheetTitlesOfSheets = {
 
 // TODO: all methods of this class can verify the user validity by its access token. Maybe using a middleware?
 export default class AvaliaSpreadsheet {
-  public token;
+  private token;
 
   constructor() {
     if (!(process.env.SERVICE_ACCOUNT_EMAIL && process.env.SERVICE_ACCOUNT_PRIVATE_KEY)) {
@@ -38,9 +38,15 @@ export default class AvaliaSpreadsheet {
     return document;
   }
 
-  private async getAdminSheetByTitle(title: string): Promise<GoogleSpreadsheetWorksheet> {
-    const document = await this.getAdminDocument();
-    return document.sheetsByTitle[title];
+  private async getSheetByTitle(title: string): Promise<GoogleSpreadsheetWorksheet> {
+    try {
+      const document = await this.getAdminDocument();
+      return document.sheetsByTitle[title];
+    } catch (_error) {
+      throw new Error(
+        "Parece que não temos acesso à planilha. Você compartilhou a planilha com a conta de serviço, conforme instruções na página de configuração?",
+      );
+    }
   }
 
   public async saveNewFair(fairName: string, fairSchool: string, adminEmail: string): Promise<string> {
@@ -49,8 +55,8 @@ export default class AvaliaSpreadsheet {
     }
 
     try {
-      const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
-      const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+      const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+      const usersSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
       const fairId = randomUUID();
 
       let emailAlreadyInUse = "";
@@ -92,8 +98,8 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
-    const userSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+    const fairSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const userSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
     let fairExists = false;
     for (const row of await fairSheet.getRows()) {
@@ -132,7 +138,7 @@ export default class AvaliaSpreadsheet {
     return false;
   }
 
-  public async getFairFromUserOrId(email: string, fairId: string): Promise<ScienceFair> {
+  public async getFairFromUserOrId(email: string | null, fairId: string | null): Promise<ScienceFair> {
     if (fairId) {
       return await this.getFairFromId(fairId);
     }
@@ -149,7 +155,7 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+    const usersSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
     let row: GoogleSpreadsheetRow | undefined = undefined;
     let fairId = "";
@@ -167,7 +173,7 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.fairNotFound);
     }
 
-    const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
     let foundFair: GoogleSpreadsheetRow | undefined = undefined;
     for (const fair of await fairsSheet.getRows()) {
@@ -202,7 +208,7 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    const fairsSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
     let foundFair: GoogleSpreadsheetRow | undefined = undefined;
     for (const fair of await fairsSheet.getRows()) {
@@ -232,7 +238,7 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+    const usersSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
     const users = [];
     for (const row of await usersSheet.getRows()) {
@@ -268,7 +274,7 @@ export default class AvaliaSpreadsheet {
     const startDateString = dates.initDate ? `${dates.initDate}T${dates.initTime ?? "00:00"}:00.000-03:00` : "";
     const endDateString = dates.endDate ? `${dates.endDate}T${dates.endTime ?? "00:00"}:00.000-03:00` : "";
 
-    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const fairSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
     let changed = false;
     for (const row of await fairSheet.getRows()) {
@@ -291,7 +297,7 @@ export default class AvaliaSpreadsheet {
 
     const sheetId = linkId.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
 
-    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const fairSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
     let changed = false;
     for (const row of await fairSheet.getRows()) {
@@ -311,8 +317,8 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
-    const userSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+    const fairSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const userSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
     let adminEmail = "";
     for (const row of await fairSheet.getRows()) {

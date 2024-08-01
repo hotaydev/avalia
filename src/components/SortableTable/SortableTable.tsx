@@ -1,3 +1,4 @@
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
@@ -120,25 +121,36 @@ function EvaluatorsTable({
     key: "id",
     direction: "ascending",
   });
-  const [data, setData] = useState<Evaluator[]>([]);
+  const [evaluatorList, setEvaluatorList] = useState<Evaluator[]>([]);
 
   useEffect(() => {
     let isMounted = true;
 
-    const evaluatorsList = localStorage.getItem("evaluatorsList");
+    const localEvaluatorList = localStorage.getItem("evaluatorsList");
 
-    if (evaluatorsList) {
-      setData(JSON.parse(evaluatorsList));
+    if (localEvaluatorList) {
+      setEvaluatorList(JSON.parse(localEvaluatorList));
     } else {
       (async () => {
-        fetch("/api/admin/evaluators/")
+        const toastId = toast.loading(
+          "Buscando avaliadores... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
+        );
+        const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+        await fetch(`/api/admin/evaluators/?fairId=${fairInfo?.fairId}`)
           .then((res) => res.json())
-          .then((data) => {
+          .then((data: AvaliaApiResponse) => {
+            toast.dismiss(toastId);
             if (isMounted) {
-              setData(data);
+              if (data.status === "success") {
+                setEvaluatorList(data.data as Evaluator[]);
+                localStorage.setItem("evaluatorsList", JSON.stringify(data.data));
+                localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
+              } else {
+                toast.error(
+                  data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
+                );
+              }
             }
-            localStorage.setItem("evaluatorsList", JSON.stringify(data));
-            localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
           });
       })();
     }
@@ -149,7 +161,7 @@ function EvaluatorsTable({
   }, []);
 
   const sortedData: Evaluator[] = useMemo(() => {
-    const sortableItems = [...data];
+    const sortableItems = [...evaluatorList];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         const aValue = a[sortConfig.key];
@@ -158,7 +170,7 @@ function EvaluatorsTable({
       });
     }
     return sortableItems;
-  }, [data, sortConfig]);
+  }, [evaluatorList, sortConfig]);
 
   const filteredData = sortedData.filter(
     (item) =>

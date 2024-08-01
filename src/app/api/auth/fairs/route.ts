@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const fairInfo: ScienceFair = await new AvaliaSpreadsheet().getFairFromUserOrId(email ?? "", fairId ?? "");
+    const fairInfo: ScienceFair = await new AvaliaSpreadsheet().getFairFromUserOrId(email, fairId);
 
     return Response.json({
       status: "success",
