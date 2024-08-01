@@ -53,7 +53,14 @@ export default class AvaliaSpreadsheet {
       const usersSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
       const fairId = randomUUID();
 
-      const emailAlreadyInUse = await this.checkIfValueExists("email", adminEmail, usersSheet);
+      let emailAlreadyInUse = "";
+      for (const row of await usersSheet.getRows()) {
+        if (row.get("email") === adminEmail) {
+          emailAlreadyInUse = row.get("fairId");
+          break;
+        }
+      }
+
       if (emailAlreadyInUse) {
         throw new Error(ErrorMessage.emailAlreadyInUse);
       }
@@ -80,20 +87,49 @@ export default class AvaliaSpreadsheet {
     }
   }
 
-  private async checkIfValueExists(
-    key: string,
-    value: string,
-    sheet: GoogleSpreadsheetWorksheet,
-  ): Promise<number | string | undefined | null | boolean> {
-    let returnValue = "";
-    for (const singleValue of await sheet.getRows()) {
-      if (singleValue.get(key) === value) {
-        returnValue = singleValue.get("fairId");
+  public async addNewNonAdminUser(fairId: string, email: string): Promise<boolean> {
+    if (!(fairId && email)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const userSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+
+    let fairExists = false;
+    for (const row of await fairSheet.getRows()) {
+      if (row.get("fairId") === fairId) {
+        fairExists = true;
         break;
       }
     }
 
-    return returnValue;
+    if (!fairExists) {
+      throw new Error("Feira não encontrada");
+    }
+
+    let isNewUser = true;
+    for (const row of await userSheet.getRows()) {
+      if (row.get("email") === email) {
+        isNewUser = false;
+        break;
+      }
+    }
+
+    if (isNewUser) {
+      try {
+        userSheet.addRow({
+          email: email,
+          fairId: fairId,
+          inviteAccepted: 0,
+        });
+
+        return true;
+      } catch (error) {
+        throw new Error(`Erro ao criar novo usuário: ${error}`);
+      }
+    }
+
+    return false;
   }
 
   public async getFairFromUserOrId(email: string, fairId: string): Promise<ScienceFair> {
@@ -268,5 +304,40 @@ export default class AvaliaSpreadsheet {
     }
 
     return changed;
+  }
+
+  public async removeUserAccess(fairId: string, email: string): Promise<boolean> {
+    if (!(fairId && email)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    const fairSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+    const userSheet = await this.getAdminSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
+
+    let adminEmail = "";
+    for (const row of await fairSheet.getRows()) {
+      if (row.get("fairId") === fairId) {
+        adminEmail = row.get("adminEmail");
+        break;
+      }
+    }
+
+    if (!adminEmail) {
+      throw new Error("Feira não encontrada");
+    }
+    if (adminEmail === email) {
+      throw new Error("Não é possível remover o usuário administrador da Feira");
+    }
+
+    let hadRemovedUser = false;
+    for (const row of await userSheet.getRows()) {
+      if (row.get("email") === email) {
+        row.delete();
+        hadRemovedUser = true;
+        break;
+      }
+    }
+
+    return hadRemovedUser;
   }
 }

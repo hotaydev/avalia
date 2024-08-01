@@ -73,6 +73,7 @@ export default function AdminInitialSetupPage() {
             .then((data: AvaliaApiResponse) => {
               if (data.status === "success" && data.data) {
                 localStorage.setItem("fairInfo", JSON.stringify(data.data));
+                toast.dismiss(toastId);
                 push("/admin");
               } else {
                 toast.dismiss(toastId);

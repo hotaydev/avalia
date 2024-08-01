@@ -59,6 +59,13 @@ export default function EventDates() {
     );
   };
 
+  const addZeroToDate = (date: number): string => {
+    if (date < 10) {
+      return `0${date}`;
+    }
+    return date.toString();
+  };
+
   const openDialog = () => {
     const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
 
@@ -67,12 +74,12 @@ export default function EventDates() {
 
     if (fairInfo?.startDate) {
       const date = new Date(fairInfo.startDate);
-      startDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}h${date.getMinutes()}`;
+      startDate = `${addZeroToDate(date.getDate())}/${addZeroToDate(date.getMonth())}/${date.getFullYear()} - ${addZeroToDate(date.getHours())}h${addZeroToDate(date.getMinutes())}`;
     }
 
     if (fairInfo?.endDate) {
       const date = new Date(fairInfo.endDate);
-      endDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} - ${date.getHours()}h${date.getMinutes()}`;
+      endDate = `${addZeroToDate(date.getDate())}/${addZeroToDate(date.getMonth())}/${date.getFullYear()} - ${addZeroToDate(date.getHours())}h${addZeroToDate(date.getMinutes())}`;
     }
 
     setAlreadySavedInfo({
@@ -96,11 +103,20 @@ export default function EventDates() {
       >
         <div className="flex space-y-4 px-6 flex-col mt-8 mb-2 w-full">
           {/* TODO: this date configuration is really bad, see some way to make it easier */}
-          {alreadySavedInfo.start && <p>Data de início configurada: {alreadySavedInfo.start}</p>}
-          {alreadySavedInfo.end && <p>Data de término configurada: {alreadySavedInfo.end}</p>}
-
+          <div>
+            {alreadySavedInfo.start && (
+              <p className="font-semibold text-blue-500">
+                Data de início configurada: <span className="text-gray-500">{alreadySavedInfo.start}</span>
+              </p>
+            )}
+            {alreadySavedInfo.end && (
+              <p className="font-semibold text-blue-500">
+                Data de término configurada: <span className="text-gray-500">{alreadySavedInfo.end}</span>
+              </p>
+            )}
+          </div>
           {(alreadySavedInfo.start || alreadySavedInfo.end) && (
-            <strong className="pb-8">
+            <strong className="pb-8 pt-6 underline decoration-red-500">
               Apenas edite os campos a baixo se precisar alterar as datas definidas acima.
             </strong>
           )}
