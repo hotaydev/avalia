@@ -41,8 +41,8 @@ const projectsTableColumns: {
   { key: "title", title: "Título" },
   // { key: "description", title: "Descrição" },
   { key: "category", title: "Categoria" },
-  { key: "field", title: "Área do Projeto" },
-  { key: "score", title: "Nota atual" },
+  { key: "field", title: "Área" },
+  { key: "score", title: "Nota" },
   { key: "evaluators", title: "Avaliadores" },
 ];
 
