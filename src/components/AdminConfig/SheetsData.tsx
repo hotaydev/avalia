@@ -15,7 +15,7 @@ export default function SheetsData() {
     const fairId = JSON.parse(localStorage.getItem("fairInfo") ?? "{}").fairId;
     const sheetId = link.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
 
-    await fetch(`/api/admin/fairs/sheet-id?fairId=${fairId}&sheetId=${sheetId}`)
+    await fetch(`/api/admin/fairs/sheet-id/?fairId=${fairId}&sheetId=${sheetId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);

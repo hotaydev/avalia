@@ -18,7 +18,7 @@ export default function ProjetosAvaliador() {
   useEffect(() => {
     let isMounted = true;
     (async () => {
-      fetch("/api/evaluator/projects")
+      fetch("/api/evaluator/projects/")
         .then((res) => res.json())
         .then((data) => {
           if (isMounted) {

@@ -31,7 +31,7 @@ export default function UsersConfiguration() {
     }
 
     const toastId = toast.loading("Criando usuário...");
-    await fetch(`/api/admin/fairs/add-user?user=${newUserEmail}&fairId=${fairInfo?.fairId}`)
+    await fetch(`/api/admin/fairs/add-user/?user=${newUserEmail}&fairId=${fairInfo?.fairId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
@@ -83,7 +83,7 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
       const userInfo = JSON.parse(localStorage.getItem("userInfo") ?? "{}");
 
       (async () => {
-        fetch(`/api/auth/users?fairId=${fairInfo?.fairId}&user=${userInfo.email}`)
+        fetch(`/api/auth/users/?fairId=${fairInfo?.fairId}&user=${userInfo.email}`)
           .then((res) => res.json())
           .then((data: AvaliaApiResponse) => {
             if (mounted) {
@@ -104,7 +104,7 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
 
   const deleteUser = async (user: FairUser): Promise<void> => {
     const toastId = toast.loading("Removendo usuário...");
-    await fetch(`/api/admin/fairs/remove-user?fairId=${fairInfo?.fairId}&user=${user.email}`)
+    await fetch(`/api/admin/fairs/remove-user/?fairId=${fairInfo?.fairId}&user=${user.email}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);

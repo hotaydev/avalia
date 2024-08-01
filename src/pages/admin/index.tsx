@@ -21,7 +21,7 @@ export default function AdminPage() {
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           (async () => {
-            await fetch("/api/admin/ranking")
+            await fetch("/api/admin/ranking/")
               .then((res) => res.json())
               .then((data) => {
                 if (mounted) {

@@ -28,7 +28,7 @@ export default function EventDates() {
 
     const fairId = JSON.parse(localStorage.getItem("fairInfo") ?? "{}").fairId;
     await fetch(
-      `/api/admin/fairs/time?fairId=${fairId}&initDate=${dateConfig.initDate}&endDate=${dateConfig.endDate}&initTime=${dateConfig.initTime}&endTime=${dateConfig.endTime}`,
+      `/api/admin/fairs/time/?fairId=${fairId}&initDate=${dateConfig.initDate}&endDate=${dateConfig.endDate}&initTime=${dateConfig.initTime}&endTime=${dateConfig.endTime}`,
     )
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {

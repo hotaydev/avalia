@@ -2,28 +2,32 @@ import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import SortableTable from "@/components/SortableTable/SortableTable";
 import { HotayLogoSvg } from "@/lib/constants/hotay-logo";
 import { auth } from "@/lib/firebase/config";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { ProjectForAdmin } from "@/lib/models/project";
+import type { ScienceFair } from "@/lib/models/scienceFair";
 import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { type NextRouter, useRouter } from "next/router";
 import qrCode from "qrcode";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { BsQrCode } from "react-icons/bs";
 import { IoReload } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 
 export default function AdminProjetosPage() {
   const [loading, setLoading] = useState(true);
+  const [fairInfo, setFairInfo] = useState<ScienceFair | undefined>();
   const [projects, setProjects] = useState<ProjectForAdmin[]>([]);
   const router = useRouter();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const fairInfo = localStorage.getItem("fairInfo");
-        if (fairInfo) {
+        const _fairInfo = localStorage.getItem("fairInfo");
+        if (_fairInfo) {
+          setFairInfo(JSON.parse(localStorage.getItem("fairInfo") ?? "{}"));
           setLoading(false);
         } else {
           router.push("/admin/setup");
@@ -48,7 +52,7 @@ export default function AdminProjetosPage() {
             <SortableTable
               table="projects"
               setPreviousData={setProjects}
-              extraComponent={<ExtraComponentForTable projects={projects} router={router} />}
+              extraComponent={<ExtraComponentForTable projects={projects} router={router} fairInfo={fairInfo} />}
             />
           </div>
         </div>
@@ -57,14 +61,24 @@ export default function AdminProjetosPage() {
   );
 }
 
-function ExtraComponentForTable({ projects, router }: Readonly<{ projects: ProjectForAdmin[]; router: NextRouter }>) {
+function ExtraComponentForTable({
+  projects,
+  router,
+  fairInfo,
+}: Readonly<{ projects: ProjectForAdmin[]; router: NextRouter; fairInfo?: ScienceFair }>) {
   const updateTableContent = async () => {
-    fetch("/api/admin/projects/")
+    const toastId = toast.loading("Atualizando lista...");
+    fetch(`/api/admin/projects/?fairId=${fairInfo?.fairId}`)
       .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("projectsList", JSON.stringify(data));
-        localStorage.setItem("projectsListLastUpdated", Date.now().toString());
-        router.reload();
+      .then((data: AvaliaApiResponse) => {
+        toast.dismiss(toastId);
+        if (data.status === "success") {
+          localStorage.setItem("projectsList", JSON.stringify(data.data));
+          localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+          router.reload();
+        } else {
+          toast.error(data.message ?? "Não foi possível atualizar a lista de projetos. Tente novamente mais tarde.");
+        }
       });
   };
 

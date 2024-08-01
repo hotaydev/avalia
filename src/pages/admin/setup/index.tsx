@@ -26,7 +26,7 @@ export default function AdminInitialSetupPage() {
           push("/admin");
         } else {
           (async () => {
-            await fetch(`/api/auth/fairs?email=${user.email}`) // used to get info from the fair
+            await fetch(`/api/auth/fairs/?email=${user.email}`) // used to get info from the fair
               .then((res) => res.json())
               .then((data: AvaliaApiResponse) => {
                 if (mounted) {
@@ -54,7 +54,7 @@ export default function AdminInitialSetupPage() {
     const toastId = toast.loading("Salvando informações...");
     setSendingInformation(true);
 
-    await fetch("/api/auth/fairs", {
+    await fetch("/api/auth/fairs/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function AdminInitialSetupPage() {
       .then((res) => res.json())
       .then(async (data: AvaliaApiResponse) => {
         if (data.status === "success") {
-          await fetch(`/api/auth/fairs?fairId=${data.data}`)
+          await fetch(`/api/auth/fairs/?fairId=${data.data}`)
             .then((res) => res.json())
             .then((data: AvaliaApiResponse) => {
               if (data.status === "success" && data.data) {
