@@ -1,7 +1,8 @@
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
-import type { ProjectForEvaluator } from "@/lib/models/project";
+import type { ProjectForAdmin } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Select from "react-tailwindcss-select";
@@ -10,10 +11,12 @@ import DialogComponent from "../Dialog/Dialog";
 
 export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evaluator }) {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
-  const [projects, setProjects] = useState<ProjectForEvaluator[]>([]);
+  const [projects, setProjects] = useState<ProjectForAdmin[]>([]);
   const [selectedProjects, setSelectedProjects] = useState<Option | Option[] | null>([]);
 
-  const getProjects = async (): Promise<ProjectForEvaluator[]> => {
+  const router = useRouter();
+
+  const getProjects = async (): Promise<ProjectForAdmin[]> => {
     const projectsGetted = localStorage.getItem("projectsList");
 
     if (projectsGetted) {
@@ -25,7 +28,6 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success") {
-          // TODO: save also this information to the project on localStorage
           return data.data;
         }
         return [];
@@ -33,9 +35,22 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
   };
 
   const openDialog = async (): Promise<void> => {
-    // Abre primeiro o modal e depois carrega os projetos, para que seja mostrado primeiramente um loader e, após, trocado o estado
     setDialogIsOpen(true);
     const projectsGetted = await getProjects();
+
+    const projectsAlreadyFromTheEvaluator: Option[] = [];
+
+    for (const proj of projectsGetted) {
+      if (proj.evaluators?.some((ev) => ev.id === evaluator.id)) {
+        projectsAlreadyFromTheEvaluator.push({
+          value: proj.id.toUpperCase(),
+          label: `${proj.title.substring(0, 30)}${proj.title.length > 30 ? "..." : ""} (${proj.id.toUpperCase()})`,
+          isSelected: true,
+        });
+      }
+    }
+
+    setSelectedProjects(projectsAlreadyFromTheEvaluator);
     setProjects(projectsGetted);
   };
 
@@ -60,9 +75,37 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
       .then(async (data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
-          // TODO: save also this information to the project on localStorage
           toast.success("Projetos atribuídos com sucesso!");
-          await new Promise((r) => setTimeout(r, 2000)); // wait 2 seconds
+
+          const localEvaluators: Evaluator[] = JSON.parse(localStorage.getItem("evaluatorsList") ?? "[]");
+          const newEvaluatorsForLocalStorage = [];
+
+          for (const singleEvaluator of localEvaluators) {
+            if (singleEvaluator.id === evaluator.id) {
+              newEvaluatorsForLocalStorage.push({
+                ...singleEvaluator,
+                projects: projects.filter((proj) => projectsIds.split(",").includes(proj.id)),
+              });
+            } else {
+              newEvaluatorsForLocalStorage.push(singleEvaluator);
+            }
+          }
+
+          localStorage.setItem("evaluatorsList", JSON.stringify(newEvaluatorsForLocalStorage));
+
+          await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
+            .then((res) => res.json())
+            .then((newProjectData: AvaliaApiResponse) => {
+              if (newProjectData.status === "success") {
+                localStorage.setItem("projectsList", JSON.stringify(newProjectData.data));
+                localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+              } else {
+                localStorage.removeItem("projectsList");
+                localStorage.removeItem("projectsListLastUpdated");
+              }
+
+              router.reload();
+            });
         } else {
           toast.error(data.message ?? "Não foi possível salvar. Tente novamente mais tarde.");
         }
@@ -94,6 +137,7 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
               return {
                 value: project.id.toUpperCase(),
                 label: `${project.title.substring(0, 30)}${project.title.length > 30 ? "..." : ""} (${project.id.toUpperCase()})`,
+                isSelected: project.evaluators?.some((ev) => ev.id === evaluator.id),
               };
             })}
             isMultiple={true}
