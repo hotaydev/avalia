@@ -14,21 +14,20 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
 
 - **Administração:**
 
-  - [ ] Importar Avaliadores via Google Sheets
-  - [ ] Importar Projetos via Google Sheets
-  - [ ] Configurar planilha de destino das notas
-  - [ ] Área administrativa com login sem senha
-  - [ ] Configuração de acesso e link das planilhas de controle
-  - [ ] Autenticação com Google na área administrativa
-  - [ ] Convite de administradores para a área administrativa
-  - [ ] Configurar data máxima para o recebimento das avaliações
-  - [ ] Configurar data de início para o recebimento das avaliações
+  - [x] Importar Avaliadores via Google Sheets
+  - [x] Importar Projetos via Google Sheets
+  - [x] Configurar planilha de destino das notas
+  - [x] Área administrativa com login sem senha
+  - [x] Configuração de acesso e link das planilhas de controle
+  - [x] Autenticação com Google na área administrativa
+  - [x] Convite de administradores para a área administrativa
+  - [x] Configurar data máxima para o recebimento das avaliações
+  - [x] Configurar data de início para o recebimento das avaliações
 
 - **Sistema:**
   - [ ] Listagem de projetos com notas (classificação/ranking)
-  - [ ] Atribuir um projeto a um avaliador
-  - [ ] Exportar lista de QR codes e códigos dos projetos
-    - [ ] Logotipo da Hotay no centro
+  - [x] Atribuir um projeto a um avaliador
+  - [x] Exportar lista de QR codes e códigos dos projetos
 
 ### Versão 2.0
 

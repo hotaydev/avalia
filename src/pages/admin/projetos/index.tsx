@@ -1,4 +1,5 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import DialogComponent from "@/components/Dialog/Dialog";
 import SortableTable from "@/components/SortableTable/SortableTable";
 import { HotayLogoSvg } from "@/lib/constants/hotay-logo";
 import { auth } from "@/lib/firebase/config";
@@ -13,6 +14,7 @@ import qrCode from "qrcode";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { BsQrCode } from "react-icons/bs";
+import { GoPlus } from "react-icons/go";
 import { IoReload } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 
@@ -66,6 +68,8 @@ function ExtraComponentForTable({
   router,
   fairInfo,
 }: Readonly<{ projects: ProjectForAdmin[]; router: NextRouter; fairInfo?: ScienceFair }>) {
+  const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
+
   const updateTableContent = async () => {
     const toastId = toast.loading("Atualizando lista...");
     fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
@@ -96,6 +100,16 @@ function ExtraComponentForTable({
       </div>
       <div
         className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
+        data-tooltip-id="add-new-project-to-list"
+        data-tooltip-content="Adicionar novo projeto"
+        data-tooltip-place="left"
+        onClick={() => setDialogIsOpen(true)}
+      >
+        <GoPlus size={24} />
+        <Tooltip id="add-new-project-to-list" />
+      </div>
+      <div
+        className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
         data-tooltip-id="projects-qr-codes"
         data-tooltip-content="Baixar códigos dos projetos"
         data-tooltip-place="left"
@@ -104,6 +118,9 @@ function ExtraComponentForTable({
         <BsQrCode size={24} />
         <Tooltip id="projects-qr-codes" />
       </div>
+      <DialogComponent open={dialogIsOpen} setOpen={setDialogIsOpen} title={"Novo Avaliador"} buttonText="Salvar">
+        texto
+      </DialogComponent>
     </div>
   );
 }

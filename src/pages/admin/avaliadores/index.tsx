@@ -1,4 +1,5 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import DialogComponent from "@/components/Dialog/Dialog";
 import SortableTable from "@/components/SortableTable/SortableTable";
 import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
@@ -9,6 +10,7 @@ import Head from "next/head";
 import { type NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { GoPlus } from "react-icons/go";
 import { IoReload } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 
@@ -56,6 +58,8 @@ export default function AdminAvaliadoresPage() {
 }
 
 function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fairInfo?: ScienceFair }) {
+  const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
+
   const updateTableContent = async () => {
     const toastId = toast.loading("Atualizando lista...");
     fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
@@ -84,6 +88,19 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
         <IoReload size={18} />
         <Tooltip id="reload-evaluators-list" />
       </div>
+      <div
+        className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
+        data-tooltip-id="add-new-evaluator-to-list"
+        data-tooltip-content="Adicionar novo avaliador"
+        data-tooltip-place="left"
+        onClick={() => setDialogIsOpen(true)}
+      >
+        <GoPlus size={24} />
+        <Tooltip id="add-new-evaluator-to-list" />
+      </div>
+      <DialogComponent open={dialogIsOpen} setOpen={setDialogIsOpen} title={"Novo Avaliador"} buttonText="Salvar">
+        texto
+      </DialogComponent>
     </div>
   );
 }
