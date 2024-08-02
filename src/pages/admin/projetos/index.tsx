@@ -68,7 +68,7 @@ function ExtraComponentForTable({
 }: Readonly<{ projects: ProjectForAdmin[]; router: NextRouter; fairInfo?: ScienceFair }>) {
   const updateTableContent = async () => {
     const toastId = toast.loading("Atualizando lista...");
-    fetch(`/api/admin/projects/?fairId=${fairInfo?.fairId}`)
+    fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);

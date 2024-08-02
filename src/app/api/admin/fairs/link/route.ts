@@ -1,27 +1,29 @@
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
-import type { Evaluator } from "@/lib/models/evaluator";
 import FairSpreadsheet from "@/lib/services/fairSpreadsheets";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const sheetId = searchParams.get("sheetId");
+  const evaluator = searchParams.get("evaluator");
+  const projects = searchParams.get("projects");
 
-  if (!sheetId) {
+  if (!(evaluator && projects && sheetId)) {
     return Response.json({
       status: "error",
-      message: "Impossível retornar a feira sem especificar o ID da feira.",
+      message: "Os parâmetros devem ser passados",
     } as AvaliaApiResponse);
   }
 
   try {
-    const evaluators: Evaluator[] = await new FairSpreadsheet({
-      spreadsheetId: sheetId,
-    }).getEvaluators();
+    const resultOfOperation = await new FairSpreadsheet({ spreadsheetId: sheetId }).attributeEvaluatorAndProject(
+      evaluator,
+      projects,
+    );
 
     return Response.json({
       status: "success",
-      message: "Science Fair found within user",
-      data: evaluators,
+      message: "Atribuição salva",
+      data: resultOfOperation,
     } as AvaliaApiResponse);
   } catch (error) {
     return Response.json({

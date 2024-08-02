@@ -136,7 +136,7 @@ function EvaluatorsTable({
           "Buscando avaliadores... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
         );
         const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
-        await fetch(`/api/admin/evaluators/?fairId=${fairInfo?.fairId}`)
+        await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
           .then((res) => res.json())
           .then((data: AvaliaApiResponse) => {
             toast.dismiss(toastId);
@@ -235,7 +235,7 @@ function ProjectsTable({
           "Buscando projetos... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
         );
         const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
-        await fetch(`/api/admin/projects/?fairId=${fairInfo?.fairId}`)
+        await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
           .then((res) => res.json())
           .then((data: AvaliaApiResponse) => {
             toast.dismiss(toastId);
@@ -399,7 +399,7 @@ function TableContent({
                       : idUppercaseOrValue(column.key, itemVal) ?? blankItemIfNoValue(column.key)}
                     {column.key === "__send__" && <SendMessageContact phone={item.phone} email={item.email} />}
                     {column.key === "projects" && <AddProjectToEvaluator evaluator={item} />}
-                    {column.key === "evaluators" && <AddEvaluatorToProject project={item} />}
+                    {column.key === "evaluators" && <AddEvaluatorToProject />}
                   </td>
                 );
               })}

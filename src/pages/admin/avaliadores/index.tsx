@@ -58,7 +58,7 @@ export default function AdminAvaliadoresPage() {
 function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fairInfo?: ScienceFair }) {
   const updateTableContent = async () => {
     const toastId = toast.loading("Atualizando lista...");
-    fetch(`/api/admin/evaluators/?fairId=${fairInfo?.fairId}`)
+    fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);

@@ -1,5 +1,6 @@
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
+import { ErrorMessage } from "../constants/errors";
 import type { Evaluator } from "../models/evaluator";
 import type { ProjectForAdmin, ProjectForEvaluator } from "../models/project";
 import generateId from "./generateId";
@@ -151,6 +152,61 @@ export default class FairSpreadsheet {
       }
 
       return projects;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
+
+  public async attributeEvaluatorAndProject(evaluatorId: string, projectsIds: string): Promise<boolean> {
+    // TODO: use regex to validate the format of projectsIds (ex. abc4,atr5,3d5f,s5g6,t667, ....)
+    if (!(evaluatorId && projectsIds)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    try {
+      const newProjectsIds = projectsIds.split(",").filter((val: string) => val !== "");
+
+      let projectsToRemove: string[] = [];
+      let projectsToAdd: string[] = [];
+
+      const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
+      const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
+
+      for (const row of await evaluatorsSheet.getRows()) {
+        if (row.get("ID") === evaluatorId) {
+          const attributedProjects = row.get("Projetos Atribuídos");
+          if (attributedProjects && attributedProjects !== "") {
+            const oldProjectsIds: string[] = attributedProjects.split(",").filter((val: string) => val !== "");
+            projectsToRemove = oldProjectsIds.filter((value) => !newProjectsIds.includes(value));
+            projectsToAdd = newProjectsIds.filter((value) => !oldProjectsIds.includes(value));
+          } else {
+            projectsToAdd = newProjectsIds;
+          }
+
+          row.set("Projetos Atribuídos", projectsIds);
+          row.save();
+          break;
+        }
+      }
+
+      for (const row of await projectsSheet.getRows()) {
+        const projectId = row.get("ID");
+        const evaluatorsIds: string[] = (row.get("Avaliadores") ?? "").split(",").filter((val: string) => val !== "");
+
+        if (projectsToRemove.includes(projectId)) {
+          // Remove the evaluator ID
+          const newData = evaluatorsIds.filter((ev) => ev !== evaluatorId);
+          row.set("Avaliadores", newData.join(","));
+          row.save();
+        } else if (projectsToAdd.includes(projectId)) {
+          // Add the evaluator ID
+          const newData = evaluatorsIds.concat(evaluatorId);
+          row.set("Avaliadores", newData.join(","));
+          row.save();
+        }
+      }
+
+      return true;
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }
