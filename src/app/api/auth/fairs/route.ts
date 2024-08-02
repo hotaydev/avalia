@@ -39,10 +39,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const { fairSchool, fairName, adminEmail } = await request.json();
 
-  const adminSpreadsheet = new AvaliaSpreadsheet();
-
   try {
-    const fairId = await adminSpreadsheet.saveNewFair(fairName, fairSchool, adminEmail);
+    const fairId = await new AvaliaSpreadsheet().saveNewFair(fairName, fairSchool, adminEmail);
 
     return Response.json({
       status: "success",

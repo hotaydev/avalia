@@ -30,3 +30,34 @@ export async function GET(request: Request) {
     } as AvaliaApiResponse);
   }
 }
+
+export async function POST(request: Request) {
+  const { sheetId, projectName, projectDescription, projectCategory, projectArea } = await request.json();
+
+  if (!(sheetId && projectName && projectCategory)) {
+    return Response.json({
+      status: "error",
+      message: "Parâmetros necessários não foram passados.",
+    } as AvaliaApiResponse);
+  }
+
+  try {
+    const createdId: string = await new FairSpreadsheet({ spreadsheetId: sheetId }).createProject({
+      projectName,
+      projectDescription,
+      projectCategory,
+      projectArea,
+    });
+
+    return Response.json({
+      status: "success",
+      message: "Projeto criado",
+      data: createdId,
+    } as AvaliaApiResponse);
+  } catch (error) {
+    return Response.json({
+      status: "error",
+      message: (error as Error).message,
+    } as AvaliaApiResponse);
+  }
+}

@@ -211,4 +211,99 @@ export default class FairSpreadsheet {
       throw new Error((error as Error).message ?? error);
     }
   }
+
+  public async getCategories(): Promise<string[]> {
+    try {
+      const categoriesSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.categories);
+
+      const categories: string[] = [];
+      for (const row of await categoriesSheet.getRows()) {
+        categories.push(row.get("Categoria"));
+      }
+
+      return categories;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
+
+  public async createEvaluator({
+    evaluatorName,
+    evaluatorEmail,
+    evaluatorPhone,
+    evaluatorArea,
+  }: {
+    evaluatorName: string;
+    evaluatorEmail: string;
+    evaluatorPhone: string;
+    evaluatorArea: string;
+  }): Promise<string> {
+    if (!evaluatorName) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    try {
+      const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
+      const id = generateId();
+
+      await evaluatorsSheet.addRow({
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        ID: id,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Nome: evaluatorName,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Email: evaluatorEmail,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Telefone: evaluatorPhone,
+        "Área de Atuação": evaluatorArea,
+        "Projetos Atribuídos": "",
+      });
+
+      return id;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
+
+  public async createProject({
+    projectName,
+    projectDescription,
+    projectCategory,
+    projectArea,
+  }: {
+    projectName: string;
+    projectDescription: string;
+    projectCategory: string;
+    projectArea: string;
+  }): Promise<string> {
+    if (!(projectName && projectCategory)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    try {
+      const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
+      const id = generateId();
+
+      await projectsSheet.addRow({
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        ID: id,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Título: projectName,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Descrição: projectDescription,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Categoria: projectCategory,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Área: projectArea,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Nota: "",
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Avaliadores: "",
+      });
+
+      return id;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
 }

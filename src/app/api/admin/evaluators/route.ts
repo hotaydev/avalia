@@ -30,3 +30,34 @@ export async function GET(request: Request) {
     } as AvaliaApiResponse);
   }
 }
+
+export async function POST(request: Request) {
+  const { sheetId, evaluatorName, evaluatorEmail, evaluatorPhone, evaluatorArea } = await request.json();
+
+  if (!(sheetId && evaluatorName)) {
+    return Response.json({
+      status: "error",
+      message: "Parâmetros necessários não foram passados.",
+    } as AvaliaApiResponse);
+  }
+
+  try {
+    const createdId: string = await new FairSpreadsheet({ spreadsheetId: sheetId }).createEvaluator({
+      evaluatorName,
+      evaluatorEmail,
+      evaluatorPhone,
+      evaluatorArea,
+    });
+
+    return Response.json({
+      status: "success",
+      message: "Avaliador criado",
+      data: createdId,
+    } as AvaliaApiResponse);
+  } catch (error) {
+    return Response.json({
+      status: "error",
+      message: (error as Error).message,
+    } as AvaliaApiResponse);
+  }
+}
