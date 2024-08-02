@@ -1,7 +1,7 @@
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import type { Evaluator } from "../models/evaluator";
-import type { ProjectForEvaluator } from "../models/project";
+import type { ProjectForAdmin, ProjectForEvaluator } from "../models/project";
 import generateId from "./generateId";
 
 const fairsSpreadsheetTitlesOfSheets = {
@@ -97,6 +97,60 @@ export default class FairSpreadsheet {
       }
 
       return evaluators;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
+
+  public async getProjects(): Promise<ProjectForAdmin[]> {
+    try {
+      const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
+      const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
+
+      const evaluators: Evaluator[] = [];
+      for (const row of await evaluatorsSheet.getRows()) {
+        let id = row.get("ID");
+
+        if (!id) {
+          id = generateId();
+          row.set("ID", id);
+          row.save();
+        }
+
+        evaluators.push({
+          id: id,
+          name: row.get("Nome"),
+          email: row.get("Email"),
+          phone: row.get("Telefone"),
+          field: row.get("Área de Atuação"),
+          projects: [], // Don't need this info. Actually, we will use this on projects listing, so there's no need of this info.
+        });
+      }
+
+      const projects: ProjectForAdmin[] = [];
+      for (const row of await projectsSheet.getRows()) {
+        let id = row.get("ID");
+
+        if (!id) {
+          id = generateId();
+          row.set("ID", id);
+          row.save();
+        }
+
+        const evaluatorsIds = (row.get("Avaliadores") ?? "").split(",");
+
+        projects.push({
+          id: id,
+          title: row.get("Título"),
+          description: row.get("Descrição"),
+          category: row.get("Categoria"),
+          field: row.get("Área"),
+          score: Number.parseInt(row.get("Nota")) || 0, // No project can have a "0" note (the minimum is 1 in each question), so the "0" is like "unevaluated yet"
+          evaluators: evaluators.filter((evaluator) => evaluatorsIds.includes(evaluator.id)),
+        });
+      }
+
+      return projects;
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }

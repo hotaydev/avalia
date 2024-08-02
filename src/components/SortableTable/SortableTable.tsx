@@ -217,30 +217,41 @@ function ProjectsTable({
     key: "id",
     direction: "ascending",
   });
-  const [data, setData] = useState<ProjectForAdmin[]>([]);
+  const [projectList, setProjectList] = useState<ProjectForAdmin[]>([]);
 
   useEffect(() => {
     let isMounted = true;
 
-    const projectsList = localStorage.getItem("projectsList");
+    const localProjectList = localStorage.getItem("projectsList");
 
-    if (projectsList) {
-      setData(JSON.parse(projectsList));
+    if (localProjectList) {
+      setProjectList(JSON.parse(localProjectList));
       if (setPreviousData) {
-        setPreviousData(JSON.parse(projectsList));
+        setPreviousData(JSON.parse(localProjectList));
       }
     } else {
       (async () => {
-        fetch("/api/admin/projects/")
+        const toastId = toast.loading(
+          "Buscando projetos... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
+        );
+        const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+        await fetch(`/api/admin/projects/?fairId=${fairInfo?.fairId}`)
           .then((res) => res.json())
-          .then((data) => {
+          .then((data: AvaliaApiResponse) => {
+            toast.dismiss(toastId);
             if (isMounted) {
-              setData(data);
-              if (setPreviousData) {
-                setPreviousData(data);
+              if (data.status === "success") {
+                setProjectList(data.data as ProjectForAdmin[]);
+                if (setPreviousData) {
+                  setPreviousData(data.data as ProjectForAdmin[]);
+                }
+                localStorage.setItem("projectsList", JSON.stringify(data.data));
+                localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+              } else {
+                toast.error(
+                  data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
+                );
               }
-              localStorage.setItem("projectsList", JSON.stringify(data));
-              localStorage.setItem("projectsListLastUpdated", Date.now().toString());
             }
           });
       })();
@@ -252,7 +263,7 @@ function ProjectsTable({
   }, [setPreviousData]);
 
   const sortedData: ProjectForAdmin[] = useMemo(() => {
-    const sortableItems = [...data];
+    const sortableItems = [...projectList];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
         const aValue = a[sortConfig.key];
@@ -261,7 +272,7 @@ function ProjectsTable({
       });
     }
     return sortableItems;
-  }, [data, sortConfig]);
+  }, [projectList, sortConfig]);
 
   const filteredData = sortedData.filter(
     (item) =>

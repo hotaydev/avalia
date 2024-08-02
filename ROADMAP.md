@@ -28,6 +28,7 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [ ] Listagem de projetos com notas (classificação/ranking)
   - [ ] Atribuir um projeto a um avaliador
   - [ ] Exportar lista de QR codes e códigos dos projetos
+    - [ ] Logotipo da Hotay no centro
 
 ### Versão 2.0
 
