@@ -1,12 +1,17 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import Spinner from "@/components/Spinner";
 import { auth } from "@/lib/firebase/config";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Category } from "@/lib/models/category";
+import type { ScienceFair } from "@/lib/models/scienceFair";
+import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { type NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { IoReload } from "react-icons/io5";
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -20,16 +25,33 @@ export default function AdminPage() {
       if (user) {
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
-          (async () => {
-            await fetch("/api/admin/ranking/")
-              .then((res) => res.json())
-              .then((data) => {
-                if (mounted) {
-                  setRanking(data);
-                  setLoading(false);
-                }
-              });
-          })();
+          const rankingInfo = localStorage.getItem("ranking");
+
+          if (rankingInfo && JSON.parse(rankingInfo).length > 0) {
+            setRanking(JSON.parse(rankingInfo));
+            setLoading(false);
+          } else {
+            const spreadSheetId: ScienceFair = JSON.parse(fairInfo)?.spreadSheetId;
+            (async () => {
+              await fetch(`/api/admin/ranking/?sheetId=${spreadSheetId}`)
+                .then((res) => res.json())
+                .then((data: AvaliaApiResponse) => {
+                  if (mounted) {
+                    localStorage.setItem("rankingLastUpdated", Date.now().toString());
+                    if (data.status === "success") {
+                      setRanking(data.data as Category[]);
+                      localStorage.setItem("ranking", JSON.stringify(data.data));
+                    } else {
+                      toast.error(
+                        data.message ??
+                          "Não foi possível obter as colocações. Tente novamente mais tarde ou veja diretamente na planilha.",
+                      );
+                    }
+                    setLoading(false);
+                  }
+                });
+            })();
+          }
         } else {
           router.push("/admin/setup");
         }
@@ -49,20 +71,30 @@ export default function AdminPage() {
         <title>Administração | Avalia</title>
       </Head>
       <Toaster />
-      {!loading && (
-        <div className="flex w-full gap-x-8 h-screen">
-          <AdminMenu path={router.pathname} pushRoute={router.push} />
-          <div className="bg-white shadow-md rounded-lg px-6 py-10 w-full" id="rankingAvailableArea">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Classificação dos projetos</h2>
-            {ranking.length > 0 ? <RankingContent ranking={ranking} /> : <NoContent />}
-          </div>
+      <div className="flex w-full gap-x-8 h-screen">
+        <AdminMenu path={router.pathname} pushRoute={router.push} />
+        <div className="bg-white shadow-md rounded-lg px-6 py-10 w-full" id="rankingAvailableArea">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2 text-center">Classificação dos projetos</h2>
+          {loading ? (
+            <div className="w-full flex h-full pb-20 justify-center items-center">
+              <Spinner />
+            </div>
+          ) : (
+            <>
+              {ranking.length > 0 ? (
+                <RankingContent ranking={ranking} router={router} />
+              ) : (
+                <NoContent router={router} />
+              )}
+            </>
+          )}
         </div>
-      )}
+      </div>
     </main>
   );
 }
 
-function RankingContent({ ranking }: Readonly<{ ranking: Category[] }>) {
+function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; router: NextRouter }>) {
   const [heigth, setHeigth] = useState<number | undefined>();
 
   useEffect(() => {
@@ -79,13 +111,28 @@ function RankingContent({ ranking }: Readonly<{ ranking: Category[] }>) {
     setHeigth(componentHeight ?? 300);
   };
 
+  const reloadRankingList = () => {
+    localStorage.removeItem("ranking");
+    localStorage.removeItem("rankingLastUpdated");
+    router.reload();
+  };
+
   return (
     <div>
+      <div className="flex items-center justify-center mb-6">
+        <p className="text-gray-500 font-light text-sm">Última atualização há {getLastTime("rankingLastUpdated")}</p>
+        <div
+          className="ml-1 p-2 bg-white hover:bg-gray-100 transition-all cursor-pointer rounded-md"
+          onClick={reloadRankingList}
+        >
+          <IoReload size={18} />
+        </div>
+      </div>
       {heigth && (
         <div
           className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-auto px-3 pb-20"
           style={{
-            maxHeight: heigth * 0.8,
+            maxHeight: heigth * 0.7,
             maskImage: "linear-gradient(to bottom, black calc(100% - 24px), transparent 100%)",
           }}
         >
@@ -160,7 +207,7 @@ function RankingContent({ ranking }: Readonly<{ ranking: Category[] }>) {
   );
 }
 
-function NoContent() {
+function NoContent({ router }: { router: NextRouter }) {
   return (
     <div className="flex flex-col justify-center items-center h-full w-full gap-20">
       <Image src="/images/empty.svg" alt="Sem dados atualmente" width={647.63626 / 2} height={632.17383 / 2} />
@@ -169,6 +216,16 @@ function NoContent() {
         <br />
         de projetos na aba &quot;Configurações&quot;.
       </p>
+      <div className="w-full flex flex-col items-center justify-center">
+        <button
+          type="button"
+          className="w-1/4 p-2 mb-2 bg-blue-500 text-white transition-all rounded-lg hover:bg-blue-600"
+          onClick={() => router.reload()}
+        >
+          Atualizar
+        </button>
+        <p className="text-gray-500 font-light text-sm">Última atualização há {getLastTime("rankingLastUpdated")}</p>
+      </div>
     </div>
   );
 }

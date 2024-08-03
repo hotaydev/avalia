@@ -419,6 +419,7 @@ function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?:
         className={`p-2 bg-gray-200 transition-all rounded-md ${phone ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
         onClick={() => {
           if (phone) {
+            // TODO: Add message and link to access the Evaluator Area
             window.open(`https://wa.me/55${phone.replace(/\D/g, "")}`, "_blank")?.focus();
           }
         }}
@@ -429,6 +430,7 @@ function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?:
         className={`p-2 bg-gray-200 transition-all rounded-md ${email ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
         onClick={() => {
           if (email) {
+            // TODO: Add message and link to access the Evaluator Area
             window.open(`mailto:${email}`, "_blank")?.focus();
           }
         }}
