@@ -346,4 +346,26 @@ export default class AvaliaSpreadsheet {
 
     return hadRemovedUser;
   }
+
+  public async getAllFairs(): Promise<ScienceFair[]> {
+    try {
+      const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+
+      const fairs: ScienceFair[] = [];
+      for (const row of await fairsSheet.getRows()) {
+        fairs.push({
+          adminEmail: row.get("adminEmail"),
+          fairName: row.get("fairName"),
+          fairId: row.get("fairId"),
+          fairSchool: row.get("fairSchool"),
+          spreadsheetId: row.get("spreadsheetId"),
+          startDate: row.get("startDate"),
+          endDate: row.get("endDate"),
+        });
+      }
+      return fairs;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
 }

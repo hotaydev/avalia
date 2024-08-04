@@ -88,13 +88,8 @@ export default function Login() {
   }, [push, query]);
 
   const handleLogin = (code: string): void => {
-    // TODO: implement login logic for evaluators
-
-    // NOTA: se o avaliador não fizer login pelo link direto, nós não sabemos para qual feira ele foi convidado.
-    //       por isso, pedimos o código e logo depois pedimos para ele escolher entre as feiras existentes. Se
-    //       o código dele estiver na planilha da feira, significa que ele foi convidado (tem acesso).
     localStorage.setItem("evaluatorCode", code);
-    push("/avaliador/projetos");
+    push("/avaliador/feira");
   };
 
   return (
