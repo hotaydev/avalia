@@ -1,6 +1,7 @@
 import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
@@ -16,18 +17,47 @@ export default function ProjetosAvaliador() {
   const [fairInfo, setFairInfo] = useState<ScienceFair | undefined>(undefined);
 
   useEffect(() => {
+    let mounted = true;
     const _evaluator = localStorage.getItem("evaluator");
+    const _evaluatorLastUpdated = localStorage.getItem("evaluatorLastUpdated");
     const _fairInfo = localStorage.getItem("fairInfo");
 
     if (_evaluator && _fairInfo) {
-      setEvaluator(JSON.parse(_evaluator));
-      setFairInfo(JSON.parse(_fairInfo));
+      const localEvaluator: Evaluator = JSON.parse(_evaluator);
+      const localFairInfo: ScienceFair = JSON.parse(_fairInfo);
+
+      setEvaluator(localEvaluator);
+      setFairInfo(localFairInfo);
       setLoading(false);
 
-      // TODO: assynchronously get evaluator info, verifying first if the last updated time of this info is more than 60 seconds.
+      if (_evaluatorLastUpdated) {
+        // FUTURE: In the future this "future date" can be a environment variable or something configurable by the admins
+        const futureDate = new Date(_evaluatorLastUpdated).setMinutes(new Date().getMinutes() + 10);
+        if (futureDate < Date.now()) {
+          // It have passed more than 10 minutes since the last update
+
+          (async () => {
+            await fetch(`/api/auth/evaluator/?sheetId=${localFairInfo.spreadsheetId}&code=${localEvaluator.id}`)
+              .then((res) => res.json())
+              .then((evaluatorResponse: AvaliaApiResponse) => {
+                if (mounted) {
+                  // evaluatorResponse.data will be true if the evaluator was found
+                  if (evaluatorResponse.status === "success" && evaluatorResponse.data) {
+                    localStorage.setItem("evaluator", JSON.stringify(evaluatorResponse.data));
+                    localStorage.setItem("evaluatorLastUpdated", Date.now().toString());
+                  }
+                }
+              });
+          })();
+        }
+      }
     } else {
       push("/avaliador"); // This page will handle the localStorage items
     }
+
+    () => {
+      mounted = false;
+    };
   }, [push]);
 
   const goToProject = (project: string): Promise<boolean> => {

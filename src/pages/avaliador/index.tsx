@@ -45,6 +45,7 @@ export default function Login() {
                         if (evaluatorResponse.status === "success" && evaluatorResponse.data) {
                           localStorage.setItem("evaluator", JSON.stringify(evaluatorResponse.data));
                           localStorage.setItem("fairInfo", JSON.stringify(fairInfo));
+                          localStorage.setItem("evaluatorLastUpdated", Date.now().toString());
 
                           push("/avaliador/projetos");
                         } else {
@@ -103,7 +104,7 @@ export default function Login() {
       </Head>
       <Toaster />
       {loading ? (
-        <div className="w-full h-screen flex pb-20 justify-center items-center">
+        <div className="w-full h-96 flex justify-center items-center">
           <Spinner />
         </div>
       ) : (
