@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FcOk } from "react-icons/fc";
 
-// TODO: see a way to refresh evaluator data to see newer projects without freezing or making too much requests
-
 export default function ProjetosAvaliador() {
   const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,6 +23,8 @@ export default function ProjetosAvaliador() {
       setEvaluator(JSON.parse(_evaluator));
       setFairInfo(JSON.parse(_fairInfo));
       setLoading(false);
+
+      // TODO: assynchronously get evaluator info, verifying first if the last updated time of this info is more than 60 seconds.
     } else {
       push("/avaliador"); // This page will handle the localStorage items
     }

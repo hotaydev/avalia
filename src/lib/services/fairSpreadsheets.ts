@@ -4,6 +4,7 @@ import { ErrorMessage } from "../constants/errors";
 import type { Evaluation } from "../models/evaluation";
 import type { Evaluator } from "../models/evaluator";
 import type { ProjectForAdmin, ProjectForEvaluator } from "../models/project";
+import type { Question } from "../models/question";
 import generateId from "./generateId";
 
 const fairsSpreadsheetTitlesOfSheets = {
@@ -379,6 +380,67 @@ export default class FairSpreadsheet {
       }
 
       return evaluator;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
+
+  public async createEvaluatorAnswer({
+    evaluator,
+    project,
+    questions,
+  }: { evaluator: string; project: string; questions: Question[] }): Promise<Evaluation> {
+    if (!(evaluator && questions && project)) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    try {
+      const answersSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.answers);
+
+      const notes = {
+        metodology: (questions.filter((quest) => quest.title.toLowerCase() === "metodologia")[0].value ?? 0) as number,
+        documents: (questions.filter((quest) => quest.title.toLowerCase() === "documentos")[0].value ?? 0) as number,
+        visualApresentation: (questions.filter((quest) => quest.title.toLowerCase() === "apresentação visual")[0]
+          .value ?? 0) as number,
+        oralApresentation: (questions.filter((quest) => quest.title.toLowerCase() === "apresentação oral")[0].value ??
+          0) as number,
+        relevancy: (questions.filter((quest) => quest.title.toLowerCase() === "relevância")[0].value ?? 0) as number,
+        finalConsiderations: (questions.filter((quest) => quest.title.toLowerCase() === "considerações finais")[0]
+          .value ?? "") as string,
+      };
+
+      await answersSheet.addRow({
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Projeto: project.toUpperCase(),
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Avaliador: evaluator.toUpperCase(),
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Metodologia: notes.metodology,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Documentos: notes.documents,
+        "Apresentação Visual": notes.visualApresentation,
+        "Apresentação Oral": notes.oralApresentation,
+        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
+        Relevância: notes.relevancy,
+        "Considerações Finais": notes.finalConsiderations,
+      });
+
+      const finalSum =
+        notes.metodology + notes.documents + notes.visualApresentation + notes.oralApresentation + notes.relevancy;
+
+      return {
+        project: project.toUpperCase(),
+        evaluator: evaluator.toUpperCase(),
+        notes: {
+          metodology: notes.metodology,
+          documents: notes.documents,
+          visualApresentation: notes.visualApresentation,
+          oralApresentation: notes.oralApresentation,
+          relevancy: notes.relevancy,
+        },
+        finalConsiderations: notes.finalConsiderations,
+        finalNote: finalSum === 0 ? 0 : finalSum / 5,
+      };
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }

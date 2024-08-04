@@ -3,6 +3,7 @@ import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogo
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import type { Evaluation } from "@/lib/models/evaluation";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { Question } from "@/lib/models/question";
@@ -80,28 +81,58 @@ export default function ProjetosAvaliador() {
     };
   }, [query, push]);
 
-  const handleQuestionScore = (id: number, score: number): void => {
-    const newQuestions = questions.map((quest) => (quest.id === id ? { ...quest, score } : quest));
-    setButtonEnabled(!newQuestions.some((q) => q.score === undefined));
+  const handleQuestionScore = (id: number, value: number | string): void => {
+    const newQuestions = questions.map((quest) => (quest.id === id ? { ...quest, value } : quest));
+    setButtonEnabled(!newQuestions.some((q) => q.value === undefined && q.type !== "text"));
     setQuestions(newQuestions);
   };
 
   const sendScores = (): void => {
-    if (questions.some((q) => q.score === undefined)) {
+    if (questions.some((q) => q.value === undefined && q.type !== "text")) {
       toast.error("Alguma questão não está preenchida.");
       return;
     }
 
+    const evaluator: Evaluator = JSON.parse(localStorage.getItem("evaluator") ?? "{}");
+    const fairInfo: ScienceFair = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+
+    const toastId = toast.loading("Enviando avaliação...");
     setButtonEnabled(false);
-    // TODO: work here, remember to save data to localStorage
     fetch("/api/evaluator/questions/", {
       method: "POST",
-      body: JSON.stringify(questions),
+      body: JSON.stringify({
+        evaluator: evaluator.id,
+        project: query.projeto,
+        sheetId: fairInfo.spreadsheetId,
+        questions: questions,
+      }),
     })
       .then((res) => res.json())
-      .then(async (data) => {
-        if (data.success) {
+      .then(async (data: AvaliaApiResponse) => {
+        toast.dismiss(toastId);
+        if (data.status === "success") {
           toast.success("Avaliação enviada com sucesso!");
+
+          const newProjects: ProjectForEvaluator[] = [];
+          for (const proj of evaluator.projects) {
+            if (proj.id.toUpperCase() === (query.projeto as string).toUpperCase()) {
+              newProjects.push({
+                ...proj,
+                evaluation: data.data as Evaluation,
+              });
+            } else {
+              newProjects.push(proj);
+            }
+          }
+
+          localStorage.setItem(
+            "evaluator",
+            JSON.stringify({
+              ...evaluator,
+              projects: newProjects,
+            }),
+          );
+
           await new Promise((r) => setTimeout(r, 1600)); // sleep
           push("/avaliador/projetos");
         } else {
@@ -164,7 +195,7 @@ function QuestionsList({
   sendScores,
 }: {
   questions: Question[];
-  handleQuestionScore: (id: number, score: number) => void;
+  handleQuestionScore: (id: number, score: number | string) => void;
   buttonEnabled: boolean;
   sendScores: () => void;
 }) {
@@ -225,26 +256,29 @@ function SingleQuestion({
   description: string;
   id: number;
   isText: boolean;
-  handleQuestionScore: (id: number, score: number) => void;
+  handleQuestionScore: (id: number, value: number | string) => void;
 }) {
-  const handle = (value: number): void => handleQuestionScore(id, value);
+  const handle = (value: number | string): void => handleQuestionScore(id, value);
 
   return (
     <div className="border border-gray-200 border-b-blue-500 border-b-4 px-5 py-4 rounded-lg mb-2 w-full text-left">
       <h3 className="font-bold text-gray-700">{title[title.length - 1] === ":" ? title : `${title}:`}</h3>
       <p className="text-sm font-light">{description}</p>
-      {isText ? <TextQuestion /> : <PossibleScores questionId={id} handle={handle} />}
+      {isText ? <TextQuestion handle={handle} /> : <PossibleScores questionId={id} handle={handle} />}
     </div>
   );
 }
 
-function TextQuestion() {
+function TextQuestion({ handle }: { handle: (value: number | string) => void }) {
   return (
     <div className="flex items-center justify-between mt-4 mb-2">
       <textarea
         className="w-full p-2 border text-sm border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
         rows={4}
         placeholder="Escreva aqui..."
+        onChange={(e) => {
+          handle(e.target.value);
+        }}
       />
     </div>
   );
@@ -255,7 +289,7 @@ function PossibleScores({
   handle,
 }: {
   questionId: number;
-  handle: (value: number) => void;
+  handle: (value: number | string) => void;
 }) {
   return (
     <div className="flex items-center justify-between px-10 mt-8 mb-2">
@@ -277,7 +311,7 @@ function SinglePossibleScore({
   score: number;
   id: string;
   questionId: number;
-  handle: (value: number) => void;
+  handle: (value: number | string) => void;
 }) {
   return (
     <div className="flex flex-col items-center justify-center text-center mb-2">
