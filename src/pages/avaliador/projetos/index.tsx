@@ -1,7 +1,9 @@
 import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
+import type { ScienceFair } from "@/lib/models/scienceFair";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -13,31 +15,19 @@ import { FcOk } from "react-icons/fc";
 export default function ProjetosAvaliador() {
   const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
-  const [projects, setProjects] = useState<ProjectForEvaluator[]>([]);
+  const [evaluator, setEvaluator] = useState<Evaluator | undefined>(undefined);
+  const [fairInfo, setFairInfo] = useState<ScienceFair | undefined>(undefined);
 
   useEffect(() => {
-    let isMounted = true;
-    (async () => {
-      fetch("/api/evaluator/projects/")
-        .then((res) => res.json())
-        .then((data) => {
-          if (isMounted) {
-            setProjects(data);
-            setLoading(false);
-          }
-        });
-    })();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+    const _evaluator = localStorage.getItem("evaluator");
+    const _fairInfo = localStorage.getItem("fairInfo");
 
-  useEffect(() => {
-    // TODO: verify if the evaluatorCode is really from an evaluator
-    const evaluator = localStorage.getItem("evaluator");
-
-    if (!evaluator) {
-      push("/avaliador/");
+    if (_evaluator && _fairInfo) {
+      setEvaluator(JSON.parse(_evaluator));
+      setFairInfo(JSON.parse(_fairInfo));
+      setLoading(false);
+    } else {
+      push("/avaliador"); // This page will handle the localStorage items
     }
   }, [push]);
 
@@ -53,13 +43,16 @@ export default function ProjetosAvaliador() {
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-10">Seus projetos para avaliação:</h2>
-        {projects.length > 0 && <ProjectsList projects={projects} push={goToProject} />}
-        {projects.length === 0 && !loading && <NoProjectsFound />}
+        {(evaluator?.projects.length ?? 0) > 0 && (
+          <ProjectsList projects={evaluator?.projects ?? []} push={goToProject} />
+        )}
+        {evaluator?.projects.length === 0 && !loading && <NoProjectsFound />}
         {loading && <LoadingComponent />}
-        {projects.some((q) => !q.evaluation) ? (
+
+        {/* Some project that have not been evaluated yet */}
+        {evaluator?.projects.some((q) => !q.evaluation) ? (
           <div className="text-center mt-10 font-normal text-sm text-gray-500">
-            {/* TODO: get this date correctly from admin's configuration */}
-            As avaliações encerram amanhã, às 10h
+            <TimeRemainingString fairInfo={fairInfo} />
           </div>
         ) : (
           <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
@@ -69,7 +62,7 @@ export default function ProjetosAvaliador() {
         )}
       </div>
       <EvaluatorLogoutComponent />
-      <Footer fixed={projects.length <= 6} />
+      <Footer fixed={(evaluator?.projects.length ?? 0) <= 6} />
     </main>
   );
 }
@@ -110,12 +103,11 @@ function ProjectsList({
   projects: ProjectForEvaluator[];
   push: (a: string) => Promise<boolean>;
 }>) {
-  // TODO: this probably will break after the change of "evaluation"
   const sortProjects = (a: ProjectForEvaluator, b: ProjectForEvaluator) => {
-    if (a.evaluation === b.evaluation) {
+    if (!!a.evaluation === !!b.evaluation) {
       return 0;
     }
-    return a.evaluation ? -1 : 1;
+    return !!a.evaluation ? -1 : 1;
   };
 
   return (
@@ -156,4 +148,50 @@ function ProjectListItem({
       </div>
     </div>
   );
+}
+
+function TimeRemainingString({ fairInfo }: { fairInfo?: ScienceFair }) {
+  const days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+  const months = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+
+  const addZeroToDate = (date: number): string => {
+    if (date < 10) {
+      return `0${date}`;
+    }
+    return date.toString();
+  };
+
+  if (fairInfo?.endDate) {
+    const date = new Date(fairInfo?.endDate);
+
+    if (date.getTime() < new Date().getTime()) {
+      return <p>As avaliações já encerraram. Agradecemos sua participação.</p>;
+    }
+
+    const weekday = days[date.getDay()];
+    const month = months[date.getMonth()];
+    const dayNumber = addZeroToDate(date.getDate());
+    const time = `${addZeroToDate(date.getHours())}h${addZeroToDate(date.getMinutes())}`;
+
+    return (
+      <p>
+        As avaliações encerram {weekday}, {dayNumber} de {month}, às {time}
+      </p>
+    );
+  }
+
+  return <p>Faça as avaliações antes do término da feira.</p>;
 }
