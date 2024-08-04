@@ -306,4 +306,26 @@ export default class FairSpreadsheet {
       throw new Error((error as Error).message ?? error);
     }
   }
+
+  public async checkIfEvaluatorExists(code: string): Promise<boolean> {
+    if (!code) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    try {
+      const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
+
+      let evaluatorFound = false;
+      for (const row of await evaluatorsSheet.getRows()) {
+        if (row.get("ID") === code) {
+          evaluatorFound = true;
+          break;
+        }
+      }
+
+      return evaluatorFound;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
 }
