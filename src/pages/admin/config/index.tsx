@@ -14,6 +14,7 @@ export default function AdminConfigPage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           setLoading(false);

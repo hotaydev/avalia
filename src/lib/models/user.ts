@@ -8,7 +8,5 @@ export interface FairUser {
 
 export interface AdminUser {
   user?: User | null;
-  token?: string;
-  refreshToken?: string;
   error?: string;
 }

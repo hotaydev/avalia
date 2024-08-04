@@ -1,6 +1,7 @@
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import { ErrorMessage } from "../constants/errors";
+import type { Evaluation } from "../models/evaluation";
 import type { Evaluator } from "../models/evaluator";
 import type { ProjectForAdmin, ProjectForEvaluator } from "../models/project";
 import generateId from "./generateId";
@@ -9,7 +10,7 @@ const fairsSpreadsheetTitlesOfSheets = {
   evaluators: "Avaliadores",
   projects: "Projetos",
   categories: "Categorias",
-  answers: "Resostas",
+  answers: "Respostas",
 };
 
 export default class FairSpreadsheet {
@@ -71,7 +72,7 @@ export default class FairSpreadsheet {
           title: row.get("Título"),
           description: row.get("Descrição"),
           category: row.get("Categoria"),
-          evaluated: false, // It will not be used in this response, so we can use any response
+          evaluation: undefined, // It will not be used in this response, so we can use any response
         });
       }
 
@@ -307,7 +308,7 @@ export default class FairSpreadsheet {
     }
   }
 
-  public async checkIfEvaluatorExists(code: string): Promise<boolean> {
+  public async getSingleEvaluator(code: string): Promise<Evaluator | undefined> {
     if (!code) {
       throw new Error(ErrorMessage.lackOfParameters);
     }
@@ -315,15 +316,69 @@ export default class FairSpreadsheet {
     try {
       const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
 
-      let evaluatorFound = false;
+      let evaluator: Evaluator | undefined = undefined;
       for (const row of await evaluatorsSheet.getRows()) {
         if (row.get("ID") === code) {
-          evaluatorFound = true;
+          const projectIds = (row.get("Projetos Atribuídos") ?? "").split(",");
+
+          const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
+          const evaluatorsAnswersSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.answers);
+
+          const evaluations: Evaluation[] = [];
+          for (const evaluation of await evaluatorsAnswersSheet.getRows()) {
+            if (evaluation.get("Avaliador") === code) {
+              const notes = {
+                metodology: evaluation.get("Metodologia") ?? 0,
+                documents: evaluation.get("Documentos") ?? 0,
+                visualApresentation: evaluation.get("Apresentação Visual") ?? 0,
+                oralApresentation: evaluation.get("Apresentação Oral") ?? 0,
+                relevancy: evaluation.get("Relevância") ?? 0,
+              };
+
+              const finalNoteSum =
+                notes.metodology +
+                notes.documents +
+                notes.visualApresentation +
+                notes.oralApresentation +
+                notes.relevancy;
+
+              evaluations.push({
+                project: evaluation.get("Projeto"),
+                evaluator: evaluation.get("Avaliador"),
+                notes: notes,
+                finalConsiderations: evaluation.get("Considerações Finais") ?? "",
+                finalNote: finalNoteSum !== 0 ? finalNoteSum / 5 : 0,
+              });
+            }
+          }
+
+          const projects: ProjectForEvaluator[] = [];
+          for (const proj of await projectsSheet.getRows()) {
+            const id = proj.get("ID");
+            if (projectIds.includes(id)) {
+              projects.push({
+                id: id,
+                title: proj.get("Título"),
+                description: proj.get("Descrição"),
+                category: proj.get("Categoria"),
+                evaluation: evaluations.filter((evaluation) => evaluation.project === id)[0] ?? undefined,
+              });
+            }
+          }
+
+          evaluator = {
+            id: row.get("ID"),
+            name: row.get("Nome"),
+            email: row.get("Email"),
+            phone: row.get("Telefone"),
+            field: row.get("Área de Atuação"),
+            projects: projects,
+          };
           break;
         }
       }
 
-      return evaluatorFound;
+      return evaluator;
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }

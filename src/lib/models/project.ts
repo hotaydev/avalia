@@ -1,3 +1,4 @@
+import type { Evaluation } from "./evaluation";
 import type { Evaluator } from "./evaluator";
 
 export interface Project {
@@ -8,7 +9,7 @@ export interface Project {
 }
 
 export interface ProjectForEvaluator extends Project {
-  evaluated: boolean;
+  evaluation?: Evaluation;
 }
 
 export interface ProjectForAdmin extends Project {

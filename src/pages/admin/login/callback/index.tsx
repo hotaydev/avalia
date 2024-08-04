@@ -17,6 +17,7 @@ export default function EmailLinkCallbackPage() {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           push("/admin");
@@ -41,7 +42,6 @@ export default function EmailLinkCallbackPage() {
             setErrorMessage(loginResult.error);
           } else {
             localStorage.setItem("userInfo", JSON.stringify(loginResult.user));
-            localStorage.setItem("refreshToken", JSON.stringify(loginResult.refreshToken));
             push("/admin/setup");
           }
         })();

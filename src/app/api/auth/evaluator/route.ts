@@ -1,4 +1,5 @@
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import type { Evaluator } from "@/lib/models/evaluator";
 import FairSpreadsheet from "@/lib/services/fairSpreadsheets";
 
 export async function GET(request: Request) {
@@ -14,14 +15,21 @@ export async function GET(request: Request) {
   }
 
   try {
-    const evaluatorExist: boolean = await new FairSpreadsheet({
+    const evaluator: Evaluator | undefined = await new FairSpreadsheet({
       spreadsheetId: sheetId,
-    }).checkIfEvaluatorExists(evaluatorCode);
+    }).getSingleEvaluator(evaluatorCode);
+
+    if (!evaluator) {
+      return Response.json({
+        status: "error",
+        message: "Não encontramos um convite para o avaliador na feira informada.",
+      } as AvaliaApiResponse);
+    }
 
     return Response.json({
       status: "success",
       message: "Got an evaluator in the fair",
-      data: evaluatorExist,
+      data: evaluator,
     } as AvaliaApiResponse);
   } catch (error) {
     return Response.json({

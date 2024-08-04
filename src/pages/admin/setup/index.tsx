@@ -21,6 +21,7 @@ export default function AdminInitialSetupPage() {
     let mounted = true;
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           push("/admin");

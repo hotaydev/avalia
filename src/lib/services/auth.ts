@@ -34,8 +34,6 @@ export default class AvaliaAuthentication {
         if (credential) {
           return {
             user: result.user,
-            token: credential.accessToken,
-            refreshToken: result.user.refreshToken,
           };
         }
         return {
@@ -82,7 +80,6 @@ export default class AvaliaAuthentication {
       .then((result) => {
         return {
           user: result.user,
-          refreshToken: result.user.refreshToken,
         };
       })
       .catch((error) => {

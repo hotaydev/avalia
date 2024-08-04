@@ -4,25 +4,25 @@ import type { ProjectForEvaluator } from "../models/project";
 const mockedProjectsForEvaluator: ProjectForEvaluator[] = [
   {
     title: "Fontes de Energia Renovável",
-    evaluated: false,
+    evaluation: undefined,
     category: "Fundamental Anos Iniciais",
     id: "abt3",
   },
   {
     title: "IA na Saúde",
-    evaluated: false,
+    evaluation: undefined,
     category: "Ensino Médio",
     id: "a2tr",
   },
   {
     title: "Técnicas de Purificação de Água",
-    evaluated: false,
+    evaluation: undefined,
     category: "Fundamental Anos Finais",
     id: "vb43",
   },
   {
     title: "Computação Quântica",
-    evaluated: false,
+    evaluation: undefined,
     category: "Ensino Médio",
     id: "ut5b",
   },

@@ -33,6 +33,7 @@ export default function AdminLoginPage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           push("/admin");
@@ -100,8 +101,6 @@ export default function AdminLoginPage() {
                 if (userResult.error) {
                   toast.error(userResult.error);
                 } else {
-                  localStorage.setItem("refreshToken", userResult.refreshToken ?? "");
-                  localStorage.setItem("accessToken", userResult.token ?? "");
                   localStorage.setItem("userInfo", JSON.stringify(userResult.user) ?? "");
 
                   push("/admin/setup");

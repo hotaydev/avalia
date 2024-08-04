@@ -34,9 +34,9 @@ export default function ProjetosAvaliador() {
 
   useEffect(() => {
     // TODO: verify if the evaluatorCode is really from an evaluator
-    const evaluatorCode = localStorage.getItem("evaluatorCode");
+    const evaluator = localStorage.getItem("evaluator");
 
-    if (!evaluatorCode) {
+    if (!evaluator) {
       push("/avaliador/");
     }
   }, [push]);
@@ -56,7 +56,7 @@ export default function ProjetosAvaliador() {
         {projects.length > 0 && <ProjectsList projects={projects} push={goToProject} />}
         {projects.length === 0 && !loading && <NoProjectsFound />}
         {loading && <LoadingComponent />}
-        {projects.some((q) => !q.evaluated) ? (
+        {projects.some((q) => !q.evaluation) ? (
           <div className="text-center mt-10 font-normal text-sm text-gray-500">
             {/* TODO: get this date correctly from admin's configuration */}
             As avaliações encerram amanhã, às 10h
@@ -110,11 +110,12 @@ function ProjectsList({
   projects: ProjectForEvaluator[];
   push: (a: string) => Promise<boolean>;
 }>) {
+  // TODO: this probably will break after the change of "evaluation"
   const sortProjects = (a: ProjectForEvaluator, b: ProjectForEvaluator) => {
-    if (a.evaluated === b.evaluated) {
+    if (a.evaluation === b.evaluation) {
       return 0;
     }
-    return a.evaluated ? -1 : 1;
+    return a.evaluation ? -1 : 1;
   };
 
   return (
@@ -139,13 +140,13 @@ function ProjectListItem({
       onClick={() => push(project.id)}
     >
       <div className="flex flex-col items-start justify-center">
-        <h3 className={`text-normal text-gray-700 ${project.evaluated ? "line-through" : ""}`}>{project.title}</h3>
-        <p className={`text-xs text-gray-500 font-light ${project.evaluated ? "line-through" : ""}`}>
+        <h3 className={`text-normal text-gray-700 ${project.evaluation ? "line-through" : ""}`}>{project.title}</h3>
+        <p className={`text-xs text-gray-500 font-light ${project.evaluation ? "line-through" : ""}`}>
           {project.category}
         </p>
       </div>
       <div>
-        {project.evaluated ? (
+        {project.evaluation ? (
           <FcOk size={42} />
         ) : (
           <span className="bg-gray-300 rounded-full w-10 flex items-center justify-center h-10">

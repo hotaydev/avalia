@@ -8,7 +8,7 @@ import type { ScienceFair } from "@/lib/models/scienceFair";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
   const { push, query } = useRouter();
@@ -43,13 +43,14 @@ export default function Login() {
                       if (mounted) {
                         // evaluatorResponse.data will be true if the evaluator was found
                         if (evaluatorResponse.status === "success" && evaluatorResponse.data) {
-                          localStorage.setItem("evaluatorCode", evaluatorCode);
+                          localStorage.setItem("evaluator", JSON.stringify(evaluatorResponse.data));
                           localStorage.setItem("fairInfo", JSON.stringify(fairInfo));
 
                           push("/avaliador/projetos");
                         } else {
                           toast.error(
-                            fairResponse.message ?? "Não encontramos o seu convite para a feira informada pelo link.",
+                            evaluatorResponse.message ??
+                              "Não encontramos o seu convite para a feira informada pelo link.",
                           );
                           setLoading(false);
                         }
@@ -68,12 +69,12 @@ export default function Login() {
         }
       }
     } else {
-      const evaluatorCode = localStorage.getItem("evaluatorCode");
+      const evaluator = localStorage.getItem("evaluator");
       const fairInfo = localStorage.getItem("fairInfo");
 
-      if (evaluatorCode && fairInfo) {
+      if (evaluator && fairInfo) {
         push("/avaliador/projetos");
-      } else if (evaluatorCode) {
+      } else if (evaluator) {
         push("/avaliador/feira");
       } else {
         setLoading(false);
@@ -100,6 +101,7 @@ export default function Login() {
       <Head>
         <title>Login do Avaliador | Avalia</title>
       </Head>
+      <Toaster />
       {loading ? (
         <div className="w-full h-screen flex pb-20 justify-center items-center">
           <Spinner />

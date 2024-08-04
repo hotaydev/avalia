@@ -15,6 +15,7 @@ export default function InviteLoginPage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           push("/admin");

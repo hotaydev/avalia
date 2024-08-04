@@ -23,6 +23,7 @@ export default function AdminPage() {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
         if (fairInfo) {
           const rankingInfo = localStorage.getItem("ranking");

@@ -27,6 +27,7 @@ export default function AdminProjetosPage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        localStorage.setItem("userInfo", JSON.stringify(user));
         const _fairInfo = localStorage.getItem("fairInfo");
         if (_fairInfo) {
           setFairInfo(JSON.parse(localStorage.getItem("fairInfo") ?? "{}"));
