@@ -86,7 +86,7 @@ export default function ProjetosAvaliador() {
         ) : (
           <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
             <FcOk className="mr-2" />
-            Seus projetos já foram avaliados. Ótimo trabalho!
+            Ótimo trabalho! Seus projetos já foram avaliados.
           </span>
         )}
       </div>

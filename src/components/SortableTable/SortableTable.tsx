@@ -421,6 +421,7 @@ function SendMessageContact({ evaluator, fairInfo }: Readonly<{ evaluator: Evalu
   const message = EVALUATOR_INVITE_MESSAGE.replace("{name}", evaluator?.name)
     .replace("{link}", accessLink)
     .replace("{fair}", fairInfo.fairName)
+    .replace("{code}", evaluator.id)
     .replaceAll("{space}", "%0A");
   return (
     <div className="flex space-x-2">
