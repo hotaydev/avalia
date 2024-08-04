@@ -83,7 +83,7 @@ export default function ChooseFair() {
 
   const selectFair = (fairId: string): void => {
     const evaluatorCode = localStorage.getItem("evaluatorCode");
-    push(`/avaliador/?code=${evaluatorCode}-${fairId}`);
+    push(`/avaliador/?code=${evaluatorCode?.toUpperCase()}-${fairId}`);
   };
 
   return (

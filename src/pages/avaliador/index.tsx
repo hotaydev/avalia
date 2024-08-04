@@ -37,7 +37,9 @@ export default function Login() {
                     return;
                   }
 
-                  await fetch(`/api/auth/evaluator/?sheetId=${fairInfo.spreadsheetId}&code=${evaluatorCode}`)
+                  await fetch(
+                    `/api/auth/evaluator/?sheetId=${fairInfo.spreadsheetId}&code=${evaluatorCode.toUpperCase()}`,
+                  )
                     .then((res) => res.json())
                     .then((evaluatorResponse: AvaliaApiResponse) => {
                       if (mounted) {
@@ -88,7 +90,7 @@ export default function Login() {
   }, [push, query]);
 
   const handleLogin = (code: string): void => {
-    localStorage.setItem("evaluatorCode", code);
+    localStorage.setItem("evaluatorCode", code.toUpperCase());
     push("/avaliador/feira");
   };
 
