@@ -128,7 +128,11 @@ function ProjectListItem({
   return (
     <div
       className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-lg w-full justify-between mb-2"
-      onClick={() => push(project.id)}
+      onClick={() => {
+        if (!project.evaluation) {
+          push(project.id);
+        }
+      }}
     >
       <div className="flex flex-col items-start justify-center">
         <h3 className={`text-normal text-gray-700 ${project.evaluation ? "line-through" : ""}`}>{project.title}</h3>

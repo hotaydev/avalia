@@ -200,7 +200,7 @@ function QuestionsList({
   sendScores: () => void;
 }) {
   return (
-    <div className="flex flex-col justify-center items-center px-4 mt-10">
+    <div className="flex flex-col justify-center items-center px-4 mt-10 mb-2">
       {questions.map((quest) => (
         <SingleQuestion
           key={quest.id}
@@ -222,9 +222,6 @@ function QuestionsList({
           &rarr;
         </span>
       </button>
-      <div className="text-center mt-4 font-normal text-xs text-gray-500">
-        Respostas podem ser editadas por até 12h após o envio.
-      </div>
     </div>
   );
 }
