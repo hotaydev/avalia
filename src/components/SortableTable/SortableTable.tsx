@@ -1,6 +1,8 @@
+import { EVALUATOR_INVITE_MESSAGE } from "@/lib/constants/messages";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
+import type { ScienceFair } from "@/lib/models/scienceFair";
 import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
 import toast from "react-hot-toast";
@@ -319,6 +321,8 @@ function TableContent({
   sortConfig: SortConfig | SortConfigForEvaluators | SortConfigForProjects;
   requestSort: (key: string) => void;
 }>) {
+  const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+
   const classesIfIsFirstElement = (index: number): string | null => {
     return index === 0 ? "pl-4 pr-2 rounded-tl-lg rounded-bl-lg" : null;
   };
@@ -397,7 +401,7 @@ function TableContent({
                     {Array.isArray(itemVal)
                       ? itemVal.length
                       : idUppercaseOrValue(column.key, itemVal) ?? blankItemIfNoValue(column.key)}
-                    {column.key === "__send__" && <SendMessageContact phone={item.phone} email={item.email} />}
+                    {column.key === "__send__" && <SendMessageContact evaluator={item} fairInfo={fairInfo} />}
                     {column.key === "projects" && <AddProjectToEvaluator evaluator={item} />}
                     {column.key === "evaluators" && <AddEvaluatorToProject />}
                   </td>
@@ -412,26 +416,31 @@ function TableContent({
   );
 }
 
-function SendMessageContact({ phone, email }: Readonly<{ phone?: string; email?: string }>) {
+function SendMessageContact({ evaluator, fairInfo }: Readonly<{ evaluator: Evaluator; fairInfo: ScienceFair }>) {
+  const accessLink = `${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/avaliador/?code=${evaluator.id}-${fairInfo.fairId}`;
+  const message = EVALUATOR_INVITE_MESSAGE.replace("{name}", evaluator?.name)
+    .replace("{link}", accessLink)
+    .replace("{fair}", fairInfo.fairName)
+    .replaceAll("{space}", "%0A");
   return (
     <div className="flex space-x-2">
       <div
-        className={`p-2 bg-gray-200 transition-all rounded-md ${phone ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
+        className={`p-2 bg-gray-200 transition-all rounded-md ${evaluator?.phone ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
         onClick={() => {
-          if (phone) {
-            // TODO: Add message and link to access the Evaluator Area
-            window.open(`https://wa.me/55${phone.replace(/\D/g, "")}`, "_blank")?.focus();
+          if (evaluator?.phone) {
+            window.open(`https://wa.me/55${evaluator?.phone.replace(/\D/g, "")}?text=${message}`, "_blank")?.focus();
           }
         }}
       >
         <FaWhatsapp />
       </div>
       <div
-        className={`p-2 bg-gray-200 transition-all rounded-md ${email ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
+        className={`p-2 bg-gray-200 transition-all rounded-md ${evaluator?.email ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
         onClick={() => {
-          if (email) {
-            // TODO: Add message and link to access the Evaluator Area
-            window.open(`mailto:${email}`, "_blank")?.focus();
+          if (evaluator?.email) {
+            window
+              .open(`mailto:${evaluator?.email}?subject=Convite para a ${fairInfo.fairName}&body=${message}`, "_blank")
+              ?.focus();
           }
         }}
       >

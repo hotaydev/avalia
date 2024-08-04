@@ -6,6 +6,6 @@ export async function GET() {
   return Response.json({
     status: "success",
     message: "Got Ranking",
-    data: rankingMock,
+    data: rankingMock, // TODO: use real data
   } as AvaliaApiResponse);
 }
