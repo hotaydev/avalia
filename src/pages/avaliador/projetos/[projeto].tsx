@@ -2,59 +2,83 @@ import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { Question } from "@/lib/models/question";
+import type { ScienceFair } from "@/lib/models/scienceFair";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function ProjetosAvaliador() {
-  const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(true);
+  const { push, query } = useRouter();
   const [project, setProject] = useState<ProjectForEvaluator | undefined>();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [buttonEnabled, setButtonEnabled] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
-    (async () => {
-      const projeto = router.query.projeto;
-      fetch(`/api/evaluator/projects/${projeto}`)
-        .then((res) => res.json())
-        .then(async (data) => {
-          if (isMounted) {
-            setProject(data);
-          }
 
-          // It really needs to be inside the other fetch
-          // because we need to first get the project data
-          // for then get the questions about that project
-          if (isMounted) {
-            fetch("/api/evaluator/questions/")
-              .then((res) => res.json())
-              .then((data) => {
-                if (isMounted) {
-                  setQuestions(data);
-                  setLoading(false);
-                }
-              });
-          }
-        });
-    })();
+    const _evaluator = localStorage.getItem("evaluator");
+    const _fairInfo = localStorage.getItem("fairInfo");
+
+    if (!(_evaluator && _fairInfo)) {
+      push("/avaliador");
+      return;
+    }
+
+    const evaluator: Evaluator = JSON.parse(_evaluator);
+    const fairInfo: ScienceFair = JSON.parse(_fairInfo);
+
+    let _project: ProjectForEvaluator | undefined;
+    if (evaluator.projects.length > 0) {
+      _project = evaluator.projects.filter((proj) => proj.id === query.projeto)[0] ?? undefined;
+      setProject(_project);
+    }
+
+    if (!_project) {
+      (async () => {
+        fetch(`/api/auth/evaluator/?sheetId=${fairInfo.spreadsheetId}&code=${evaluator.id}`)
+          .then((res) => res.json())
+          .then((data: AvaliaApiResponse) => {
+            if (isMounted) {
+              if (data.status === "success" && data.data) {
+                localStorage.setItem("evaluator", JSON.stringify(data.data));
+                setProject((data.data as Evaluator).projects.filter((proj) => proj.id === query.projeto)[0]);
+              } else {
+                toast.error("Não foi possível obter informações sobre o projeto. Tente novamente mais tarde.");
+              }
+            }
+          });
+      })();
+    }
+
+    const localQuestions = localStorage.getItem("fairQuestions");
+    if (localQuestions) {
+      setQuestions(JSON.parse(localQuestions));
+    } else {
+      (async () => {
+        fetch("/api/evaluator/questions/")
+          .then((res) => res.json())
+          .then((data: AvaliaApiResponse) => {
+            if (isMounted) {
+              if (data.status === "success") {
+                setQuestions(data.data as Question[]);
+                localStorage.setItem("fairQuestions", JSON.stringify(data.data));
+              } else {
+                toast.error("Não foi possível obter as questões de avaliação. Tente novamente mais tarde.");
+              }
+            }
+          });
+      })();
+    }
+
     return () => {
       isMounted = false;
     };
-  }, [router.query.projeto]);
-
-  useEffect(() => {
-    // TODO: verify if the evaluatorCode is really from an evaluator
-    const evaluatorCode = localStorage.getItem("evaluatorCode");
-
-    if (!evaluatorCode) {
-      router.push("/avaliador/");
-    }
-  }, [router]);
+  }, [query, push]);
 
   const handleQuestionScore = (id: number, score: number): void => {
     const newQuestions = questions.map((quest) => (quest.id === id ? { ...quest, score } : quest));
@@ -69,6 +93,7 @@ export default function ProjetosAvaliador() {
     }
 
     setButtonEnabled(false);
+    // TODO: work here, remember to save data to localStorage
     fetch("/api/evaluator/questions/", {
       method: "POST",
       body: JSON.stringify(questions),
@@ -78,7 +103,7 @@ export default function ProjetosAvaliador() {
         if (data.success) {
           toast.success("Avaliação enviada com sucesso!");
           await new Promise((r) => setTimeout(r, 1600)); // sleep
-          router.push("/avaliador/projetos");
+          push("/avaliador/projetos");
         } else {
           toast.error("Ocorreu algum erro. Tente novamente.");
           setButtonEnabled(true);
@@ -98,13 +123,12 @@ export default function ProjetosAvaliador() {
         <h3 className="font-normal text-gray-500 mb-6">
           {project?.title ? (
             project.title
-          ) : loading ? (
-            <span className="rounded-lg bg-gray-100 text-gray-100">------------------------------</span>
           ) : (
-            "Projeto não encontrado"
+            <span className="rounded-lg bg-gray-100 text-gray-100">------------------------------</span>
           )}
-          {loading && <QuestionsListplaceholder />}
-          {!loading && questions.length > 0 && (
+
+          {questions.length === 0 && <QuestionsListplaceholder />}
+          {questions.length > 0 && (
             <QuestionsList
               questions={questions}
               handleQuestionScore={handleQuestionScore}

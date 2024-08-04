@@ -8,4 +8,5 @@ export default function wipeLocalStorage() {
   localStorage.removeItem("evaluator");
   localStorage.removeItem("ranking");
   localStorage.removeItem("rankingLastUpdated");
+  localStorage.removeItem("fairQuestions");
 }

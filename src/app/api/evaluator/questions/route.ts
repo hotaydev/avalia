@@ -1,3 +1,4 @@
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Question } from "@/lib/models/question";
 
 const mockData: Question[] = [
@@ -52,7 +53,11 @@ const mockData: Question[] = [
 
 // biome-ignore lint/suspicious/useAwait: Needs to be async
 export async function GET() {
-  return Response.json(mockData);
+  return Response.json({
+    status: "success",
+    message: "Perguntas do projeto obtidas com sucesso.",
+    data: mockData,
+  } as AvaliaApiResponse);
 }
 
 // biome-ignore lint/suspicious/useAwait: Needs to be async

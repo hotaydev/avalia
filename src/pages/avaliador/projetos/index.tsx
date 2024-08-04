@@ -9,8 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FcOk } from "react-icons/fc";
 
-// TODO: salvar localmente os projetos, de forma que a cada 10x novas requisições ele atualize os dados dos projetos.
-//       isso implica na necessidade de, ao avaliar um projeto, os valores da avaliação sejama tualizados na lista local.
+// TODO: see a way to refresh evaluator data to see newer projects without freezing or making too much requests
 
 export default function ProjetosAvaliador() {
   const { push } = useRouter();
@@ -107,7 +106,7 @@ function ProjectsList({
     if (!!a.evaluation === !!b.evaluation) {
       return 0;
     }
-    return !!a.evaluation ? -1 : 1;
+    return a.evaluation ? -1 : 1;
   };
 
   return (
