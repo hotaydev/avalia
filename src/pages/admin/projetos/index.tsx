@@ -73,7 +73,13 @@ function ExtraComponentForTable({
 
   const updateTableContent = async () => {
     const toastId = toast.loading("Atualizando lista...");
-    fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
+
+    if (!fairInfo?.spreadsheetId) {
+      toast.error("O link da planilha de dados ainda não foi configurado. Vá para a página de configuração.");
+      return;
+    }
+
+    await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
@@ -171,6 +177,11 @@ function NewProjectModalContent({
   const sendData = async (): Promise<void> => {
     if (!(projectName && projectCategory)) {
       toast.error("Apenas a descrição e a área podem ser deixadas em branco.");
+      return;
+    }
+
+    if (!fairInfo?.spreadsheetId) {
+      toast.error("O link da planilha de dados ainda não foi configurado. Vá para a página de configuração.");
       return;
     }
 

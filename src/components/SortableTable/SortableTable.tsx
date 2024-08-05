@@ -137,22 +137,24 @@ function EvaluatorsTable({
           "Buscando avaliadores... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
         );
         const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
-        await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
-          .then((res) => res.json())
-          .then((data: AvaliaApiResponse) => {
-            toast.dismiss(toastId);
-            if (isMounted) {
-              if (data.status === "success") {
-                setEvaluatorList(data.data as Evaluator[]);
-                localStorage.setItem("evaluatorsList", JSON.stringify(data.data));
-                localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
-              } else {
-                toast.error(
-                  data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
-                );
+        if (fairInfo.spreadsheetId) {
+          await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
+            .then((res) => res.json())
+            .then((data: AvaliaApiResponse) => {
+              toast.dismiss(toastId);
+              if (isMounted) {
+                if (data.status === "success") {
+                  setEvaluatorList(data.data as Evaluator[]);
+                  localStorage.setItem("evaluatorsList", JSON.stringify(data.data));
+                  localStorage.setItem("evaluatorsListLastUpdated", Date.now().toString());
+                } else {
+                  toast.error(
+                    data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
+                  );
+                }
               }
-            }
-          });
+            });
+        }
       })();
     }
 
@@ -236,20 +238,22 @@ function ProjectsTable({
           "Buscando projetos... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
         );
         const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
-        await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
-          .then((res) => res.json())
-          .then((data: AvaliaApiResponse) => {
-            toast.dismiss(toastId);
-            if (isMounted) {
-              if (data.status === "success") {
-                setProjectsListLocally(data.data as ProjectForAdmin[]);
-              } else {
-                toast.error(
-                  data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
-                );
+        if (fairInfo.spreadsheetId) {
+          await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
+            .then((res) => res.json())
+            .then((data: AvaliaApiResponse) => {
+              toast.dismiss(toastId);
+              if (isMounted) {
+                if (data.status === "success") {
+                  setProjectsListLocally(data.data as ProjectForAdmin[]);
+                } else {
+                  toast.error(
+                    data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
+                  );
+                }
               }
-            }
-          });
+            });
+        }
       })();
     }
 

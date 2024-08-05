@@ -64,7 +64,11 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
 
   const updateTableContent = async () => {
     const toastId = toast.loading("Atualizando lista...");
-    fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
+    if (!fairInfo?.spreadsheetId) {
+      toast.error("O link da planilha de dados ainda não foi configurado. Vá para a página de configuração.");
+      return;
+    }
+    await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
@@ -129,6 +133,11 @@ function NewEvaluatorModalContent({
   const sendData = async (): Promise<void> => {
     if (!evaluatorName) {
       toast.error("O nome do avaliador é a única informação estritamente necessária.");
+      return;
+    }
+
+    if (!fairInfo?.spreadsheetId) {
+      toast.error("O link da planilha de dados ainda não foi configurado. Vá para a página de configuração.");
       return;
     }
 

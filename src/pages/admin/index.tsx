@@ -41,15 +41,19 @@ export default function AdminPage() {
           setLoading(false);
         } else {
           const fairInfoParsed: ScienceFair = JSON.parse(fairInfo);
-          (async () => {
-            await fetch(`/api/admin/ranking/?sheetId=${fairInfoParsed.spreadsheetId}`)
-              .then((res) => res.json())
-              .then((data: AvaliaApiResponse) => {
-                if (mounted) {
-                  handleRankingApiResponse(data);
-                }
-              });
-          })();
+          if (fairInfoParsed.spreadsheetId) {
+            (async () => {
+              await fetch(`/api/admin/ranking/?sheetId=${fairInfoParsed.spreadsheetId}`)
+                .then((res) => res.json())
+                .then((data: AvaliaApiResponse) => {
+                  if (mounted) {
+                    handleRankingApiResponse(data);
+                  }
+                });
+            })();
+          } else {
+            setLoading(false);
+          }
         }
       } else {
         router.push("/admin/login");
