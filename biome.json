@@ -29,7 +29,11 @@
 		"lineWidth": 120
 	},
 	"files": {
-		"ignoreUnknown": true
+		"ignoreUnknown": true,
+		"ignore": [
+			"public/**/*",
+			"docs/**/*"
+		]
 	},
 	"vcs": {
 		"useIgnoreFile": true

@@ -1,0 +1,16 @@
+[
+  {
+    "text": "Início Rápido",
+    "link": "/guide/",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "Self Hosted",
+    "link": "/self-hosted/",
+    "activeMatch": "/self-hosted/"
+  },
+  {
+    "text": "Contribuir",
+    "link": "https://github.com/hotaydev/avalia"
+  }
+]

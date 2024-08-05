@@ -27,6 +27,8 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Listagem de projetos com notas (classificação/ranking)
   - [x] Atribuir um projeto a um avaliador
   - [x] Exportar lista de QR codes e códigos dos projetos
+  - [ ] Adicionar favicon
+  - [ ] Definir página 404 com redirecionamento para a /
 
 ### Versão 2.0
 
