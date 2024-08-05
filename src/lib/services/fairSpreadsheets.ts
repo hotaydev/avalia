@@ -24,12 +24,14 @@ export default class FairSpreadsheet {
       throw new Error("FairSpreadsheet() needs to be initialized passing `spreadsheetId` parameter");
     }
 
-    if (!(process.env.SERVICE_ACCOUNT_EMAIL && process.env.SERVICE_ACCOUNT_PRIVATE_KEY)) {
-      throw new Error("SERVICE_ACCOUNT_EMAIL or SERVICE_ACCOUNT_PRIVATE_KEY environment variables not configured");
+    if (!(process.env.NEXT_PUBLIC_SERVICE_ACCOUNT_EMAIL && process.env.SERVICE_ACCOUNT_PRIVATE_KEY)) {
+      throw new Error(
+        "NEXT_PUBLIC_SERVICE_ACCOUNT_EMAIL or SERVICE_ACCOUNT_PRIVATE_KEY environment variables not configured",
+      );
     }
 
     this.token = new JWT({
-      email: process.env.SERVICE_ACCOUNT_EMAIL,
+      email: process.env.NEXT_PUBLIC_SERVICE_ACCOUNT_EMAIL,
       key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, "\n"),
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });

@@ -1,4 +1,5 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import DialogComponent from "@/components/Dialog/Dialog";
 import Spinner from "@/components/Spinner";
 import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
@@ -12,6 +13,8 @@ import { type NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { IoReload } from "react-icons/io5";
+import { SlMagnifier } from "react-icons/sl";
+import { Tooltip } from "react-tooltip";
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -103,6 +106,8 @@ export default function AdminPage() {
 
 function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; router: NextRouter }>) {
   const [heigth, setHeigth] = useState<number | undefined>();
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>();
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
@@ -150,7 +155,26 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
             let rankingModifier = 1;
             return (
               <div key={rank.title} className="bg-gray-50 rounded-md px-4 text-center pt-4 pb-6">
-                <p className="font-semibold mb-6">{rank.title}</p>
+                <div className="flex justify-between items-center">
+                  <span> </span>
+                  <p className="font-semibold pl-6">{rank.title}</p>
+                  <span
+                    className="p-2 bg-gray-100 hover:bg-gray-200 cursor-pointer transition-all rounded-md"
+                    data-tooltip-id="see-all-projects-ranking"
+                    data-tooltip-content="Ver classificação de todos os projetos"
+                    data-tooltip-place="left"
+                    onClick={() => {
+                      setSelectedCategory(rank);
+                      setDialogOpen(true);
+                    }}
+                  >
+                    <SlMagnifier size={12} />
+                  </span>
+                  <Tooltip id="see-all-projects-ranking" />
+                </div>
+                <p className="mb-6 font-light text-sm text-gray-500">
+                  Mostrando os {sortedRanking.length} (max. 5) melhores
+                </p>
                 <div className="flex flex-col space-y-2 px-4">
                   {sortedRanking.map((project, index) => {
                     let medal = "";
@@ -200,7 +224,7 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
                             {project.title.length > 35 ? "..." : ""}
                           </p>
                         </div>
-                        <p className="text-xs text-gray-500">({project.score} pontos)</p>
+                        <p className="text-xs text-gray-500">Nota {project.score}</p>
                       </div>
                     );
                   })}
@@ -210,6 +234,60 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
           })}
         </div>
       )}
+      <DialogComponent
+        open={dialogOpen}
+        setOpen={setDialogOpen}
+        title={`Todos os projetos da categoria ${selectedCategory?.title}`}
+        buttonText="Fechar"
+      >
+        {selectedCategory && (
+          <div className="flex flex-col space-y-2 px-4 overflow-auto" style={{ height: "calc(100vh * 0.6)" }}>
+            {selectedCategory.projects
+              .toSorted((a, b) => ((a.score ?? 0) > (b.score ?? 0) ? -1 : 1))
+              .map((project, index) => {
+                let medal = "";
+
+                switch (index) {
+                  case 0:
+                    medal = "border-blue-700 border-2";
+                    break;
+                  case 1:
+                    medal = "border-blue-600 border-2";
+                    break;
+                  case 2:
+                    medal = "border-blue-500 border-2";
+                    break;
+                  case 3:
+                    medal = "border-blue-400 border-2";
+                    break;
+                  case 4:
+                    medal = "border-blue-300 border-2";
+                    break;
+                  default:
+                    medal = "border-gray-200 border";
+                    break;
+                }
+
+                return (
+                  <div
+                    key={project.id}
+                    className={`flex justify-between gap-2 bg-white items-center px-4 py-2 rounded-md ${medal}`}
+                  >
+                    <div className="flex justify-start items-center gap-4">
+                      {index === 0 && <p className="font-semibold">1º</p>}
+                      {index !== 0 && <p className="font-semibold">{index}º</p>}
+                      <p className="text-gray-700 text-sm" title={project.title}>
+                        {project.title.substring(0, 35)}
+                        {project.title.length > 35 ? "..." : ""}
+                      </p>
+                    </div>
+                    <p className="text-xs text-gray-500">Nota {project.score}</p>
+                  </div>
+                );
+              })}
+          </div>
+        )}
+      </DialogComponent>
     </div>
   );
 }

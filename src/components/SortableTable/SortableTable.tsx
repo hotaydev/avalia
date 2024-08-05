@@ -8,6 +8,7 @@ import type { JSX } from "react";
 import toast from "react-hot-toast";
 import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
+import { IoMdLink } from "react-icons/io";
 import { Tooltip } from "react-tooltip";
 import AddEvaluatorToProject from "../AddEvaluatorToProject/AddEvaluatorToProject";
 import AddProjectToEvaluator from "../AddProjectToEvaluator/AddProjectToEvaluator";
@@ -428,17 +429,23 @@ function SendMessageContact({ evaluator, fairInfo }: Readonly<{ evaluator: Evalu
   return (
     <div className="flex space-x-2">
       <div
-        className={`p-2 bg-gray-200 transition-all rounded-md ${evaluator?.phone ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
+        className={`p-2 transition-all rounded-md ${evaluator?.phone ? "hover:bg-gray-300 bg-gray-200 cursor-pointer" : "cursor-not-allowed bg-gray-100"}`}
+        data-tooltip-id={evaluator?.phone ? "invite-link-messages" : undefined}
+        data-tooltip-content="Enviar link de convite pelo WhatsApp"
+        data-tooltip-place="left"
         onClick={() => {
           if (evaluator?.phone) {
             window.open(`https://wa.me/55${evaluator?.phone.replace(/\D/g, "")}?text=${message}`, "_blank")?.focus();
           }
         }}
       >
-        <FaWhatsapp />
+        <FaWhatsapp color={evaluator?.phone ? "black" : "gray"} />
       </div>
       <div
-        className={`p-2 bg-gray-200 transition-all rounded-md ${evaluator?.email ? "hover:bg-gray-300 cursor-pointer" : "cursor-not-allowed"}`}
+        className={`p-2 transition-all rounded-md ${evaluator?.email ? "hover:bg-gray-300 bg-gray-200 cursor-pointer" : "cursor-not-allowed bg-gray-100"}`}
+        data-tooltip-id={evaluator?.email ? "invite-link-messages" : undefined}
+        data-tooltip-content="Enviar link de convite pelo Email"
+        data-tooltip-place="left"
         onClick={() => {
           if (evaluator?.email) {
             window
@@ -447,8 +454,21 @@ function SendMessageContact({ evaluator, fairInfo }: Readonly<{ evaluator: Evalu
           }
         }}
       >
-        <HiOutlineMail />
+        <HiOutlineMail color={evaluator?.email ? "black" : "gray"} />
       </div>
+      <div
+        className="p-2 bg-gray-200 transition-all rounded-md hover:bg-gray-300 cursor-pointer"
+        data-tooltip-id="invite-link-messages"
+        data-tooltip-content="Copiar link de convite"
+        data-tooltip-place="left"
+        onClick={() => {
+          navigator.clipboard.writeText(accessLink);
+          toast.success("Link de convite/login copiado!");
+        }}
+      >
+        <IoMdLink />
+      </div>
+      <Tooltip id="invite-link-messages" />
     </div>
   );
 }

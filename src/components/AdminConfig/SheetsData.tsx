@@ -90,14 +90,16 @@ function SingleSheet({ link, setLink }: { link: string; setLink: Dispatch<SetSta
           .
         </p>
         <p className="ml-1 mb-1 font-light text-gray-500 text-sm">
-          2. Compartilhe a planilha com o{" "}
-          <Link
-            href={"https://github.com/hotaydev/avalia/wiki"}
-            target="_blank"
+          2. Compartilhe a planilha com{" "}
+          <span
             className="text-blue-500 font-semibold"
+            onClick={() => {
+              navigator.clipboard.writeText(process.env.NEXT_PUBLIC_SERVICE_ACCOUNT_EMAIL ?? "");
+              toast.success("Email copiado com sucesso!");
+            }}
           >
-            email citado aqui
-          </Link>
+            este email (clique para copiar)
+          </span>
           .
         </p>
         <p className="ml-1 mb-1 font-light text-gray-500 text-sm pl-4">

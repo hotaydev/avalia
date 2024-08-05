@@ -1,8 +1,9 @@
+// 'unsafe-eval' and 'unsafe-inline' are necessary due to the PDF export ;-;
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' apis.google.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' apis.google.com;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' www.hotay.dev;
+  img-src 'self' www.hotay.dev data:;
   media-src 'none';
   connect-src *;
   font-src 'self' data: use.typekit.net;
