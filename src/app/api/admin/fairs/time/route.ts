@@ -1,6 +1,8 @@
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import AvaliaSpreadsheet from "@/lib/services/avaliaSpreadsheets";
 
+// TODO: the init date and final date aren't being validated right now, work on this.
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const fairId = searchParams.get("fairId");

@@ -14,6 +14,6 @@ export interface ProjectForEvaluator extends Project {
 
 export interface ProjectForAdmin extends Project {
   field?: string;
-  score?: number;
+  score?: number; // This is used for the Ranking, not for the project listing
   evaluators?: Evaluator[];
 }

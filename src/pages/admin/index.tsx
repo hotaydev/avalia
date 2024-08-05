@@ -32,16 +32,16 @@ export default function AdminPage() {
             setRanking(JSON.parse(rankingInfo));
             setLoading(false);
           } else {
-            const spreadSheetId: ScienceFair = JSON.parse(fairInfo)?.spreadSheetId;
+            const fairInfoParsed: ScienceFair = JSON.parse(fairInfo);
             (async () => {
-              await fetch(`/api/admin/ranking/?sheetId=${spreadSheetId}`)
+              await fetch(`/api/admin/ranking/?sheetId=${fairInfoParsed.spreadsheetId}`)
                 .then((res) => res.json())
                 .then((data: AvaliaApiResponse) => {
                   if (mounted) {
-                    localStorage.setItem("rankingLastUpdated", Date.now().toString());
                     if (data.status === "success") {
                       setRanking(data.data as Category[]);
                       localStorage.setItem("ranking", JSON.stringify(data.data));
+                      localStorage.setItem("rankingLastUpdated", Date.now().toString());
                     } else {
                       toast.error(
                         data.message ??

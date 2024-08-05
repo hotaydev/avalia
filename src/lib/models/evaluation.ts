@@ -9,5 +9,4 @@ export interface Evaluation {
     relevancy?: number;
   };
   finalConsiderations?: string;
-  finalNote?: number;
 }

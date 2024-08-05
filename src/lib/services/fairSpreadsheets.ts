@@ -1,6 +1,7 @@
 import { JWT } from "google-auth-library";
 import { GoogleSpreadsheet, type GoogleSpreadsheetWorksheet } from "google-spreadsheet";
 import { ErrorMessage } from "../constants/errors";
+import type { Category } from "../models/category";
 import type { Evaluation } from "../models/evaluation";
 import type { Evaluator } from "../models/evaluator";
 import type { ProjectForAdmin, ProjectForEvaluator } from "../models/project";
@@ -148,7 +149,6 @@ export default class FairSpreadsheet {
           description: row.get("Descrição"),
           category: row.get("Categoria"),
           field: row.get("Área"),
-          score: Number.parseInt(row.get("Nota")) || 0, // No project can have a "0" note (the minimum is 1 in each question), so the "0" is like "unevaluated yet"
           evaluators: evaluators.filter((evaluator) => evaluatorsIds.includes(evaluator.id)),
         });
       }
@@ -336,19 +336,11 @@ export default class FairSpreadsheet {
                 relevancy: evaluation.get("Relevância") ?? 0,
               };
 
-              const finalNoteSum =
-                notes.metodology +
-                notes.documents +
-                notes.visualApresentation +
-                notes.oralApresentation +
-                notes.relevancy;
-
               evaluations.push({
                 project: evaluation.get("Projeto"),
                 evaluator: evaluation.get("Avaliador"),
                 notes: notes,
                 finalConsiderations: evaluation.get("Considerações Finais") ?? "",
-                finalNote: finalNoteSum !== 0 ? finalNoteSum / 5 : 0,
               });
             }
           }
@@ -439,10 +431,75 @@ export default class FairSpreadsheet {
           relevancy: notes.relevancy,
         },
         finalConsiderations: notes.finalConsiderations,
-        finalNote: finalSum === 0 ? 0 : finalSum / 5,
       };
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }
+  }
+
+  public async getRanking(): Promise<Category[]> {
+    try {
+      const categoriesList: string[] = await this.getCategories();
+      const scoresSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.answers);
+      const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
+
+      const evaluations: Evaluation[] = [];
+      for (const evaluation of await scoresSheet.getRows()) {
+        evaluations.push({
+          project: evaluation.get("Projeto"),
+          evaluator: evaluation.get("Avaliador"),
+          notes: {
+            metodology: Number.parseInt(evaluation.get("Metodologia")),
+            documents: Number.parseInt(evaluation.get("Documentos")),
+            visualApresentation: Number.parseInt(evaluation.get("Apresentação Visual")),
+            oralApresentation: Number.parseInt(evaluation.get("Apresentação Oral")),
+            relevancy: Number.parseInt(evaluation.get("Relevância")),
+          },
+          // Don't need the "finalConsiderations" here, since it doesn't change the final score
+        });
+      }
+
+      const projects: ProjectForAdmin[] = [];
+      for (const project of await projectsSheet.getRows()) {
+        projects.push({
+          id: project.get("ID"),
+          title: project.get("Título"),
+          description: project.get("Descrição"),
+          category: project.get("Categoria"),
+          field: project.get("Área"),
+          score: this.getProjectScore(project.get("ID"), evaluations),
+          evaluators: [], // Note: Evaluators array can be blank, it's not necessary for the Ranking
+        });
+      }
+
+      const categories: Category[] = categoriesList.map((category) => {
+        return {
+          title: category,
+          projects: projects.filter((proj) => proj.category === category),
+        };
+      });
+
+      return categories;
+    } catch (error) {
+      throw new Error((error as Error).message ?? error);
+    }
+  }
+
+  private getProjectScore(projectId: string, evaluations: Evaluation[]): number {
+    let projectScoresSum = 0;
+    let projectScoresCount = 0;
+
+    for (const evaluation of evaluations) {
+      if (evaluation.project === projectId) {
+        projectScoresSum += evaluation.notes.documents ?? 0;
+        projectScoresSum += evaluation.notes.metodology ?? 0;
+        projectScoresSum += evaluation.notes.oralApresentation ?? 0;
+        projectScoresSum += evaluation.notes.relevancy ?? 0;
+        projectScoresSum += evaluation.notes.visualApresentation ?? 0;
+        projectScoresCount += 5;
+      }
+    }
+
+    return projectScoresSum !== 0 ? Number.parseFloat((projectScoresSum / projectScoresCount).toPrecision(3)) : 0;
   }
 }
