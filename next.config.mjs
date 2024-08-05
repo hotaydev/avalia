@@ -77,7 +77,15 @@ const nextConfig = {
       },
       {
         source: "/api/(.*)",
-        headers: securityHeaders,
+        headers: [
+          // Avoid Cache on API routes
+          ...securityHeaders,
+          // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+          {
+            key: "Cache-Control",
+            value: "no-cache"
+          },
+        ],
       },
     ];
   }
