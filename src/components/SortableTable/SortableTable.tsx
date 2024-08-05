@@ -133,11 +133,11 @@ function EvaluatorsTable({
       setEvaluatorList(JSON.parse(localEvaluatorList));
     } else {
       (async () => {
-        const toastId = toast.loading(
-          "Buscando avaliadores... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
-        );
         const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
         if (fairInfo.spreadsheetId) {
+          const toastId = toast.loading(
+            "Buscando avaliadores... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
+          );
           await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
             .then((res) => res.json())
             .then((data: AvaliaApiResponse) => {
@@ -234,11 +234,11 @@ function ProjectsTable({
       }
     } else {
       (async () => {
-        const toastId = toast.loading(
-          "Buscando projetos... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
-        );
         const fairInfo = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
         if (fairInfo.spreadsheetId) {
+          const toastId = toast.loading(
+            "Buscando projetos... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
+          );
           await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
             .then((res) => res.json())
             .then((data: AvaliaApiResponse) => {
