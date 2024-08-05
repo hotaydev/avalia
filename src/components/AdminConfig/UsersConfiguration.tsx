@@ -83,7 +83,7 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
       const userInfo = JSON.parse(localStorage.getItem("userInfo") ?? "{}");
 
       (async () => {
-        fetch(`/api/auth/users/?fairId=${fairInfo?.fairId}&user=${userInfo.email}`)
+        await fetch(`/api/auth/users/?fairId=${fairInfo?.fairId}&user=${userInfo.email}`)
           .then((res) => res.json())
           .then((data: AvaliaApiResponse) => {
             if (mounted) {

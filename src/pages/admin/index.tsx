@@ -27,34 +27,28 @@ export default function AdminPage() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         localStorage.setItem("userInfo", JSON.stringify(user));
-        const fairInfo = localStorage.getItem("fairInfo");
-
-        if (!fairInfo) {
+        const fairInfo: ScienceFair = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
+        if (!fairInfo.fairId) {
           router.push("/admin/setup");
           return;
         }
 
-        const rankingInfo = localStorage.getItem("ranking");
-
-        if (rankingInfo && JSON.parse(rankingInfo).length > 0) {
-          setRanking(JSON.parse(rankingInfo));
+        const rankingInfo = JSON.parse(localStorage.getItem("ranking") ?? "[]");
+        if (!fairInfo.spreadsheetId || rankingInfo.length > 0) {
+          setRanking(rankingInfo);
           setLoading(false);
-        } else {
-          const fairInfoParsed: ScienceFair = JSON.parse(fairInfo);
-          if (fairInfoParsed.spreadsheetId) {
-            (async () => {
-              await fetch(`/api/admin/ranking/?sheetId=${fairInfoParsed.spreadsheetId}`)
-                .then((res) => res.json())
-                .then((data: AvaliaApiResponse) => {
-                  if (mounted) {
-                    handleRankingApiResponse(data);
-                  }
-                });
-            })();
-          } else {
-            setLoading(false);
-          }
+          return;
         }
+
+        (async () => {
+          await fetch(`/api/admin/ranking/?sheetId=${fairInfo.spreadsheetId}`)
+            .then((res) => res.json())
+            .then((data: AvaliaApiResponse) => {
+              if (mounted) {
+                handleRankingApiResponse(data);
+              }
+            });
+        })();
       } else {
         router.push("/admin/login");
       }
