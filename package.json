@@ -7,7 +7,8 @@
     "build": "cd docs && npm run build && cd ../ && next build",
     "start": "next start",
     "format": "npx @biomejs/biome check --write ./src/",
-    "prepare": "git config --local core.hooksPath .hooks/"
+    "prepare": "git config --local core.hooksPath .hooks/",
+    "postinstall": "cd docs && npm install"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.0",
