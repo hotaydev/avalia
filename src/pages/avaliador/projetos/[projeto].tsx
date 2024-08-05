@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
+// TODO: validate fair start and end times before allowing this page and the previous page.
+
 export default function ProjetosAvaliador() {
   const { push, query } = useRouter();
   const [project, setProject] = useState<ProjectForEvaluator | undefined>();

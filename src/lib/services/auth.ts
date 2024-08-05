@@ -44,7 +44,7 @@ export default class AvaliaAuthentication {
         // Handle Errors here.
         // const email = error.customData.email;
 
-        // TODO: handle some common error codes
+        // TODO: handle some common error codes here, like "login cancelled" or others
         return {
           error: `ERRO ${error.code}: ${error.message}`,
         };

@@ -6,11 +6,10 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
 
 - **Avaliador:**
 
-  - [ ] Área dos avaliadores acessível via link direto
-  - [ ] Área dos avaliadores acessível via código
-  - [ ] Enviar link de acesso e código do avaliador via email e WhatsApp
+  - [x] Área dos avaliadores acessível via link direto
+  - [x] Área dos avaliadores acessível via código
+  - [x] Enviar link de acesso e código do avaliador via email e WhatsApp
   - [ ] Confirmar a avaliação do projeto usando Código do Projeto (QR Code/Código numérico)
-  - [ ] Permitir a edição das notas por, no máximo, 12 horas após enviadas
 
 - **Administração:**
 
@@ -25,7 +24,7 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Configurar data de início para o recebimento das avaliações
 
 - **Sistema:**
-  - [ ] Listagem de projetos com notas (classificação/ranking)
+  - [x] Listagem de projetos com notas (classificação/ranking)
   - [x] Atribuir um projeto a um avaliador
   - [x] Exportar lista de QR codes e códigos dos projetos
 
@@ -40,8 +39,7 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [ ] Página para cadastro de projetos
   - [ ] Configuração do formulário do avaliador
   - [ ] Configuração de diferentes rankings
-  - [ ] Opção de atualizar tabelas de informações (além da atualização automática)
-  - [ ] Mostrar quando ocorreu a última atualização
+  - [ ] Mostrar quando ocorreu a última atualização de forma mais clara (texto sempre visível)
   - [ ] Adicionar mais formas de login social
 
 - **Sistema:**
@@ -56,6 +54,7 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [ ] Melhorar a documentação do projeto e guias de desenvolvimento para a comunidade
   - [ ] Implementar sistemas de internacionalização
   - [ ] Implementar meio de doações para o projeto além do GitHub Sponsors
+  - [ ] Mover todos os textos para um arquivo de fácil tradução (internacionalização)
 
 - **Avaliador:**
 
