@@ -41,11 +41,7 @@ export default function ProjetosAvaliador() {
               .then((res) => res.json())
               .then((evaluatorResponse: AvaliaApiResponse) => {
                 if (mounted) {
-                  // evaluatorResponse.data will be true if the evaluator was found
-                  if (evaluatorResponse.status === "success" && evaluatorResponse.data) {
-                    localStorage.setItem("evaluator", JSON.stringify(evaluatorResponse.data));
-                    localStorage.setItem("evaluatorLastUpdated", Date.now().toString());
-                  }
+                  handleEvaluatorDataApiResponse(evaluatorResponse);
                 }
               });
           })();
@@ -59,6 +55,14 @@ export default function ProjetosAvaliador() {
       mounted = false;
     };
   }, [push]);
+
+  const handleEvaluatorDataApiResponse = (data: AvaliaApiResponse) => {
+    // evaluatorResponse.data will be true if the evaluator was found
+    if (data.status === "success" && data.data) {
+      localStorage.setItem("evaluator", JSON.stringify(data.data));
+      localStorage.setItem("evaluatorLastUpdated", Date.now().toString());
+    }
+  };
 
   const goToProject = (project: string): Promise<boolean> => {
     return push(`/avaliador/projetos/${project}`);

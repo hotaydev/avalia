@@ -31,12 +31,7 @@ export default function AdminInitialSetupPage() {
               .then((res) => res.json())
               .then((data: AvaliaApiResponse) => {
                 if (mounted) {
-                  if (data.status === "success" && data.data) {
-                    localStorage.setItem("fairInfo", JSON.stringify(data.data));
-                    push("/admin");
-                  } else {
-                    setLoading(false);
-                  }
+                  handleFairsApiResult(data);
                 }
               });
           })();
@@ -50,6 +45,15 @@ export default function AdminInitialSetupPage() {
       mounted = false;
     };
   }, [push]);
+
+  const handleFairsApiResult = (data: AvaliaApiResponse) => {
+    if (data.status === "success" && data.data) {
+      localStorage.setItem("fairInfo", JSON.stringify(data.data));
+      push("/admin");
+    } else {
+      setLoading(false);
+    }
+  };
 
   const sendData = async () => {
     const toastId = toast.loading("Salvando informações...");

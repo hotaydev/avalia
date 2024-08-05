@@ -77,20 +77,7 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
         if (data.status === "success") {
           toast.success("Projetos atribuídos com sucesso!");
 
-          const localEvaluators: Evaluator[] = JSON.parse(localStorage.getItem("evaluatorsList") ?? "[]");
-          const newEvaluatorsForLocalStorage = [];
-
-          for (const singleEvaluator of localEvaluators) {
-            if (singleEvaluator.id === evaluator.id) {
-              newEvaluatorsForLocalStorage.push({
-                ...singleEvaluator,
-                projects: projects.filter((proj) => projectsIds.split(",").includes(proj.id)),
-              });
-            } else {
-              newEvaluatorsForLocalStorage.push(singleEvaluator);
-            }
-          }
-
+          const newEvaluatorsForLocalStorage = handleProjectsChangesForLocalStoredProjects(projectsIds);
           localStorage.setItem("evaluatorsList", JSON.stringify(newEvaluatorsForLocalStorage));
 
           await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
@@ -110,6 +97,24 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
           toast.error(data.message ?? "Não foi possível salvar. Tente novamente mais tarde.");
         }
       });
+  };
+
+  const handleProjectsChangesForLocalStoredProjects = (projectsIds: string): Evaluator[] => {
+    const localEvaluators: Evaluator[] = JSON.parse(localStorage.getItem("evaluatorsList") ?? "[]");
+    const newEvaluatorsForLocalStorage: Evaluator[] = [];
+
+    for (const singleEvaluator of localEvaluators) {
+      if (singleEvaluator.id === evaluator.id) {
+        newEvaluatorsForLocalStorage.push({
+          ...singleEvaluator,
+          projects: projects.filter((proj) => projectsIds.split(",").includes(proj.id)),
+        });
+      } else {
+        newEvaluatorsForLocalStorage.push(singleEvaluator);
+      }
+    }
+
+    return newEvaluatorsForLocalStorage;
   };
 
   return (

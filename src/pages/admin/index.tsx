@@ -25,36 +25,28 @@ export default function AdminPage() {
       if (user) {
         localStorage.setItem("userInfo", JSON.stringify(user));
         const fairInfo = localStorage.getItem("fairInfo");
-        if (fairInfo) {
-          const rankingInfo = localStorage.getItem("ranking");
 
-          if (rankingInfo && JSON.parse(rankingInfo).length > 0) {
-            setRanking(JSON.parse(rankingInfo));
-            setLoading(false);
-          } else {
-            const fairInfoParsed: ScienceFair = JSON.parse(fairInfo);
-            (async () => {
-              await fetch(`/api/admin/ranking/?sheetId=${fairInfoParsed.spreadsheetId}`)
-                .then((res) => res.json())
-                .then((data: AvaliaApiResponse) => {
-                  if (mounted) {
-                    if (data.status === "success") {
-                      setRanking(data.data as Category[]);
-                      localStorage.setItem("ranking", JSON.stringify(data.data));
-                      localStorage.setItem("rankingLastUpdated", Date.now().toString());
-                    } else {
-                      toast.error(
-                        data.message ??
-                          "Não foi possível obter as colocações. Tente novamente mais tarde ou veja diretamente na planilha.",
-                      );
-                    }
-                    setLoading(false);
-                  }
-                });
-            })();
-          }
-        } else {
+        if (!fairInfo) {
           router.push("/admin/setup");
+          return;
+        }
+
+        const rankingInfo = localStorage.getItem("ranking");
+
+        if (rankingInfo && JSON.parse(rankingInfo).length > 0) {
+          setRanking(JSON.parse(rankingInfo));
+          setLoading(false);
+        } else {
+          const fairInfoParsed: ScienceFair = JSON.parse(fairInfo);
+          (async () => {
+            await fetch(`/api/admin/ranking/?sheetId=${fairInfoParsed.spreadsheetId}`)
+              .then((res) => res.json())
+              .then((data: AvaliaApiResponse) => {
+                if (mounted) {
+                  handleRankingApiResponse(data);
+                }
+              });
+          })();
         }
       } else {
         router.push("/admin/login");
@@ -65,6 +57,20 @@ export default function AdminPage() {
       mounted = false;
     };
   }, [router]);
+
+  const handleRankingApiResponse = (data: AvaliaApiResponse) => {
+    if (data.status === "success") {
+      setRanking(data.data as Category[]);
+      localStorage.setItem("ranking", JSON.stringify(data.data));
+      localStorage.setItem("rankingLastUpdated", Date.now().toString());
+    } else {
+      toast.error(
+        data.message ??
+          "Não foi possível obter as colocações. Tente novamente mais tarde ou veja diretamente na planilha.",
+      );
+    }
+    setLoading(false);
+  };
 
   return (
     <main className="z-10 flex flex-col relative px-10 py-10 h-screen">

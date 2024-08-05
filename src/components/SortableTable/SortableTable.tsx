@@ -241,12 +241,7 @@ function ProjectsTable({
             toast.dismiss(toastId);
             if (isMounted) {
               if (data.status === "success") {
-                setProjectList(data.data as ProjectForAdmin[]);
-                if (setPreviousData) {
-                  setPreviousData(data.data as ProjectForAdmin[]);
-                }
-                localStorage.setItem("projectsList", JSON.stringify(data.data));
-                localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+                setProjectsListLocally(data.data as ProjectForAdmin[]);
               } else {
                 toast.error(
                   data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.",
@@ -261,6 +256,15 @@ function ProjectsTable({
       isMounted = false;
     };
   }, [setPreviousData]);
+
+  const setProjectsListLocally = (data: ProjectForAdmin[]): void => {
+    setProjectList(data);
+    if (setPreviousData) {
+      setPreviousData(data);
+    }
+    localStorage.setItem("projectsList", JSON.stringify(data));
+    localStorage.setItem("projectsListLastUpdated", Date.now().toString());
+  };
 
   const sortedData: ProjectForAdmin[] = useMemo(() => {
     const sortableItems = [...projectList];

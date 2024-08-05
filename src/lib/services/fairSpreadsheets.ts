@@ -166,30 +166,12 @@ export default class FairSpreadsheet {
     }
 
     try {
-      const newProjectsIds = projectsIds.split(",").filter((val: string) => val !== "");
-
-      let projectsToRemove: string[] = [];
-      let projectsToAdd: string[] = [];
-
-      const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
       const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
 
-      for (const row of await evaluatorsSheet.getRows()) {
-        if (row.get("ID") === evaluatorId) {
-          const attributedProjects = row.get("Projetos Atribuídos");
-          if (attributedProjects && attributedProjects !== "") {
-            const oldProjectsIds: string[] = attributedProjects.split(",").filter((val: string) => val !== "");
-            projectsToRemove = oldProjectsIds.filter((value) => !newProjectsIds.includes(value));
-            projectsToAdd = newProjectsIds.filter((value) => !oldProjectsIds.includes(value));
-          } else {
-            projectsToAdd = newProjectsIds;
-          }
-
-          row.set("Projetos Atribuídos", projectsIds);
-          row.save();
-          break;
-        }
-      }
+      const { projectsToRemove, projectsToAdd } = await this.getProjectsSyncForEvaluatorAssign(
+        evaluatorId,
+        projectsIds,
+      );
 
       for (const row of await projectsSheet.getRows()) {
         const projectId = row.get("ID");
@@ -212,6 +194,37 @@ export default class FairSpreadsheet {
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }
+  }
+
+  private async getProjectsSyncForEvaluatorAssign(
+    evaluatorId: string,
+    projectsIds: string,
+  ): Promise<{ projectsToRemove: string[]; projectsToAdd: string[] }> {
+    const newProjectsIds = projectsIds.split(",").filter((val: string) => val !== "");
+
+    let projectsToRemove: string[] = [];
+    let projectsToAdd: string[] = [];
+
+    const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
+
+    for (const row of await evaluatorsSheet.getRows()) {
+      if (row.get("ID") === evaluatorId) {
+        const attributedProjects = row.get("Projetos Atribuídos");
+        if (attributedProjects && attributedProjects !== "") {
+          const oldProjectsIds: string[] = attributedProjects.split(",").filter((val: string) => val !== "");
+          projectsToRemove = oldProjectsIds.filter((value) => !newProjectsIds.includes(value));
+          projectsToAdd = newProjectsIds.filter((value) => !oldProjectsIds.includes(value));
+        } else {
+          projectsToAdd = newProjectsIds;
+        }
+
+        row.set("Projetos Atribuídos", projectsIds);
+        row.save();
+        break;
+      }
+    }
+
+    return { projectsToRemove, projectsToAdd };
   }
 
   public async getCategories(): Promise<string[]> {
@@ -309,8 +322,8 @@ export default class FairSpreadsheet {
     }
   }
 
-  public async getSingleEvaluator(code: string): Promise<Evaluator | undefined> {
-    if (!code) {
+  public async getSingleEvaluator(evaluatorCode: string): Promise<Evaluator | undefined> {
+    if (!evaluatorCode) {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
@@ -319,31 +332,11 @@ export default class FairSpreadsheet {
 
       let evaluator: Evaluator | undefined = undefined;
       for (const row of await evaluatorsSheet.getRows()) {
-        if (row.get("ID") === code) {
+        if (row.get("ID") === evaluatorCode) {
           const projectIds = (row.get("Projetos Atribuídos") ?? "").split(",");
 
           const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
-          const evaluatorsAnswersSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.answers);
-
-          const evaluations: Evaluation[] = [];
-          for (const evaluation of await evaluatorsAnswersSheet.getRows()) {
-            if (evaluation.get("Avaliador") === code) {
-              const notes = {
-                metodology: evaluation.get("Metodologia") ?? 0,
-                documents: evaluation.get("Documentos") ?? 0,
-                visualApresentation: evaluation.get("Apresentação Visual") ?? 0,
-                oralApresentation: evaluation.get("Apresentação Oral") ?? 0,
-                relevancy: evaluation.get("Relevância") ?? 0,
-              };
-
-              evaluations.push({
-                project: evaluation.get("Projeto"),
-                evaluator: evaluation.get("Avaliador"),
-                notes: notes,
-                finalConsiderations: evaluation.get("Considerações Finais") ?? "",
-              });
-            }
-          }
+          const evaluations = await this.getEvaluationsForEvaluator(evaluatorCode);
 
           const projects: ProjectForEvaluator[] = [];
           for (const proj of await projectsSheet.getRows()) {
@@ -375,6 +368,32 @@ export default class FairSpreadsheet {
     } catch (error) {
       throw new Error((error as Error).message ?? error);
     }
+  }
+
+  private async getEvaluationsForEvaluator(evaluatorCode: string): Promise<Evaluation[]> {
+    const evaluatorsAnswersSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.answers);
+
+    const evaluations: Evaluation[] = [];
+    for (const evaluation of await evaluatorsAnswersSheet.getRows()) {
+      if (evaluation.get("Avaliador") === evaluatorCode) {
+        const notes = {
+          metodology: evaluation.get("Metodologia") ?? 0,
+          documents: evaluation.get("Documentos") ?? 0,
+          visualApresentation: evaluation.get("Apresentação Visual") ?? 0,
+          oralApresentation: evaluation.get("Apresentação Oral") ?? 0,
+          relevancy: evaluation.get("Relevância") ?? 0,
+        };
+
+        evaluations.push({
+          project: evaluation.get("Projeto"),
+          evaluator: evaluation.get("Avaliador"),
+          notes: notes,
+          finalConsiderations: evaluation.get("Considerações Finais") ?? "",
+        });
+      }
+    }
+
+    return evaluations;
   }
 
   public async createEvaluatorAnswer({
@@ -416,9 +435,6 @@ export default class FairSpreadsheet {
         Relevância: notes.relevancy,
         "Considerações Finais": notes.finalConsiderations,
       });
-
-      const finalSum =
-        notes.metodology + notes.documents + notes.visualApresentation + notes.oralApresentation + notes.relevancy;
 
       return {
         project: project.toUpperCase(),
