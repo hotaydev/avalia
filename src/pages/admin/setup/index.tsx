@@ -17,7 +17,6 @@ export default function AdminInitialSetupPage() {
 
   const { push } = useRouter();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: push can't be in the dependency array
   useEffect(() => {
     let mounted = true;
     onAuthStateChanged(auth, (user) => {
@@ -45,7 +44,7 @@ export default function AdminInitialSetupPage() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [push]);
 
   const handleFairsApiResult = (data: AvaliaApiResponse) => {
     if (data.status === "success" && data.data) {

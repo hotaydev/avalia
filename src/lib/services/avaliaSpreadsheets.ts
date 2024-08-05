@@ -21,7 +21,7 @@ export default class AvaliaSpreadsheet {
 
     this.token = new JWT({
       email: process.env.SERVICE_ACCOUNT_EMAIL,
-      key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY,
+      key: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, "\n"),
       scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
   }
