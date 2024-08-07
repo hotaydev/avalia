@@ -84,15 +84,16 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
 
   return (
     <div className="flex items-center">
-      <div
-        className="mr-4 p-2 bg-white hover:bg-gray-100 transition-all cursor-pointer rounded-md"
-        data-tooltip-id="reload-evaluators-list"
-        data-tooltip-content={`Última atualização há ${getLastTime("evaluatorsListLastUpdated")}`}
-        data-tooltip-place="left"
-        onClick={updateTableContent}
-      >
-        <IoReload size={18} />
-        <Tooltip id="reload-evaluators-list" />
+      <div className="flex items-center">
+        <div className="mr-2 text-xs font-light text-gray-500">
+          Última atualização há {getLastTime("evaluatorsListLastUpdated")}
+        </div>
+        <div
+          className="mr-2 p-2 bg-white hover:bg-gray-100 transition-all cursor-pointer rounded-md"
+          onClick={updateTableContent}
+        >
+          <IoReload size={20} />
+        </div>
       </div>
       <div
         className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
@@ -101,7 +102,7 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
         data-tooltip-place="left"
         onClick={() => setDialogIsOpen(true)}
       >
-        <GoPlus size={24} />
+        <GoPlus size={20} />
         <Tooltip id="add-new-evaluator-to-list" />
       </div>
       <NewEvaluatorModalContent

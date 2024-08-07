@@ -9,7 +9,6 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Área dos avaliadores acessível via link direto
   - [x] Área dos avaliadores acessível via código
   - [x] Enviar link de acesso e código do avaliador via email e WhatsApp
-  - [ ] Confirmar a avaliação do projeto usando Código do Projeto (QR Code/Código numérico)
 
 - **Administração:**
 
@@ -22,26 +21,27 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Convite de administradores para a área administrativa
   - [x] Configurar data máxima para o recebimento das avaliações
   - [x] Configurar data de início para o recebimento das avaliações
+  - [ ] Possibilidade de ver quantas avaliações foram feitas em cada projeto
 
 - **Sistema:**
   - [x] Listagem de projetos com notas (classificação/ranking)
   - [x] Atribuir um projeto a um avaliador
   - [x] Exportar lista de QR codes e códigos dos projetos
   - [ ] Adicionar favicon
-  - [ ] Definir página 404 com redirecionamento para a /
+  - [ ] Definir página 404 com link para a /
 
 ### Versão 2.0
 
 - **Avaliador:**
 
   - [ ] Página para cadastro de avaliadores
+  - [ ] Confirmar a avaliação do projeto usando Código do Projeto (QR Code/Código numérico)
 
 - **Administração:**
 
   - [ ] Página para cadastro de projetos
   - [ ] Configuração do formulário do avaliador
   - [ ] Configuração de diferentes rankings
-  - [ ] Mostrar quando ocorreu a última atualização de forma mais clara (texto sempre visível)
   - [ ] Adicionar mais formas de login social
 
 - **Sistema:**
