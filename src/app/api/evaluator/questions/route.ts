@@ -3,7 +3,7 @@ import type { Evaluation } from "@/lib/models/evaluation";
 import type { Question } from "@/lib/models/question";
 import FairSpreadsheet from "@/lib/services/fairSpreadsheets";
 
-const mockData: Question[] = [
+const defaultQuestions: Question[] = [
   {
     title: "METODOLOGIA",
     id: 1,
@@ -58,7 +58,7 @@ export async function GET() {
   return Response.json({
     status: "success",
     message: "Perguntas do projeto obtidas com sucesso.",
-    data: mockData,
+    data: defaultQuestions,
   } as AvaliaApiResponse);
 }
 

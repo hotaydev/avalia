@@ -112,6 +112,7 @@ export default class FairSpreadsheet {
     try {
       const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
       const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
+      const evaluationsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.answers);
 
       const evaluators: Evaluator[] = [];
       for (const row of await evaluatorsSheet.getRows()) {
@@ -133,6 +134,15 @@ export default class FairSpreadsheet {
         });
       }
 
+      const evaluations: Evaluation[] = [];
+      for (const row of await evaluationsSheet.getRows()) {
+        evaluations.push({
+          project: row.get("Projeto"),
+          evaluator: row.get("Avaliador"),
+          notes: {}, // Can Be kept in blank, we don't need this info for this purpose
+        });
+      }
+
       const projects: ProjectForAdmin[] = [];
       for (const row of await projectsSheet.getRows()) {
         let id = row.get("ID");
@@ -151,6 +161,7 @@ export default class FairSpreadsheet {
           description: row.get("Descrição"),
           category: row.get("Categoria"),
           field: row.get("Área"),
+          evaluations: evaluations.filter((evaluation) => evaluation.project === id).length,
           evaluators: evaluators.filter((evaluator) => evaluatorsIds.includes(evaluator.id)),
         });
       }

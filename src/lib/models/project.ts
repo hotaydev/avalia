@@ -16,4 +16,5 @@ export interface ProjectForAdmin extends Project {
   field?: string;
   score?: number; // This is used for the Ranking, not for the project listing
   evaluators?: Evaluator[];
+  evaluations?: number;
 }

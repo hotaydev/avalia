@@ -45,6 +45,7 @@ const projectsTableColumns: {
   { key: "title", title: "Título" },
   { key: "category", title: "Categoria" },
   { key: "field", title: "Área" },
+  { key: "evaluations", title: "Avaliações" },
   { key: "evaluators", title: "Avaliadores" },
 ];
 

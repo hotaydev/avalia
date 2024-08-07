@@ -21,14 +21,14 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Convite de administradores para a área administrativa
   - [x] Configurar data máxima para o recebimento das avaliações
   - [x] Configurar data de início para o recebimento das avaliações
-  - [ ] Possibilidade de ver quantas avaliações foram feitas em cada projeto
+  - [x] Possibilidade de ver quantas avaliações foram feitas em cada projeto
 
 - **Sistema:**
   - [x] Listagem de projetos com notas (classificação/ranking)
   - [x] Atribuir um projeto a um avaliador
   - [x] Exportar lista de QR codes e códigos dos projetos
-  - [ ] Adicionar favicon
-  - [ ] Definir página 404 com link para a /
+  - [x] Adicionar favicon
+  - [x] Definir página 404 com link para a /
 
 ### Versão 2.0
 
