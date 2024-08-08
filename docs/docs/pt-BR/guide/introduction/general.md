@@ -1,3 +1,15 @@
 # Visão Geral
 
-Página em construção
+Bem-vindo ao **Avalia**, uma plataforma inovadora criada para facilitar o processo de avaliação em Feiras de Iniciação Científica. Desenvolvida pela [Hotay](https://www.hotay.dev), o Avalia foi projetado para ser uma ferramenta simples, intuitiva e acessível, especialmente voltada para escolas públicas que necessitam de uma solução gratuita e eficiente.
+
+O Avalia é uma plataforma **totalmente gratuita** e de **código aberto**, sem qualquer tipo de anúncio ou custo oculto. Nosso objetivo é democratizar o acesso a ferramentas tecnológicas, simplificando as tarefas dos professores e avaliadores, ao mesmo tempo que proporciona uma experiência fluida e descomplicada.
+
+A plataforma é dividida em duas áreas principais:
+
+- **Área Administrativa:** Permite a configuração e gerenciamento completo da feira, incluindo a criação e organização dos projetos, além da administração dos avaliadores e usuários administrativos.
+
+- **Área dos Avaliadores:** Projetada para ser extremamente fácil de usar, onde os avaliadores podem acessar a plataforma via links fornecido de forma rápida e segura, sem a necessidade de senhas.
+
+O **Avalia** foi criado com a intenção de integrar a tecnologia ao cotidiano da comunidade escolar de maneira acessível e eficiente, garantindo que a experiência de avaliação em feiras científicas seja o mais simplificada possível.
+
+Nossa [filosofia](./philosophy) explica como o sistema é gratuito e porque ele é de código livre.

@@ -1,3 +1,23 @@
 # Sobre a Hotay
 
-Página em construção
+A **Hotay** é uma empresa brasileira de desenvolvimento de software, dedicada exclusivamente à criação de **software de código livre**. Fundada com a missão de fornecer ferramentas tecnológicas acessíveis e gratuitas, a Hotay se empenha em apoiar diversas comunidades, desde a comunidade escolar até a comunidade de desenvolvedores.
+
+### Compromisso com o Software Livre
+
+Na Hotay, acreditamos que o software deve ser uma ferramenta de empoderamento, acessível a todos. Por isso, todos os nossos projetos são **de código aberto**, permitindo que qualquer pessoa possa acessar, modificar e distribuir nossos softwares. Esta abordagem não só promove a transparência e a colaboração, mas também fortalece as comunidades que utilizam nossas ferramentas, dando-lhes a liberdade de adaptar o software às suas necessidades específicas.
+
+### Apoio à Comunidade Escolar
+
+Reconhecendo a importância da educação e os desafios enfrentados pelas escolas públicas, a Hotay tem um compromisso especial com a comunidade escolar. Projetos como a **Avalia** são exemplos de como buscamos oferecer soluções tecnológicas que simplifiquem e melhorem o trabalho dos educadores, sem qualquer custo. Sabemos que os professores são fundamentais na formação de cidadãos e que merecem ter acesso a ferramentas que facilitem suas tarefas diárias, permitindo-lhes focar no que realmente importa: a educação dos alunos.
+
+### Sustentabilidade Através de Doações
+
+Os projetos da Hotay são sustentados, principalmente, por **doações**. Acreditamos que a gratificação voluntária dos usuários é uma forma poderosa de reconhecer o valor das ferramentas que desenvolvemos. Cada doação, independentemente do valor, é um incentivo para continuarmos nosso trabalho e uma prova de que o software livre pode prosperar com o apoio de sua comunidade.
+
+Para nos contribuir, veja [nossa página no GitHub](https://github.com/sponsors/hotaydev).
+
+### Contribuindo para um Futuro Melhor
+
+Ao escolher utilizar e apoiar os projetos da Hotay, você está contribuindo para um futuro onde a tecnologia é livre, acessível e uma verdadeira aliada no desenvolvimento social. Estamos comprometidos em continuar criando ferramentas que façam a diferença, sempre com o foco em **impactar positivamente as comunidades que servimos**.
+
+Seja na educação, no desenvolvimento de software ou em qualquer outra área, a Hotay está aqui para construir um mundo melhor, um código livre de cada vez.
