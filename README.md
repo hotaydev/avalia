@@ -1,5 +1,8 @@
 # Avalia - Sistema para avaliação de projetos em Feiras de Iniciação Científica
 
+<div align="center"><a href="https://avalia.hotay.dev/" target="_blank">Acessar Avalia online</a></div>
+&nbsp;
+
 Bem-vindo ao **Avalia**, uma plataforma gratuita e de código aberto, desenvolvida pela [Hotay](#sobre-a-hotay) para facilitar o processo de avaliação de projetos em Feiras de Iniciação Científica. Nosso objetivo é proporcionar uma ferramenta simples e acessível que apoie professores e avaliadores, especialmente em escolas públicas, trazendo mais tecnologia ao cotidiano da comunidade escolar.
 
 ## Funcionalidades Principais

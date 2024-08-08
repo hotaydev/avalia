@@ -11,27 +11,27 @@
     "postinstall": "cd docs && npm install"
   },
   "dependencies": {
-    "@headlessui/react": "^2.1.0",
-    "firebase": "^10.12.2",
-    "google-auth-library": "^9.12.0",
+    "@headlessui/react": "^2.1.2",
+    "firebase": "^10.12.5",
+    "google-auth-library": "^9.13.0",
     "google-spreadsheet": "^4.1.2",
-    "next": "^14.2.4",
-    "qrcode": "^1.5.3",
+    "next": "^14.2.5",
+    "qrcode": "^1.5.4",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-tailwindcss-select": "^1.8.5",
-    "react-tooltip": "^5.27.1"
+    "react-tooltip": "^5.28.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
-    "@types/node": "^20",
+    "@biomejs/biome": "^1.8.3",
+    "@types/node": "^22.1.0",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.9",
+    "typescript": "^5.5.4"
   }
 }
