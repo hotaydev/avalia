@@ -63,11 +63,11 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
   const updateTableContent = async () => {
-    const toastId = toast.loading("Atualizando lista...");
     if (!fairInfo?.spreadsheetId) {
       toast.error("O link da planilha de dados ainda não foi configurado. Vá para a página de configuração.");
       return;
     }
+    const toastId = toast.loading("Atualizando lista...");
     await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
       .then((res) => res.json())
       .then((data: AvaliaApiResponse) => {

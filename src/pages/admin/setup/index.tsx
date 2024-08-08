@@ -56,8 +56,8 @@ export default function AdminInitialSetupPage() {
   };
 
   const sendData = async () => {
-    const toastId = toast.loading("Salvando informações...");
     setSendingInformation(true);
+    const toastId = toast.loading("Salvando informações...");
 
     await fetch("/api/auth/fairs/", {
       method: "POST",

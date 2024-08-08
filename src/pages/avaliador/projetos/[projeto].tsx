@@ -98,8 +98,8 @@ export default function ProjetosAvaliador() {
     const evaluator: Evaluator = JSON.parse(localStorage.getItem("evaluator") ?? "{}");
     const fairInfo: ScienceFair = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
 
-    const toastId = toast.loading("Enviando avaliação...");
     setButtonEnabled(false);
+    const toastId = toast.loading("Enviando avaliação...");
     fetch("/api/evaluator/questions/", {
       method: "POST",
       body: JSON.stringify({
