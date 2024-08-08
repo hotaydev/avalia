@@ -3,6 +3,7 @@ import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Spinner from "@/components/Spinner";
 import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import AvaliaAuthentication from "@/lib/services/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -94,6 +95,11 @@ export default function AdminInitialSetupPage() {
       });
   };
 
+  const handleLogout = () => {
+    new AvaliaAuthentication().logout();
+    push("/admin/login");
+  };
+
   return (
     <main className="z-10 flex flex-col items-center relative px-6 pt-20 pb-10 sm:pb-10 md:pb-14 lg:pb-20">
       <Head>
@@ -145,6 +151,15 @@ export default function AdminInitialSetupPage() {
           </div>
         </div>
       )}
+      <div className="static md:fixed md:top-2 md:right-6">
+        <span
+          className="px-6 rounded-full cursor-pointer font-light text-sm hover:underline transition-all text-gray-600"
+          onClick={handleLogout}
+        >
+          <span className="hidden md:block pr-5">Cancelar criação de conta</span>
+          <span className="block md:hidden">Cancelar</span>
+        </span>
+      </div>
       <Footer />
     </main>
   );

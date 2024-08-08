@@ -30,6 +30,9 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Exportar lista de QR codes e códigos dos projetos
   - [x] Adicionar favicon
   - [x] Definir página 404 com link para a /
+  - [ ] Tratar erros 429 (WAF Rate-Limit) informando o usuário
+  - [ ] Publicar a documentação
+  - [ ] Adicionar `robots.txt` e `sitemap.xml`
 
 ### Versão 2.0
 

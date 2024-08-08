@@ -120,7 +120,7 @@ export default function Login() {
             </div>
           </div>
           <Footer />
-          <ArrowBack />
+          <ArrowBack route="/" />
         </>
       )}
     </main>

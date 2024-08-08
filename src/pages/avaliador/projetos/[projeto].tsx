@@ -173,7 +173,7 @@ export default function ProjetosAvaliador() {
       </div>
       <EvaluatorLogoutComponent />
       <Footer fixed={false} />
-      <ArrowBack />
+      <ArrowBack route="/avaliador/projetos" />
     </main>
   );
 }

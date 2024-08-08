@@ -130,7 +130,7 @@ export default function ChooseFair() {
         </div>
       </div>
       <Footer />
-      <ArrowBack />
+      <ArrowBack route="/avaliador" />
     </main>
   );
 }

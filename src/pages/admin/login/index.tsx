@@ -175,7 +175,7 @@ export default function AdminLoginPage() {
         </div>
       )}
       <Footer />
-      <ArrowBack />
+      <ArrowBack route="/" />
       <DialogComponent open={open} setOpen={setOpen} title="Por que não usamos senhas?">
         A segurança de uma senha é fácil de ser burlada. Processos de autorização e login sem senha passam a camada de
         segurança diretamente para o Google ou seu e-mail.
