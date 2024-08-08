@@ -1,0 +1,27 @@
+[
+  {
+    "type": "dir",
+    "name": "general",
+    "label": "Visão Geral"
+  },
+  {
+    "type": "dir",
+    "name": "hosting",
+    "label": "Hospedagem"
+  },
+  {
+    "type": "dir",
+    "name": "spreadsheets",
+    "label": "Planilhas do Google"
+  },
+  {
+    "type": "dir",
+    "name": "firebase-auth",
+    "label": "Autenticação com Firebase"
+  },
+  {
+    "type": "dir",
+    "name": "google-service-account",
+    "label": "Conta de Serviço para as Planilhas"
+  }
+]

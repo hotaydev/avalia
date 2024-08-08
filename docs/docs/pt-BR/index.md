@@ -3,12 +3,12 @@ pageType: home
 
 hero:
   name: Avalia
-  text: Sistema para Avaliação de Feiras
+  text: Sistema para Avaliação de Feiras Científicas
   tagline: Documentação da Plataforma
   actions:
     - theme: brand
       text: Início Rápido
-      link: /guide/
+      link: /guide/introduction/general
     - theme: alt
       text: GitHub
       link: https://github.com/hotaydev/avalia

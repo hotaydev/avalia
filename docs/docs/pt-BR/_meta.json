@@ -1,12 +1,12 @@
 [
   {
     "text": "Início Rápido",
-    "link": "/guide/",
+    "link": "/guide/introduction/general",
     "activeMatch": "/guide/"
   },
   {
     "text": "Self Hosted",
-    "link": "/self-hosted/",
+    "link": "/self-hosted/general/quick-start",
     "activeMatch": "/self-hosted/"
   },
   {

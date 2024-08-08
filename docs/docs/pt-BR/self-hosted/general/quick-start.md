@@ -1,4 +1,4 @@
-# Guia para usar o Avalia de forma auto-hospedada
+# Início Rápido
 
 Página em construção. Se você tiver alguma experiência com código, você pode dar uma olhada no [GitHub do projeto](https://github.com/hotaydev/avalia). É relativamente simples de configurá-lo, especialmente utilizando a [Vercel](https://vercel.com/).
 

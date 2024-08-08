@@ -1,0 +1,37 @@
+[
+  {
+    "type": "dir",
+    "name": "introduction",
+    "label": "Introdução"
+  },
+  {
+    "type": "dir",
+    "name": "administrators",
+    "label": "Para Administradores"
+  },
+  {
+    "type": "dir",
+    "name": "evaluators",
+    "label": "Para Avaliadores"
+  },
+  {
+    "type": "dir",
+    "name": "security-privacy-and-performance",
+    "label": "Segurança, Privacidade e Performance"
+  },
+  {
+    "type": "dir",
+    "name": "open-source",
+    "label": "Código Livre"
+  },
+  {
+    "type": "dir",
+    "name": "roadmap",
+    "label": "Roadmap"
+  },
+  {
+    "type": "dir",
+    "name": "commercial",
+    "label": "Uso Comercial"
+  }
+]
