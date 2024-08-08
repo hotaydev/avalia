@@ -13,7 +13,7 @@ hero:
       text: GitHub
       link: https://github.com/hotaydev/avalia
   image:
-    src: /rspress-icon.png
+    src: /icon.png
     alt: Avalia Docs Logo
 features:
   - title: Avaliação rápida e simples

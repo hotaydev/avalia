@@ -1,0 +1,27 @@
+[
+  {
+    "type": "dir",
+    "name": "general",
+    "label": "Overview"
+  },
+  {
+    "type": "dir",
+    "name": "hosting",
+    "label": "Hosting"
+  },
+  {
+    "type": "dir",
+    "name": "spreadsheets",
+    "label": "Google Spreadsheets"
+  },
+  {
+    "type": "dir",
+    "name": "firebase-auth",
+    "label": "Firebase Authentication"
+  },
+  {
+    "type": "dir",
+    "name": "google-service-account",
+    "label": "Spreadsheets Service Account"
+  }
+]

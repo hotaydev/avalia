@@ -5,10 +5,10 @@ export default defineConfig({
   root: join(__dirname, 'docs'),
   title: 'Avalia Docs',
   description: 'Documentação da Plataforma Avalia',
-  icon: '/rspress-icon.png',
+  icon: '/icon.png',
   logo: {
-    light: '/rspress-light-logo.png',
-    dark: '/rspress-dark-logo.png',
+    light: '/light-logo.png',
+    dark: '/dark-logo.png',
   },
   themeConfig: {
     socialLinks: [
@@ -23,10 +23,18 @@ export default defineConfig({
     },
   },
   lang: "pt-BR",
-  locales: [{
-    lang: "pt-BR",
-    label: "Português",
-    title: 'Avalia Docs',
-    description: 'Documentação da Plataforma Avalia',
-  }],
+  locales: [
+    {
+      lang: "pt-BR",
+      label: "Português",
+      title: 'Avalia Docs',
+      description: 'Documentação da Plataforma Avalia',
+    },
+    {
+      lang: "en-US",
+      label: "English",
+      title: 'Avalia Docs',
+      description: 'Avalia Platform Documentation',
+    }
+  ],
 });
