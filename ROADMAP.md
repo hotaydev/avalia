@@ -2,13 +2,14 @@
 
 Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das versões planejadas para o sistema "Avalia".
 
-### Versão 1.0
+### Versão 1.0 (Em Andamento)
 
 - **Avaliador:**
 
   - [x] Área dos avaliadores acessível via link direto
   - [x] Área dos avaliadores acessível via código
   - [x] Enviar link de acesso e código do avaliador via email e WhatsApp
+  - [ ] Bloquear o envio de avaliações fora do período definido
 
 - **Administração:**
 

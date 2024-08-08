@@ -27,10 +27,11 @@ const securityHeaders = [
     value: "DENY",
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
-  {
-    key: "X-Content-Type-Options",
-    value: "nosniff",
-  },
+  // This need to be disabled because NextJS, for some reason, send mime type "text/html" for .js files (?)
+  // {
+  //   key: "X-Content-Type-Options",
+  //   value: "nosniff",
+  // },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
   {
     key: "Strict-Transport-Security",
