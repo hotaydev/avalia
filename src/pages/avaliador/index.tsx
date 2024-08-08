@@ -25,11 +25,19 @@ export default function Login() {
         if (evaluatorCode && fairCode) {
           (async () => {
             await fetch(`/api/auth/fairs/?fairId=${fairCode}`)
-              .then((res) => res.json())
+              .then((res) => {
+                if (res.status === 429) {
+                  throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+                }
+                return res.json();
+              })
               .then(async (fairResponse: AvaliaApiResponse) => {
                 if (mounted) {
                   await handleScienceFairApiResult(fairResponse, evaluatorCode);
                 }
+              })
+              .catch((error) => {
+                toast.error(error.message);
               });
           })();
         } else {
@@ -56,7 +64,12 @@ export default function Login() {
 
   const getEvaluatorDataAfterScienceFair = async (fairInfo: ScienceFair, evaluatorCode: string) => {
     await fetch(`/api/auth/evaluator/?sheetId=${fairInfo.spreadsheetId}&code=${evaluatorCode.toUpperCase()}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((evaluatorResponse: AvaliaApiResponse) => {
         // evaluatorResponse.data will be true if the evaluator was found
         if (evaluatorResponse.status === "success" && evaluatorResponse.data) {
@@ -69,6 +82,9 @@ export default function Login() {
           toast.error(evaluatorResponse.message ?? "Não encontramos o seu convite para a feira informada pelo link.");
           setLoading(false);
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

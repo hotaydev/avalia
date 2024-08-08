@@ -8,6 +8,7 @@ import type { ScienceFair } from "@/lib/models/scienceFair";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FcOk } from "react-icons/fc";
 
 export default function ProjetosAvaliador() {
@@ -38,11 +39,19 @@ export default function ProjetosAvaliador() {
 
           (async () => {
             await fetch(`/api/auth/evaluator/?sheetId=${localFairInfo.spreadsheetId}&code=${localEvaluator.id}`)
-              .then((res) => res.json())
+              .then((res) => {
+                if (res.status === 429) {
+                  throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+                }
+                return res.json();
+              })
               .then((evaluatorResponse: AvaliaApiResponse) => {
                 if (mounted) {
                   handleEvaluatorDataApiResponse(evaluatorResponse);
                 }
+              })
+              .catch((error) => {
+                toast.error(error.message);
               });
           })();
         }

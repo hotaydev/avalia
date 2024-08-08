@@ -69,7 +69,12 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
     }
     const toastId = toast.loading("Atualizando lista...");
     await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -79,6 +84,9 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
         } else {
           toast.error(data.message ?? "Não foi possível atualizar a lista de avaliadores. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -158,7 +166,12 @@ function NewEvaluatorModalContent({
         evaluatorArea,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then(async (data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -181,6 +194,9 @@ function NewEvaluatorModalContent({
         } else {
           toast.error(data.message ?? "Não foi possível salvar o avaliador. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

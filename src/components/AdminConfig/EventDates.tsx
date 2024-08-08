@@ -30,7 +30,12 @@ export default function EventDates() {
     await fetch(
       `/api/admin/fairs/time/?fairId=${fairId}&initDate=${dateConfig.initDate}&endDate=${dateConfig.endDate}&initTime=${dateConfig.initTime}&endTime=${dateConfig.endTime}`,
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -40,6 +45,9 @@ export default function EventDates() {
         } else {
           toast.error(data.message ?? "Algo deu errado na hora de salvar. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

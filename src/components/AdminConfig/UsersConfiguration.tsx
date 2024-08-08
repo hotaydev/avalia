@@ -32,7 +32,12 @@ export default function UsersConfiguration() {
 
     const toastId = toast.loading("Criando usuário...");
     await fetch(`/api/admin/fairs/add-user/?user=${newUserEmail}&fairId=${fairInfo?.fairId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -44,6 +49,9 @@ export default function UsersConfiguration() {
         } else {
           toast.error(data.message ?? "Não foi possível criar o usuário. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -84,7 +92,12 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
 
       (async () => {
         await fetch(`/api/auth/users/?fairId=${fairInfo?.fairId}&user=${userInfo.email}`)
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 429) {
+              throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+            }
+            return res.json();
+          })
           .then((data: AvaliaApiResponse) => {
             if (mounted) {
               if (data.status === "success") {
@@ -93,6 +106,9 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
                 toast.error(data.message ?? "Não foi possível recuperar os usuários administradores da feira.");
               }
             }
+          })
+          .catch((error) => {
+            toast.error(error.message);
           });
       })();
     }
@@ -105,7 +121,12 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
   const deleteUser = async (user: FairUser): Promise<void> => {
     const toastId = toast.loading("Removendo usuário...");
     await fetch(`/api/admin/fairs/remove-user/?fairId=${fairInfo?.fairId}&user=${user.email}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -115,6 +136,9 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
         } else {
           toast.success(data.message ?? "Não foi possível remover o usuário. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

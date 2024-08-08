@@ -48,7 +48,12 @@ export default function ChooseFair() {
     if (needToReload) {
       (async () => {
         await fetch("/api/evaluator/fairs")
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 429) {
+              throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+            }
+            return res.json();
+          })
           .then((data: AvaliaApiResponse) => {
             if (mounted) {
               if (data.status === "success") {
@@ -60,6 +65,9 @@ export default function ChooseFair() {
               }
               setLoading(false);
             }
+          })
+          .catch((error) => {
+            toast.error(error.message);
           });
       })();
     }

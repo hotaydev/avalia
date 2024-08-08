@@ -140,7 +140,12 @@ function EvaluatorsTable({
             "Buscando avaliadores... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
           );
           await fetch(`/api/admin/evaluators/?sheetId=${fairInfo?.spreadsheetId}`)
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status === 429) {
+                throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+              }
+              return res.json();
+            })
             .then((data: AvaliaApiResponse) => {
               toast.dismiss(toastId);
               if (isMounted) {
@@ -154,6 +159,9 @@ function EvaluatorsTable({
                   );
                 }
               }
+            })
+            .catch((error) => {
+              toast.error(error.message);
             });
         }
       })();
@@ -241,7 +249,12 @@ function ProjectsTable({
             "Buscando projetos... Após isso a lista será assíncrona, use o botão a baixo para recarregar.",
           );
           await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status === 429) {
+                throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+              }
+              return res.json();
+            })
             .then((data: AvaliaApiResponse) => {
               toast.dismiss(toastId);
               if (isMounted) {
@@ -253,6 +266,9 @@ function ProjectsTable({
                   );
                 }
               }
+            })
+            .catch((error) => {
+              toast.error(error.message);
             });
         }
       })();

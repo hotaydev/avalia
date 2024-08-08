@@ -42,11 +42,19 @@ export default function AdminPage() {
 
         (async () => {
           await fetch(`/api/admin/ranking/?sheetId=${fairInfo.spreadsheetId}`)
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status === 429) {
+                throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+              }
+              return res.json();
+            })
             .then((data: AvaliaApiResponse) => {
               if (mounted) {
                 handleRankingApiResponse(data);
               }
+            })
+            .catch((error) => {
+              toast.error(error.message);
             });
         })();
       } else {

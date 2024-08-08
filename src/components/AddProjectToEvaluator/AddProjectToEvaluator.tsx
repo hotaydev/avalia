@@ -25,12 +25,20 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
 
     const fairInfo: ScienceFair = JSON.parse(localStorage.getItem("fairInfo") ?? "{}");
     return await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data) => {
         if (data.status === "success") {
           return data.data;
         }
         return [];
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -71,7 +79,12 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
     await fetch(
       `/api/admin/fairs/link/?evaluator=${evaluator.id}&projects=${projectsIds}&sheetId=${fairInfo?.spreadsheetId}`,
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then(async (data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -81,7 +94,12 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
           localStorage.setItem("evaluatorsList", JSON.stringify(newEvaluatorsForLocalStorage));
 
           await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status === 429) {
+                throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+              }
+              return res.json();
+            })
             .then((newProjectData: AvaliaApiResponse) => {
               if (newProjectData.status === "success") {
                 localStorage.setItem("projectsList", JSON.stringify(newProjectData.data));
@@ -92,10 +110,16 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
               }
 
               router.reload();
+            })
+            .catch((error) => {
+              toast.error(error.message);
             });
         } else {
           toast.error(data.message ?? "Não foi possível salvar. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

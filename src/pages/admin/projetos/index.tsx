@@ -79,7 +79,12 @@ function ExtraComponentForTable({
 
     const toastId = toast.loading("Atualizando lista...");
     await fetch(`/api/admin/projects/?sheetId=${fairInfo?.spreadsheetId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -89,6 +94,9 @@ function ExtraComponentForTable({
         } else {
           toast.error(data.message ?? "Não foi possível atualizar a lista de projetos. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
@@ -160,11 +168,19 @@ function NewProjectModalContent({
     if (fairInfo?.spreadsheetId && availableCategories.length === 0) {
       (async () => {
         await fetch(`/api/admin/fairs/categories/?sheetId=${fairInfo?.spreadsheetId}`)
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 429) {
+              throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+            }
+            return res.json();
+          })
           .then((data: AvaliaApiResponse) => {
             if (mounted && data.status === "success") {
               setAvailableCategories(data.data as string[]);
             }
+          })
+          .catch((error) => {
+            toast.error(error.message);
           });
       })();
     }
@@ -199,7 +215,12 @@ function NewProjectModalContent({
         projectArea,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then(async (data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -223,6 +244,9 @@ function NewProjectModalContent({
         } else {
           toast.error(data.message ?? "Não foi possível salvar o projeto. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

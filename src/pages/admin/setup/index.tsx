@@ -29,11 +29,19 @@ export default function AdminInitialSetupPage() {
         } else {
           (async () => {
             await fetch(`/api/auth/fairs/?email=${user.email}`) // used to get info from the fair
-              .then((res) => res.json())
+              .then((res) => {
+                if (res.status === 429) {
+                  throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+                }
+                return res.json();
+              })
               .then((data: AvaliaApiResponse) => {
                 if (mounted) {
                   handleFairsApiResult(data);
                 }
+              })
+              .catch((error) => {
+                toast.error(error.message);
               });
           })();
         }
@@ -71,11 +79,21 @@ export default function AdminInitialSetupPage() {
         adminEmail: auth.currentUser?.email,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then(async (data: AvaliaApiResponse) => {
         if (data.status === "success") {
           await fetch(`/api/auth/fairs/?fairId=${data.data}`)
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status === 429) {
+                throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+              }
+              return res.json();
+            })
             .then((data: AvaliaApiResponse) => {
               if (data.status === "success" && data.data) {
                 localStorage.setItem("fairInfo", JSON.stringify(data.data));
@@ -86,12 +104,18 @@ export default function AdminInitialSetupPage() {
                 toast.error(data.message ?? "Ocorreu algum problema. Tente novamente mais tarde.");
                 setSendingInformation(false);
               }
+            })
+            .catch((error) => {
+              toast.error(error.message);
             });
         } else {
           toast.dismiss(toastId);
           toast.error(data.message ?? "Ocorreu algum problema. Tente novamente mais tarde.");
           setSendingInformation(false);
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

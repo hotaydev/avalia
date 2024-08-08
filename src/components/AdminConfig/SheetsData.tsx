@@ -16,7 +16,12 @@ export default function SheetsData() {
     const sheetId = link.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
 
     await fetch(`/api/admin/fairs/sheet-id/?fairId=${fairId}&sheetId=${sheetId}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then((data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -26,6 +31,9 @@ export default function SheetsData() {
         } else {
           toast.error(data.message ?? "Algo deu errado na hora de salvar. Tente novamente mais tarde.");
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 

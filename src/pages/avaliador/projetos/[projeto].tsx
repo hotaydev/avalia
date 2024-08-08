@@ -44,7 +44,12 @@ export default function ProjetosAvaliador() {
     if (!_project) {
       (async () => {
         fetch(`/api/auth/evaluator/?sheetId=${fairInfo.spreadsheetId}&code=${evaluator.id}`)
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 429) {
+              throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+            }
+            return res.json();
+          })
           .then((data: AvaliaApiResponse) => {
             if (isMounted) {
               if (data.status === "success" && data.data) {
@@ -54,6 +59,9 @@ export default function ProjetosAvaliador() {
                 toast.error("Não foi possível obter informações sobre o projeto. Tente novamente mais tarde.");
               }
             }
+          })
+          .catch((error) => {
+            toast.error(error.message);
           });
       })();
     }
@@ -64,7 +72,12 @@ export default function ProjetosAvaliador() {
     } else {
       (async () => {
         fetch("/api/evaluator/questions/")
-          .then((res) => res.json())
+          .then((res) => {
+            if (res.status === 429) {
+              throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+            }
+            return res.json();
+          })
           .then((data: AvaliaApiResponse) => {
             if (isMounted) {
               if (data.status === "success") {
@@ -74,6 +87,9 @@ export default function ProjetosAvaliador() {
                 toast.error("Não foi possível obter as questões de avaliação. Tente novamente mais tarde.");
               }
             }
+          })
+          .catch((error) => {
+            toast.error(error.message);
           });
       })();
     }
@@ -109,7 +125,12 @@ export default function ProjetosAvaliador() {
         questions: questions,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+        }
+        return res.json();
+      })
       .then(async (data: AvaliaApiResponse) => {
         toast.dismiss(toastId);
         if (data.status === "success") {
@@ -141,6 +162,9 @@ export default function ProjetosAvaliador() {
           toast.error("Ocorreu algum erro. Tente novamente.");
           setButtonEnabled(true);
         }
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
   };
 
