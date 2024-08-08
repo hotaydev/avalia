@@ -86,6 +86,7 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };
@@ -196,6 +197,7 @@ function NewEvaluatorModalContent({
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

@@ -47,6 +47,7 @@ export default function EventDates() {
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

@@ -33,6 +33,7 @@ export default function SheetsData() {
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

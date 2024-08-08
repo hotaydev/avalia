@@ -39,6 +39,7 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
       })
       .catch((error) => {
         toast.error(error.message);
+        return [];
       });
   };
 
@@ -119,6 +120,7 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

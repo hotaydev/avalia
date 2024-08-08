@@ -51,6 +51,7 @@ export default function UsersConfiguration() {
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };
@@ -138,6 +139,7 @@ function UsersList({ fairInfo }: { fairInfo: ScienceFair | undefined }) {
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

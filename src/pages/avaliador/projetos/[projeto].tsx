@@ -164,6 +164,7 @@ export default function ProjetosAvaliador() {
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

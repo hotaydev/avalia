@@ -161,6 +161,7 @@ function EvaluatorsTable({
               }
             })
             .catch((error) => {
+              toast.dismiss(toastId);
               toast.error(error.message);
             });
         }
@@ -268,6 +269,7 @@ function ProjectsTable({
               }
             })
             .catch((error) => {
+              toast.dismiss(toastId);
               toast.error(error.message);
             });
         }

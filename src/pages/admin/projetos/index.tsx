@@ -96,6 +96,7 @@ function ExtraComponentForTable({
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };
@@ -246,6 +247,7 @@ function NewProjectModalContent({
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
         toast.error(error.message);
       });
   };

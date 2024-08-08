@@ -38,6 +38,7 @@ export default function Login() {
               })
               .catch((error) => {
                 toast.error(error.message);
+                setLoading(false);
               });
           })();
         } else {
@@ -84,6 +85,7 @@ export default function Login() {
         }
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error.message);
       });
   };

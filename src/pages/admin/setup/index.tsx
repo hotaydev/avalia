@@ -106,6 +106,8 @@ export default function AdminInitialSetupPage() {
               }
             })
             .catch((error) => {
+              toast.dismiss(toastId);
+              setSendingInformation(false);
               toast.error(error.message);
             });
         } else {
@@ -115,6 +117,8 @@ export default function AdminInitialSetupPage() {
         }
       })
       .catch((error) => {
+        toast.dismiss(toastId);
+        setSendingInformation(false);
         toast.error(error.message);
       });
   };
