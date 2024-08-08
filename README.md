@@ -1,4 +1,4 @@
-<div align="center"><img align="center" src="https://raw.githubusercontent.com/hotaydev/avalia/main/.github/images/avalia-title.png" alt="Avalia Logo" width="300" /></div>
+<div align="center"><img align="center" src="https://raw.githubusercontent.com/hotaydev/avalia/main/.github/images/avalia-title.png" alt="Avalia Logo" /></div>
 
 ---
 
