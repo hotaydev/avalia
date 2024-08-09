@@ -10,10 +10,10 @@
 &nbsp;
 
 <div align="center">
-  <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/hotaydev?label=Sponsors">
-  <img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues">
-  <img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licen%C3%A7a">
-  <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web">
+  <a href="https://github.com/sponsors/hotaydev/" target="_blank"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/hotaydev?label=Sponsors"></a>
+  <a href="https://github.com/hotaydev/avalia/issues." target="_blank"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues"></a>
+  <a href="https://github.com/hotaydev/avalia?tab=AGPL-3.0-1-ov-file" target="_blank"><img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licen%C3%A7a"></a>
+  <a href="https://avalia.hotay.dev/" target="_blank"><img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web"></a>
 </div>
 &nbsp;
 
