@@ -1,5 +1,5 @@
 name: Security Scan
-run-name: Security Scan in ${{ github.base_ref }}
+run-name: Security Scan in ${{ github.head_ref || github.ref_name || github.base_ref }}
 
 on:
   push:
