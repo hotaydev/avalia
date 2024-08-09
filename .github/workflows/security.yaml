@@ -43,13 +43,8 @@ jobs:
           scanners: "vuln,misconfig,secret"
           severity: "UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW"
 
-      - name: Run npm audit scan
-        run: |
-          npm install
-          npm audit --audit-level info
-
       - name: Run Open Source Vulnerability Scanner (OSV)
         run: |
-          wget "https://github.com/google/osv-scanner/releases/download/v1.8.3/osv-scanner_linux_amd64"
+          wget -q "https://github.com/google/osv-scanner/releases/download/v1.8.3/osv-scanner_linux_amd64"
           chmod +x ./osv-scanner_linux_amd64
           ./osv-scanner_linux_amd64 --lockfile=./package-lock.json --lockfile=./docs/package-lock.json
