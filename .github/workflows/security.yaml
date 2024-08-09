@@ -49,8 +49,7 @@ jobs:
           npm audit --audit-level info
 
       - name: Run Open Source Vulnerability Scanner (OSV)
-        uses: google/osv-scanner-action/osv-scanner-action@1.8.3
-        with:
-          scan-args: |-
-            --lockfile=package-lock.json
-            --lockfile=docs/package-lock.json
+        run: |
+          curl https://github.com/google/osv-scanner/releases/download/v1.8.3/osv-scanner_linux_amd64 -o osv-scanner
+          chmod +x osv-scanner
+          ./osv-scanner --lockfile=package-lock.json --lockfile=docs/package-lock.json
