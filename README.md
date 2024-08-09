@@ -6,14 +6,14 @@
 <h4 align="center">Sistema para avaliação de projetos em Feiras de Iniciação Científica.<br/>De Código livre e Gratuito.</h4>
 
 
-<div align="center"><a href="https://avalia.hotay.dev/" target="_blank">🌐 Acessar online</a></div>
+<div align="center"><a href="https://avalia.hotay.dev/">🌐 Acessar online</a></div>
 &nbsp;
 
 <div align="center">
-  <a href="https://github.com/sponsors/hotaydev/" target="_blank"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/hotaydev?label=Sponsors"></a>
-  <a href="https://github.com/hotaydev/avalia/issues." target="_blank"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues"></a>
-  <a href="https://github.com/hotaydev/avalia?tab=AGPL-3.0-1-ov-file" target="_blank"><img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licen%C3%A7a"></a>
-  <a href="https://avalia.hotay.dev/" target="_blank"><img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web"></a>
+  <a href="https://github.com/sponsors/hotaydev/"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/hotaydev?label=Sponsors"></a>
+  <a href="https://github.com/hotaydev/avalia/issues"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues"></a>
+  <a href="https://github.com/hotaydev/avalia?tab=AGPL-3.0-1-ov-file"><img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licen%C3%A7a"></a>
+  <a href="https://avalia.hotay.dev/"><img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web"></a>
 </div>
 &nbsp;
 
