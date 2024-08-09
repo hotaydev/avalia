@@ -1,0 +1,56 @@
+name: Security Scan
+run-name: Security Scan in ${{ github.base_ref }}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Scanning only the last commit in the branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  # Required to upload SARIF file to CodeQL. See: https://github.com/github/codeql-action/issues/2117
+  actions: read
+  # Require writing security events to upload SARIF file to security tab
+  security-events: write
+  # Only need to read contents
+  contents: read
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          format: "table"
+          exit-code: 1
+          scanners: "vuln,misconfig,secret"
+          severity: "UNKNOWN,CRITICAL,HIGH,MEDIUM,LOW"
+
+      - name: Run npm audit scan
+        run: |
+          npm install
+          npm audit --audit-level info
+
+      - name: Run Open Source Vulnerability Scanner (OSV)
+        uses: google/osv-scanner-action/osv-scanner-action@1.8.3
+        with:
+          scan-args: |-
+            --lockfile=package-lock.json
+            --lockfile=docs/package-lock.json

@@ -1,0 +1,33 @@
+name: Quality Scan
+run-name: Quality Scan in ${{ github.base_ref }}
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: "0 6 * * 1" # 06 AM, every Monday
+
+# Scanning only the last commit in the branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Run biome quality scan
+        run: |
+          npm install
+          npx @biomejs/biome check ./src/
