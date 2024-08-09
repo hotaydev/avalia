@@ -9,6 +9,16 @@
 <div align="center"><a href="https://avalia.hotay.dev/" target="_blank">🌐 Acessar online</a></div>
 &nbsp;
 
+<div align="center">
+  <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/hotaydev/avalia/build.yaml?branch=main&link=https%3A%2F%2Fgithub.com%2Fhotaydev%2Favalia%2Factions%2Fworkflows%2Fbuild.yaml&label=Build">
+  <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/hotaydev?label=Sponsors">
+  <img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues">
+  <img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licença">
+  <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web">
+</div>
+&nbsp;
+
+
 🎉 Bem-vindo ao **Avalia**, uma plataforma gratuita e de código aberto, desenvolvida pela [Hotay](#sobre-a-hotay) para facilitar o processo de avaliação de projetos em Feiras de Iniciação Científica. Nosso objetivo é proporcionar uma ferramenta simples e acessível que apoie professores e avaliadores, especialmente em escolas públicas, trazendo mais tecnologia ao cotidiano da comunidade escolar.
 
 ## ✨ Funcionalidades Principais
