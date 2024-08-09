@@ -13,7 +13,7 @@
   <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/hotaydev/avalia/build.yaml?branch=main&link=https%3A%2F%2Fgithub.com%2Fhotaydev%2Favalia%2Factions%2Fworkflows%2Fbuild.yaml&label=Build">
   <img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/hotaydev?label=Sponsors">
   <img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues">
-  <img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licença">
+  <img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licen%C3%A7a">
   <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web">
 </div>
 &nbsp;
