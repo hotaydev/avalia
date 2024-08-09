@@ -1,3 +1,35 @@
+import { normalizeImagePath } from 'rspress/runtime';
+
 # Acesso
 
-Página em construção
+O acesso à área administrativa do **Avalia** é projetado para ser rápido e sem complicações, eliminando a necessidade de senhas. Atualmente, existem duas formas de login disponíveis para os administradores:
+
+[Página de login administrativo](https://avalia.hotay.dev/admin/login).
+
+### 1. Login com Google
+
+Para acessar a plataforma, você pode utilizar sua conta do Google. Este método é rápido, seguro e elimina a necessidade de criar e lembrar uma senha adicional.
+
+### 2. Login via Link Enviado por E-mail
+
+Se preferir, você também pode acessar o Avalia através de um **link de login** enviado diretamente para o seu e-mail. Basta clicar no link recebido para entrar na plataforma. Esse método é ideal para quem deseja evitar a integração com outras contas, para quem prefere simplicidade no acesso, ou simplesmente para aqueles que usam e-mails diferentes de @gmail.
+
+&nbsp;
+<img src={normalizeImagePath("/images/admin/login.png")} alt="Login administrativo" />
+&nbsp;
+
+### Primeiro Acesso e Criação de uma Feira
+
+Após realizar o primeiro acesso, caso você não tenha sido convidado por outro administrador para participar de uma feira existente, será solicitado que você preencha as informações iniciais sobre a sua feira. Esses dados incluem o **nome da escola** e o **nome da feira** que você deseja criar e administrar. Ao concluir essa etapa, você se torna automaticamente o administrador principal da feira e terá a capacidade de convidar outros usuários para ajudar na administração.
+
+&nbsp;
+<img src={normalizeImagePath("/images/admin/config.png")} alt="Dados da feira" />
+&nbsp;
+
+### Importante: Associação de E-mail a uma Feira
+
+Um ponto crucial a ser destacado é que cada e-mail (ou login) pode estar associado **apenas a uma feira**. Isso significa que, se você (geralmente um professor) precisar gerenciar feiras em **duas escolas diferentes**, será necessário utilizar dois e-mails diferentes — um para cada feira. Isso garante que cada feira tenha uma administração independente, sem conflitos de acesso ou gestão.
+
+Existem planos de adicionar a possibilidade de alterar o usuário administrador da feira e de atribuir várias feiras à um mesmo e-mail.
+
+Com essas opções de acesso e a simplicidade do sistema, você pode iniciar a administração da sua feira científica rapidamente e sem complicações.

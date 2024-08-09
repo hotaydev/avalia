@@ -1,3 +1,46 @@
+import { normalizeImagePath } from 'rspress/runtime';
+
 # Configuração Inicial
 
-Página em construção
+A configuração inicial da feira no **Avalia** é um processo simples, que precisa ser realizado apenas uma vez por um dos administradores. Após a configuração inicial, todos os administradores terão acesso às mudanças e poderão colaborar na gestão da feira.
+
+### Navegando na Página Administrativa
+
+Ao acessar a área administrativa, você encontrará várias abas que organizam as funcionalidades do sistema:
+
+- **Classificação:** Visualize o ranking dos projetos.
+- **Avaliadores:** Adicione e gerencie os avaliadores da feira.
+- **Projetos:** Inclua e organize os projetos que serão avaliados.
+- **Configurações:** Configure as informações essenciais da feira.
+
+&nbsp;
+<img src={normalizeImagePath("/images/admin/first-view.png")} alt="Visão inicial" />
+&nbsp;
+
+### Configuração Inicial na Aba "Configurações"
+
+A aba **Configurações** é onde toda a configuração inicial é feita. Aqui estão as principais etapas:
+
+1. **Definição das Datas da Feira:** 
+   - Configure as **datas de início e término** da feira, que determinarão o período em que os avaliadores poderão acessar e avaliar os projetos.
+
+2. **Gerenciamento de Usuários Administrativos:**
+   - **Convidar outros administradores:** Você pode adicionar outros usuários administrativos para ajudar na gestão da feira.
+   - **Remover administradores:** Se necessário, também é possível remover administradores existentes.
+
+3. **Configuração da Fonte de Dados:**
+   - Para manter o Avalia **gratuito**, cada feira utiliza sua própria "fonte de dados", que é uma planilha do Google.
+   - Disponibilizamos uma **[planilha modelo](https://docs.google.com/spreadsheets/d/1SfimzvUWXehgbfLYS_Pi2lABrWlWqjeU8_gX3xu2TXI/template/preview)** que você pode copiar e usar como base. Esta planilha contém todas as páginas e colunas necessárias, com instruções sobre quais partes não devem ser editadas, pois serão gerenciadas pelo sistema Avalia.
+   - Após copiar a planilha modelo, compartilhe-a com **acesso de edição** com o e-mail:
+      ```bash
+          avalia-spreadsheet-reader@avalia-hotay.iam.gserviceaccount.com
+        ```
+   - Uma vez configurada e compartilhada, basta copiar o **link da planilha** e colá-lo na aba "Configurações" no sistema Avalia.
+
+&nbsp;
+<img src={normalizeImagePath("/images/admin/data-origin.png")} alt="Fonte de Dados" />
+&nbsp;
+
+### Pós configuração
+
+Após a configuração inicial você poderá cadastrar [avaliadores](./evaluators) e [projetos](./projects).
