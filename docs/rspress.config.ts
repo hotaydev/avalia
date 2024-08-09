@@ -6,10 +6,8 @@ export default defineConfig({
   title: 'Avalia Docs',
   description: 'Documentação da Plataforma Avalia',
   icon: '/icon.png',
-  logo: {
-    light: '/light-logo.png',
-    dark: '/dark-logo.png',
-  },
+  logo: "/icon-small.png",
+  logoText: "Avalia",
   themeConfig: {
     socialLinks: [
       { icon: 'github', mode: 'link', content: 'https://github.com/hotaydev/avalia' },

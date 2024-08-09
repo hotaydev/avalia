@@ -7,11 +7,11 @@ hero:
   tagline: Documentação da Plataforma
   actions:
     - theme: brand
-      text: Início Rápido
-      link: /guide/introduction/general
+      text: Acessar
+      link: https://avalia.hotay.dev
     - theme: alt
-      text: GitHub
-      link: https://github.com/hotaydev/avalia
+      text: Entenda mais
+      link: /guide/introduction/general
   image:
     src: /icon.png
     alt: Avalia Docs Logo
