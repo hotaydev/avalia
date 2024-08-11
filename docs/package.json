@@ -8,6 +8,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
+    "@rspress/plugin-container-syntax": "^1.27.1",
     "rspress": "^1.27.1"
   },
   "devDependencies": {
