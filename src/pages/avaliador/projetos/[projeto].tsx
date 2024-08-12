@@ -15,7 +15,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 // TODO: validate fair start and end times before allowing this page and the previous page.
 
-export default function ProjetosAvaliador() {
+export default function ProjectToEvaluator() {
   const { push, query } = useRouter();
   const [project, setProject] = useState<ProjectForEvaluator | undefined>();
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -35,12 +35,13 @@ export default function ProjetosAvaliador() {
     const evaluator: Evaluator = JSON.parse(_evaluator);
     const fairInfo: ScienceFair = JSON.parse(_fairInfo);
 
-    let _project: ProjectForEvaluator | undefined;
-    if (evaluator.projects.length > 0) {
-      _project = evaluator.projects.filter((proj) => proj.id === query.projeto)[0] ?? undefined;
-      setProject(_project);
+    const outOfDateMessage = outOfEvaluationDates(fairInfo);
+    if (outOfDateMessage) {
+      push(`/avaliador/projetos?error=${outOfDateMessage}`);
+      return;
     }
 
+    const _project = getProjectFromList(evaluator);
     if (!_project) {
       (async () => {
         fetch(`/api/auth/evaluator/?sheetId=${fairInfo.spreadsheetId}&code=${evaluator.id}`)
@@ -105,6 +106,37 @@ export default function ProjetosAvaliador() {
     setQuestions(newQuestions);
   };
 
+  const getProjectFromList = (evaluator: Evaluator): ProjectForEvaluator | undefined => {
+    let _project: ProjectForEvaluator | undefined;
+    if (evaluator.projects.length > 0) {
+      _project = evaluator.projects.filter((proj) => proj.id === query.projeto)[0] ?? undefined;
+      setProject(_project);
+    }
+
+    return _project;
+  };
+
+  const outOfEvaluationDates = (fairInfo: ScienceFair): string | undefined => {
+    // If dates weren't configured, then we allow the evaluations (because we don't know when they should occur)
+    if (!(fairInfo.endDate || fairInfo.startDate)) {
+      return;
+    }
+
+    const startDate = new Date(fairInfo.startDate ?? "").getTime();
+    const endDate = new Date(fairInfo.endDate ?? "").getTime();
+    const now = Date.now();
+
+    if (endDate < now) {
+      return "A feira já se encerrou.";
+    }
+
+    if (startDate > now) {
+      return "A feira ainda não se iniciou.";
+    }
+
+    return;
+  };
+
   const sendScores = (): void => {
     if (questions.some((q) => q.value === undefined && q.type !== "text")) {
       toast.error("Alguma questão não está preenchida.");
@@ -116,7 +148,7 @@ export default function ProjetosAvaliador() {
 
     setButtonEnabled(false);
     const toastId = toast.loading("Enviando avaliação...");
-    fetch("/api/evaluator/questions/", {
+    fetch("/api/evaluator/evaluate/", {
       method: "POST",
       body: JSON.stringify({
         evaluator: evaluator.id,
@@ -159,7 +191,7 @@ export default function ProjetosAvaliador() {
           await new Promise((r) => setTimeout(r, 1600)); // sleep
           push("/avaliador/projetos");
         } else {
-          toast.error("Ocorreu algum erro. Tente novamente.");
+          toast.error(data.message ?? "Ocorreu algum erro. Tente novamente.");
           setButtonEnabled(true);
         }
       })

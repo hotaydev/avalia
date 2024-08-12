@@ -97,10 +97,10 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
   };
 
   const setValues = (newValues: string[]) => {
-    setValueOne(newValues[0]);
-    setValueTwo(newValues[1]);
-    setValueThree(newValues[2]);
-    setValueFour(newValues[3]);
+    setValueOne(newValues[0].toUpperCase());
+    setValueTwo(newValues[1].toUpperCase());
+    setValueThree(newValues[2].toUpperCase());
+    setValueFour(newValues[3].toUpperCase());
   };
 
   const sendButton = () => {
@@ -120,7 +120,7 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
               value={valueOne}
               onChange={(e) =>
                 handleInput({
-                  value: e.target.value,
+                  value: e.target.value.toUpperCase(),
                   setState: setValueOne,
                   nextInput: inputTwoRef,
                 })
@@ -136,7 +136,7 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
               value={valueTwo}
               onChange={(e) =>
                 handleInput({
-                  value: e.target.value,
+                  value: e.target.value.toUpperCase(),
                   setState: setValueTwo,
                   nextInput: inputThreeRef,
                 })
@@ -152,7 +152,7 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
               value={valueThree}
               onChange={(e) =>
                 handleInput({
-                  value: e.target.value,
+                  value: e.target.value.toUpperCase(),
                   setState: setValueThree,
                   nextInput: inputFourRef,
                 })
@@ -168,7 +168,7 @@ export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code:
               value={valueFour}
               onChange={(e) =>
                 handleInput({
-                  value: e.target.value,
+                  value: e.target.value.toUpperCase(),
                   setState: setValueFour,
                   nextInput: undefined,
                 })

@@ -2,14 +2,14 @@
 
 Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das versões planejadas para o sistema "Avalia".
 
-### Versão 1.0 (Em Andamento)
+### Versão 1.0 (Concluída)
 
 - **Avaliador:**
 
   - [x] Área dos avaliadores acessível via link direto
   - [x] Área dos avaliadores acessível via código
   - [x] Enviar link de acesso e código do avaliador via email e WhatsApp
-  - [ ] Bloquear o envio de avaliações fora do período definido
+  - [x] Bloquear o envio de avaliações fora do período definido
 
 - **Administração:**
 
@@ -32,9 +32,9 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [x] Definir página 404 com link para a /
   - [x] Adicionar `robots.txt`
   - [x] Tratar erros 429 (WAF Rate-Limit) informando o usuário
-  - [ ] Publicar a documentação
+  - [x] Publicar a documentação
 
-### Versão 2.0
+### Versão 2.0 (Em Andamento)
 
 - **Avaliador:**
 

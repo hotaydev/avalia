@@ -8,6 +8,7 @@ const ContentSecurityPolicy = `
   connect-src *;
   font-src 'self' data: use.typekit.net;
   frame-src avalia-hotay.firebaseapp.com;
+  object-src data:;
 `;
 
 const securityHeaders = [

@@ -1,7 +1,5 @@
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
-import type { Evaluation } from "@/lib/models/evaluation";
 import type { Question } from "@/lib/models/question";
-import FairSpreadsheet from "@/lib/services/fairSpreadsheets";
 
 const defaultQuestions: Question[] = [
   {
@@ -60,34 +58,4 @@ export async function GET() {
     message: "Perguntas do projeto obtidas com sucesso.",
     data: defaultQuestions,
   } as AvaliaApiResponse);
-}
-
-export async function POST(request: Request) {
-  const { sheetId, evaluator, questions, project } = await request.json();
-
-  if (!(sheetId && evaluator && questions && project)) {
-    return Response.json({
-      status: "error",
-      message: "Parâmetros necessários não foram passados.",
-    } as AvaliaApiResponse);
-  }
-
-  try {
-    const evaluated: Evaluation = await new FairSpreadsheet({ spreadsheetId: sheetId }).createEvaluatorAnswer({
-      evaluator,
-      project,
-      questions,
-    });
-
-    return Response.json({
-      status: "success",
-      message: "Avaliação salva com sucesso!",
-      data: evaluated,
-    } as AvaliaApiResponse);
-  } catch (error) {
-    return Response.json({
-      status: "error",
-      message: (error as Error).message,
-    } as AvaliaApiResponse);
-  }
 }

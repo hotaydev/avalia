@@ -8,11 +8,11 @@ import type { ScienceFair } from "@/lib/models/scienceFair";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FcOk } from "react-icons/fc";
 
-export default function ProjetosAvaliador() {
-  const { push } = useRouter();
+export default function ProjectsForEvaluator() {
+  const { push, query } = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [evaluator, setEvaluator] = useState<Evaluator | undefined>(undefined);
   const [fairInfo, setFairInfo] = useState<ScienceFair | undefined>(undefined);
@@ -30,6 +30,10 @@ export default function ProjetosAvaliador() {
       setEvaluator(localEvaluator);
       setFairInfo(localFairInfo);
       setLoading(false);
+
+      if (query.error) {
+        toast.error(query.error as string);
+      }
 
       if (_evaluatorLastUpdated) {
         // FUTURE: In the future this "future date" can be a environment variable or something configurable by the admins
@@ -63,7 +67,7 @@ export default function ProjetosAvaliador() {
     () => {
       mounted = false;
     };
-  }, [push]);
+  }, [push, query]);
 
   const handleEvaluatorDataApiResponse = (data: AvaliaApiResponse) => {
     // evaluatorResponse.data will be true if the evaluator was found
@@ -82,6 +86,7 @@ export default function ProjetosAvaliador() {
       <Head>
         <title>Projetos | Avalia</title>
       </Head>
+      <Toaster />
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-10">Seus projetos para avaliação:</h2>

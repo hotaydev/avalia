@@ -235,6 +235,36 @@ export default class AvaliaSpreadsheet {
     };
   }
 
+  public async getFairFromSheetId(sheetId: string): Promise<ScienceFair> {
+    if (!sheetId) {
+      throw new Error(ErrorMessage.lackOfParameters);
+    }
+
+    const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
+
+    let foundFair: GoogleSpreadsheetRow | undefined = undefined;
+    for (const fair of await fairsSheet.getRows()) {
+      if (fair.get("spreadsheetId") === sheetId) {
+        foundFair = fair;
+        break;
+      }
+    }
+
+    if (!foundFair) {
+      throw new Error(ErrorMessage.fairNotFound);
+    }
+
+    return {
+      adminEmail: foundFair.get("adminEmail"),
+      fairName: foundFair.get("fairName"),
+      fairId: foundFair.get("fairId"),
+      fairSchool: foundFair.get("fairSchool"),
+      spreadsheetId: foundFair.get("spreadsheetId"),
+      startDate: foundFair.get("startDate"),
+      endDate: foundFair.get("endDate"),
+    };
+  }
+
   public async getFairUsers(fairId: string, email: string): Promise<FairUser[]> {
     if (!(fairId && email)) {
       throw new Error(ErrorMessage.lackOfParameters);

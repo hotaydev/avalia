@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function Login() {
+export default function EvaluatorLogin() {
   const { push, query } = useRouter();
   const [loading, setLoading] = useState(true);
 

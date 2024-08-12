@@ -7,7 +7,7 @@ import type { ScienceFair } from "@/lib/models/scienceFair";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ChooseFair() {
   const [heigth, setHeigth] = useState<number | undefined>();
@@ -100,6 +100,7 @@ export default function ChooseFair() {
       <Head>
         <title>Login do Avaliador | Avalia</title>
       </Head>
+      <Toaster />
       <HeaderTitle />
       <div
         id="fairsAvailableArea"
