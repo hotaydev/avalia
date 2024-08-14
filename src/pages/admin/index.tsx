@@ -158,7 +158,6 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
             const sortedRanking = rank.projects
               .toSorted((a, b) => ((a.score ?? 0) > (b.score ?? 0) ? -1 : 1))
               .slice(0, 5);
-            let rankingModifier = 1;
             return (
               <div key={rank.title} className="bg-gray-50 rounded-md px-4 text-center pt-4 pb-6">
                 <div className="flex justify-between items-center">
@@ -206,25 +205,13 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
                         break;
                     }
 
-                    if (index !== 0 && sortedRanking[index].score === sortedRanking[index - 1].score) {
-                      rankingModifier--;
-                    }
-
                     return (
                       <div
                         key={project.id}
                         className={`flex justify-between gap-2 bg-white items-center px-4 py-2 rounded-md ${medal}`}
                       >
                         <div className="flex justify-start items-center gap-4">
-                          {index === 0 && <p className="font-semibold">1º</p>}
-                          {index !== 0 && (
-                            <p className="font-semibold">
-                              {sortedRanking[index].score === sortedRanking[index - 1].score
-                                ? index
-                                : index + rankingModifier}
-                              º
-                            </p>
-                          )}
+                          <p className="font-semibold">{index + 1}º</p>
                           <p className="text-gray-700 text-sm" title={project.title}>
                             {project.title.substring(0, 35)}
                             {project.title.length > 35 ? "..." : ""}
@@ -280,8 +267,7 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
                     className={`flex justify-between gap-2 bg-white items-center px-4 py-2 rounded-md ${medal}`}
                   >
                     <div className="flex justify-start items-center gap-4">
-                      {index === 0 && <p className="font-semibold">1º</p>}
-                      {index !== 0 && <p className="font-semibold">{index}º</p>}
+                      <p className="font-semibold">{index + 1}º</p>
                       <p className="text-gray-700 text-sm" title={project.title}>
                         {project.title.substring(0, 35)}
                         {project.title.length > 35 ? "..." : ""}
