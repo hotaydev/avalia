@@ -14,14 +14,14 @@ export async function GET(request: Request) {
   }
 
   try {
-    const categories: Category[] = await new FairSpreadsheet({
+    const rankingWithCategories: Category[] = await new FairSpreadsheet({
       spreadsheetId: sheetId,
     }).getRanking();
 
     return Response.json({
       status: "success",
       message: "Got Ranking",
-      data: categories,
+      data: rankingWithCategories,
     } as AvaliaApiResponse);
   } catch (error) {
     return Response.json({

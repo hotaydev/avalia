@@ -33,7 +33,7 @@ export default function AdminPage() {
           return;
         }
 
-        const rankingInfo = JSON.parse(localStorage.getItem("ranking") ?? "[]");
+        const rankingInfo: Category[] = JSON.parse(localStorage.getItem("ranking") ?? "[]");
         if (!fairInfo.spreadsheetId || rankingInfo.length > 0) {
           setRanking(rankingInfo);
           setLoading(false);
@@ -98,7 +98,11 @@ export default function AdminPage() {
           ) : (
             <>
               {ranking.length > 0 ? (
-                <RankingContent ranking={ranking} router={router} />
+                ranking.some((rank) => rank.hasEvaluations) ? (
+                  <RankingContent ranking={ranking} router={router} />
+                ) : (
+                  <NoEvaluatedContent router={router} />
+                )
               ) : (
                 <NoContent router={router} />
               )}
@@ -300,6 +304,35 @@ function NoContent({ router }: { router: NextRouter }) {
           onClick={() => router.reload()}
         >
           Atualizar
+        </button>
+        <p className="text-gray-500 font-light text-sm">Última atualização há {getLastTime("rankingLastUpdated")}</p>
+      </div>
+    </div>
+  );
+}
+
+function NoEvaluatedContent({ router }: { router: NextRouter }) {
+  const getNewData = () => {
+    localStorage.removeItem("ranking");
+    localStorage.removeItem("rankingLastUpdated");
+    router.reload();
+  };
+
+  return (
+    <div className="flex flex-col justify-center items-center h-full w-full gap-20">
+      <Image src="/images/empty.svg" alt="Sem dados atualmente" width={647.63626 / 2} height={632.17383 / 2} />
+      <p className="text-gray-500 text-center font-light">
+        Aparentemente nenhum projeto foi avaliado até agora.
+        <br />
+        Caso as avaliações já tenham iniciado, tente atualizar a lista usando o botão a baixo.
+      </p>
+      <div className="w-full flex flex-col items-center justify-center">
+        <button
+          type="button"
+          className="w-1/4 p-2 mb-2 bg-blue-500 text-white transition-all rounded-lg hover:bg-blue-600"
+          onClick={getNewData}
+        >
+          Atualizar lista
         </button>
         <p className="text-gray-500 font-light text-sm">Última atualização há {getLastTime("rankingLastUpdated")}</p>
       </div>

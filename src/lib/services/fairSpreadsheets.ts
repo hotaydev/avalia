@@ -496,15 +496,17 @@ export default class FairSpreadsheet {
           description: project.get("Descrição"),
           category: project.get("Categoria"),
           field: project.get("Área"),
-          score: this.getProjectScore(project.get("ID"), evaluations),
+          score: evaluations.length > 0 ? this.getProjectScore(project.get("ID"), evaluations) : 0,
           evaluators: [], // Note: Evaluators array can be blank, it's not necessary for the Ranking
         });
       }
 
       const categories: Category[] = categoriesList.map((category) => {
+        const projectsForThisRanking = projects.filter((proj) => proj.category === category);
         return {
           title: category,
-          projects: projects.filter((proj) => proj.category === category),
+          projects: projectsForThisRanking,
+          hasEvaluations: projectsForThisRanking.some((proj) => proj.score !== 0),
         };
       });
 
