@@ -111,7 +111,7 @@ export default function ProjectsForEvaluator() {
         )}
       </div>
       <EvaluatorLogoutComponent />
-      <Footer fixed={(evaluator?.projects.length ?? 0) <= 6} />
+      <Footer fixed={false} />
     </main>
   );
 }
