@@ -32,7 +32,9 @@ export default function ProjectsForEvaluator() {
       setLoading(false);
 
       if (query.error) {
-        toast.error(query.error as string);
+        toast(query.error as string, {
+          icon: "⏰",
+        });
       }
 
       if (_evaluatorLastUpdated) {

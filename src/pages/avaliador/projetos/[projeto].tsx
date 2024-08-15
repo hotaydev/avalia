@@ -131,7 +131,7 @@ export default function ProjectToEvaluator() {
     }
 
     if (startDate > now) {
-      return "A feira ainda não se iniciou.";
+      return "A feira ainda não iniciou. Em breve você poderá avaliar os projetos.";
     }
 
     return;
