@@ -28,7 +28,6 @@ export default function ProjectsForEvaluator() {
       const localFairInfo: ScienceFair = JSON.parse(_fairInfo);
 
       setEvaluator(localEvaluator);
-      setFairInfo(localFairInfo);
       setLoading(false);
 
       if (query.error) {
@@ -39,7 +38,7 @@ export default function ProjectsForEvaluator() {
 
       if (_evaluatorLastUpdated) {
         // FUTURE: In the future this "future date" can be a environment variable or something configurable by the admins
-        const futureDate = new Date(_evaluatorLastUpdated).setMinutes(new Date().getMinutes() + 10);
+        const futureDate = new Date(Number.parseInt(_evaluatorLastUpdated)).setMinutes(new Date().getMinutes() + 10);
         if (futureDate < Date.now()) {
           // It have passed more than 10 minutes since the last update
 
@@ -60,8 +59,28 @@ export default function ProjectsForEvaluator() {
                 toast.error(error.message);
               });
           })();
+
+          (async () => {
+            await fetch(`/api/auth/fairs/?fairId=${localFairInfo.fairId}`)
+              .then((res) => {
+                if (res.status === 429) {
+                  throw new Error("Nós evitamos muitas requisições seguidas. Espere um pouco e tente novamente.");
+                }
+                return res.json();
+              })
+              .then((fairInfoResponse: AvaliaApiResponse) => {
+                if (mounted) {
+                  handleFairInfoDataApiResponse(fairInfoResponse);
+                }
+              })
+              .catch((error) => {
+                toast.error(error.message);
+              });
+          })();
         }
       }
+
+      setFairInfo(localFairInfo);
     } else {
       push("/avaliador"); // This page will handle the localStorage items
     }
@@ -76,6 +95,14 @@ export default function ProjectsForEvaluator() {
     if (data.status === "success" && data.data) {
       localStorage.setItem("evaluator", JSON.stringify(data.data));
       localStorage.setItem("evaluatorLastUpdated", Date.now().toString());
+      setEvaluator(data.data as Evaluator); // update projects
+    }
+  };
+
+  const handleFairInfoDataApiResponse = (data: AvaliaApiResponse) => {
+    if (data.status === "success" && data.data) {
+      localStorage.setItem("fairInfo", JSON.stringify(data.data));
+      setFairInfo(data.data as ScienceFair); // possibly update fair dates
     }
   };
 
