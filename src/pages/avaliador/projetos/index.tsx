@@ -264,7 +264,9 @@ function TimeRemainingString({ fairInfo }: { fairInfo?: ScienceFair }) {
     const weekday = days[date.getDay()];
     const month = months[date.getMonth()];
     const dayNumber = addZeroToDate(date.getDate());
-    const time = `${addZeroToDate(date.getHours())}h${addZeroToDate(date.getMinutes())}`;
+
+    // TODO: remove this "- 2" from here, it was used for a specific fair
+    const time = `${addZeroToDate(date.getHours() - 2)}h${addZeroToDate(date.getMinutes())}`;
 
     return (
       <p>
