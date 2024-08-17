@@ -47,9 +47,14 @@ Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das 
   - [ ] Configuração do formulário do avaliador
   - [ ] Configuração de diferentes rankings
   - [ ] Adicionar mais formas de login social
+  - [ ] Possibilidade de editar o nome da escola/feira (atualmente é possível apenas na configuração inicial)
+  - [ ] Melhorar estilos CSS para visualização em celulares (atualmente funciona apenas em desktop, apenas as páginas do avaliador que são otimizadas para celulares e desktops)
+  - [ ] Exportar colocações como PDF
+  - [ ] Opção de diferentes sistemas de notas (de 5 a 10 e de 1 a 5)
 
 - **Sistema:**
   - [ ] Criar automaticamente as planilhas no Drive conectado
+  - [ ] Utilizar IDs numéricos para projetos, de forma reordenável
 
 ### Versão 3.0
 

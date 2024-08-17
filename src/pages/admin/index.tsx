@@ -5,6 +5,7 @@ import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Category } from "@/lib/models/category";
 import type { ScienceFair } from "@/lib/models/scienceFair";
+import capitalizeFirstLetters from "@/lib/utils/capitalize";
 import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
@@ -216,8 +217,8 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
                       >
                         <div className="flex justify-start items-center gap-4">
                           <p className="font-semibold">{index + 1}º</p>
-                          <p className="text-gray-700 text-sm" title={project.title}>
-                            {project.title.substring(0, 35)}
+                          <p className="text-gray-700 text-sm text-left" title={project.title}>
+                            {capitalizeFirstLetters(project.title.substring(0, 35))}
                             {project.title.length > 35 ? "..." : ""}
                           </p>
                         </div>
@@ -272,8 +273,8 @@ function RankingContent({ ranking, router }: Readonly<{ ranking: Category[]; rou
                   >
                     <div className="flex justify-start items-center gap-4">
                       <p className="font-semibold">{index + 1}º</p>
-                      <p className="text-gray-700 text-sm" title={project.title}>
-                        {project.title.substring(0, 35)}
+                      <p className="text-gray-700 text-sm text-left" title={project.title}>
+                        {capitalizeFirstLetters(project.title.substring(0, 35))}
                         {project.title.length > 35 ? "..." : ""}
                       </p>
                     </div>

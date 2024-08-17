@@ -8,6 +8,7 @@ import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { Question } from "@/lib/models/question";
 import type { ScienceFair } from "@/lib/models/scienceFair";
+import capitalizeFirstLetters from "@/lib/utils/capitalize";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -212,7 +213,7 @@ export default function ProjectToEvaluator() {
         <h2 className="text-2xl font-semibold text-gray-800 mb-2">Avaliação do projeto</h2>
         <h3 className="font-normal text-gray-500 mb-6">
           {project?.title ? (
-            project.title
+            capitalizeFirstLetters(project.title)
           ) : (
             <span className="rounded-lg bg-gray-100 text-gray-100">------------------------------</span>
           )}

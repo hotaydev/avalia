@@ -3,6 +3,7 @@ import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
+import capitalizeFirstLetters from "@/lib/utils/capitalize";
 import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
 import type { JSX } from "react";
 import toast from "react-hot-toast";
@@ -358,7 +359,9 @@ function TableContent({
   };
 
   const idUppercaseOrValue = (columnKey: string, itemVal: string | number) => {
-    return columnKey === "id" ? clickToCopyIdSection(itemVal.toString().toUpperCase()) : itemVal;
+    return columnKey === "id"
+      ? clickToCopyIdSection(itemVal.toString().toUpperCase())
+      : capitalizeFirstLetters(itemVal);
   };
 
   const clickToCopyIdSection = (id: string) => {

@@ -5,6 +5,7 @@ import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
+import capitalizeFirstLetters from "@/lib/utils/capitalize";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -212,9 +213,11 @@ function ProjectListItem({
       }}
     >
       <div className="flex flex-col items-start justify-center">
-        <h3 className={`text-normal text-gray-700 ${project.evaluation ? "line-through" : ""}`}>{project.title}</h3>
+        <h3 className={`text-normal text-gray-700 ${project.evaluation ? "line-through" : ""}`}>
+          {capitalizeFirstLetters(project.title)}
+        </h3>
         <p className={`text-xs text-gray-500 font-light ${project.evaluation ? "line-through" : ""}`}>
-          {project.category}
+          {capitalizeFirstLetters(project.category)}
         </p>
       </div>
       <div>
@@ -265,8 +268,7 @@ function TimeRemainingString({ fairInfo }: { fairInfo?: ScienceFair }) {
     const month = months[date.getMonth()];
     const dayNumber = addZeroToDate(date.getDate());
 
-    // TODO: remove this "- 2" from here, it was used for a specific fair
-    const time = `${addZeroToDate(date.getHours() - 2)}h${addZeroToDate(date.getMinutes())}`;
+    const time = `${addZeroToDate(date.getHours())}h${addZeroToDate(date.getMinutes())}`;
 
     return (
       <p>

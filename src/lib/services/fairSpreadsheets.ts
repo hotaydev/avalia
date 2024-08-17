@@ -66,7 +66,7 @@ export default class FairSpreadsheet {
         let id = row.get("ID");
 
         if (!id) {
-          id = generateId();
+          id = await this.getIdThatDoesNotExist(projectsSheet);
           row.set("ID", id);
           row.save();
         }
@@ -85,7 +85,7 @@ export default class FairSpreadsheet {
         let id = row.get("ID");
 
         if (!id) {
-          id = generateId();
+          id = await this.getIdThatDoesNotExist(evaluatorsSheet);
           row.set("ID", id);
           row.save();
         }
@@ -119,7 +119,7 @@ export default class FairSpreadsheet {
         let id = row.get("ID");
 
         if (!id) {
-          id = generateId();
+          id = await this.getIdThatDoesNotExist(evaluatorsSheet);
           row.set("ID", id);
           row.save();
         }
@@ -148,7 +148,7 @@ export default class FairSpreadsheet {
         let id = row.get("ID");
 
         if (!id) {
-          id = generateId();
+          id = await this.getIdThatDoesNotExist(projectsSheet);
           row.set("ID", id);
           row.save();
         }
@@ -272,7 +272,7 @@ export default class FairSpreadsheet {
 
     try {
       const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
-      const id = generateId();
+      const id = await this.getIdThatDoesNotExist(evaluatorsSheet);
 
       await evaluatorsSheet.addRow({
         // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
@@ -293,6 +293,22 @@ export default class FairSpreadsheet {
     }
   }
 
+  private async getIdThatDoesNotExist(sheet: GoogleSpreadsheetWorksheet): Promise<string> {
+    const ids: string[] = [];
+    for (const row of await sheet.getRows()) {
+      ids.push(row.get("ID"));
+    }
+
+    let newId: string;
+
+    // Generate a new ID until it's not in the ids array
+    do {
+      newId = generateId();
+    } while (ids.includes(newId));
+
+    return newId;
+  }
+
   public async createProject({
     projectName,
     projectDescription,
@@ -310,7 +326,7 @@ export default class FairSpreadsheet {
 
     try {
       const projectsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.projects);
-      const id = generateId();
+      const id = await this.getIdThatDoesNotExist(projectsSheet);
 
       await projectsSheet.addRow({
         // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name

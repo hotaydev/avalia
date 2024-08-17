@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-export default function AvaliadorCode({ callback }: Readonly<{ callback?: (code: string) => void }>) {
+export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code: string) => void }>) {
   const [valueOne, setValueOne] = useState("");
   const [valueTwo, setValueTwo] = useState("");
   const [valueThree, setValueThree] = useState("");
