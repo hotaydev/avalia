@@ -13,8 +13,17 @@ updates:
     commit-message:
       prefix: fix(deps)
       prefix-development: chore(dev-deps)
-    group:
-      group-name: "all-minor-and-patch-updates"
-      patterns:
-        - dependency-type: "all"
-          update-type: "all"
+    groups:
+      all-minor-and-patch-updates:
+        update-types:
+          - "minor"
+          - "patch"
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+      major-updates:
+        update-types:
+          - "major"
+        applies-to: "version-updates"
+        patterns:
+          - "*"
