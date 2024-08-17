@@ -1,6 +1,17 @@
 ---
 pageType: home
 
+head:
+  - - meta
+    - property: og:title
+      content: Avalia - Sistema para Avaliação de Feiras Científicas
+  - - meta
+    - property: og:url
+      content: https://avalia.hotay.dev/docs
+  - - meta
+    - property: og:image
+      content: https://avalia.hotay.dev/docs/images/preview.jpg
+
 hero:
   name: Avalia
   text: Sistema para Avaliação de Feiras Científicas
