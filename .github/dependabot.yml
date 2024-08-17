@@ -3,8 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directories: ["/", "/docs"]
     schedule:
-      interval: "weekly"
-      day: "saturday"
+      interval: "monthly"
     versioning-strategy: "increase"
     labels:
       - "dependencies"
@@ -14,3 +13,8 @@ updates:
     commit-message:
       prefix: fix(deps)
       prefix-development: chore(dev-deps)
+    group:
+      group-name: "all-minor-and-patch-updates"
+      patterns:
+        - dependency-type: "all"
+          update-type: "all"

@@ -8,10 +8,10 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/plugin-container-syntax": "^1.27.1",
-    "rspress": "^1.27.1"
+    "@rspress/plugin-container-syntax": "^1.28.0",
+    "rspress": "^1.28.0"
   },
   "devDependencies": {
-    "@types/node": "^22.2.0"
+    "@types/node": "^22.4.0"
   }
 }
