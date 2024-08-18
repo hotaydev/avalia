@@ -12,7 +12,7 @@ export default function Footer({ fixed = true }: { fixed?: boolean }) {
       <Link href="https://www.hotay.dev" target="_blank">
         <Image
           className="ml-2"
-          src="https://www.hotay.dev/assets/images/logo.svg"
+          src="https://www.hotay.dev/assets/imgs/logo.svg"
           alt="Logo da Hotay"
           width={70}
           height={23}

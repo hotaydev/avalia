@@ -59,7 +59,7 @@ export default function AdminMenu({
       <div className="z-10 text-gray-500 text-center flex flex-col items-center justify-center py-4 w-full font-light relative">
         Desenvolvido gratuitamente pela
         <Link href="https://www.hotay.dev" target="_blank" rel="noopener noreferrer" className="mt-2">
-          <Image src="https://www.hotay.dev/assets/images/logo.svg" alt="Logo da Hotay" width={70} height={23} />
+          <Image src="https://www.hotay.dev/assets/imgs/logo.svg" alt="Logo da Hotay" width={70} height={23} />
         </Link>
       </div>
     </div>
