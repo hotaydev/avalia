@@ -1,0 +1,30 @@
+name: Project is Building Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Scanning only the last commit in the branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Build project
+        run: |
+          npm install
+          npm run build
