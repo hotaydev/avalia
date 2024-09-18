@@ -1,41 +1,43 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"all": true,
-			"a11y": {
-				"useKeyWithClickEvents": "off",
-				"useKeyWithMouseEvents": "off"
-			},
-			"suspicious": {
-				"noExplicitAny": "info"
-			},
-			"style": {
-				"noDefaultExport": "off",
-				"useFilenamingConvention": "off"
-			},
-			"correctness": {
-				"noNodejsModules": "off"
-			}
-		}
-	},
-	"formatter": {
-		"indentStyle": "space",
-		"indentWidth": 2,
-		"lineWidth": 120
-	},
-	"files": {
-		"ignoreUnknown": true,
-		"ignore": [
-			"public/**/*",
-			"docs/**/*"
-		]
-	},
-	"vcs": {
-		"useIgnoreFile": true
-	}
+  "$schema": "https://biomejs.dev/schemas/1.9.1/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "a11y": {
+        "useKeyWithClickEvents": "off",
+        "useKeyWithMouseEvents": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "info",
+        "noReactSpecificProps": "off"
+      },
+      "style": {
+        "noDefaultExport": "off",
+        "useFilenamingConvention": "off"
+      },
+      "correctness": {
+        "noNodejsModules": "off",
+        "useImportExtensions": "off"
+      }
+    }
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "ignore": [
+      "public/**/*",
+      "docs/**/*"
+    ]
+  },
+  "vcs": {
+    "useIgnoreFile": true
+  }
 }

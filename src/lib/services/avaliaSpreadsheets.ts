@@ -5,6 +5,8 @@ import { ErrorMessage } from "../constants/errors";
 import type { ScienceFair } from "../models/scienceFair";
 import type { FairUser } from "../models/user";
 
+const removeEditPartRegex = /\/edit.*/;
+
 const adminSpreadsheetTitlesOfSheets = {
   fairs: "Science Fairs",
   users: "Users",
@@ -159,7 +161,7 @@ export default class AvaliaSpreadsheet {
 
     const usersSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
-    let row: GoogleSpreadsheetRow | undefined = undefined;
+    let row: GoogleSpreadsheetRow | undefined;
     let fairId = "";
     for (const singleValue of await usersSheet.getRows()) {
       if (singleValue.get("email") === email) {
@@ -177,7 +179,7 @@ export default class AvaliaSpreadsheet {
 
     const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
-    let foundFair: GoogleSpreadsheetRow | undefined = undefined;
+    let foundFair: GoogleSpreadsheetRow | undefined;
     for (const fair of await fairsSheet.getRows()) {
       if (fair.get("fairId") === fairId) {
         foundFair = fair;
@@ -212,7 +214,7 @@ export default class AvaliaSpreadsheet {
 
     const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
-    let foundFair: GoogleSpreadsheetRow | undefined = undefined;
+    let foundFair: GoogleSpreadsheetRow | undefined;
     for (const fair of await fairsSheet.getRows()) {
       if (fair.get("fairId") === fairId) {
         foundFair = fair;
@@ -242,7 +244,7 @@ export default class AvaliaSpreadsheet {
 
     const fairsSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 
-    let foundFair: GoogleSpreadsheetRow | undefined = undefined;
+    let foundFair: GoogleSpreadsheetRow | undefined;
     for (const fair of await fairsSheet.getRows()) {
       if (fair.get("spreadsheetId") === sheetId) {
         foundFair = fair;
@@ -272,7 +274,7 @@ export default class AvaliaSpreadsheet {
 
     const usersSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.users);
 
-    const users = [];
+    const users: FairUser[] = [];
     for (const row of await usersSheet.getRows()) {
       if (row.get("fairId") === fairId) {
         users.push({
@@ -327,7 +329,7 @@ export default class AvaliaSpreadsheet {
       throw new Error(ErrorMessage.lackOfParameters);
     }
 
-    const sheetId = linkId.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
+    const sheetId = linkId.replace("https://docs.google.com/spreadsheets/d/", "").replace(removeEditPartRegex, "");
 
     const fairSheet = await this.getSheetByTitle(adminSpreadsheetTitlesOfSheets.fairs);
 

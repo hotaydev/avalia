@@ -36,15 +36,14 @@ const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security
   {
     key: "Strict-Transport-Security",
-    value: "max-age=31536000; includeSubDomains; preload"
+    value: "max-age=31536000; includeSubDomains; preload",
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
   {
     key: "Permissions-Policy",
     value: "camera=(self), microphone=(), geolocation=()",
   },
-]
-
+];
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -62,7 +61,7 @@ const nextConfig = {
         destination: "/docs/index.html",
         permanent: true,
       },
-    ]
+    ];
   },
   headers() {
     return [
@@ -74,7 +73,7 @@ const nextConfig = {
           // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
           {
             key: "Cache-Control",
-            value: "public, max-age=31536000, immutable"
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },
@@ -86,12 +85,12 @@ const nextConfig = {
           // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
           {
             key: "Cache-Control",
-            value: "no-cache"
+            value: "no-cache",
           },
         ],
       },
     ];
-  }
+  },
 };
 
 export default nextConfig;

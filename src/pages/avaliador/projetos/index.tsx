@@ -260,7 +260,7 @@ function TimeRemainingString({ fairInfo }: { fairInfo?: ScienceFair }) {
   if (fairInfo?.endDate) {
     const date = new Date(fairInfo?.endDate);
 
-    if (date.getTime() < new Date().getTime()) {
+    if (date.getTime() < Date.now()) {
       return <p>As avaliações já encerraram. Agradecemos sua participação.</p>;
     }
 

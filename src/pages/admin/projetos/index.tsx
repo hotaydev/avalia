@@ -350,7 +350,5 @@ function printContent(content: string) {
     mywindow.onload = () => {
       mywindow.print();
     };
-  } else {
-    console.error("Failed to open new window.");
   }
 }

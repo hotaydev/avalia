@@ -429,7 +429,7 @@ function TableContent({
                   >
                     {Array.isArray(itemVal)
                       ? itemVal.length
-                      : idUppercaseOrValue(column.key, itemVal) ?? blankItemIfNoValue(column.key)}
+                      : (idUppercaseOrValue(column.key, itemVal) ?? blankItemIfNoValue(column.key))}
                     {column.key === "__send__" && <SendMessageContact evaluator={item} fairInfo={fairInfo} />}
                     {column.key === "projects" && <AddProjectToEvaluator evaluator={item} />}
                     {column.key === "evaluators" && <AddEvaluatorToProject />}

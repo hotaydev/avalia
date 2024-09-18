@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import DialogComponent from "../Dialog/Dialog";
 import ConfigItem from "./ConfigItem";
 
+const removeEditPartRegex = /\/edit.*/;
+
 export default function SheetsData() {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
   const [link, setLink] = useState("");
@@ -13,7 +15,7 @@ export default function SheetsData() {
     const toastId = toast.loading("Salvando informações...");
 
     const fairId = JSON.parse(localStorage.getItem("fairInfo") ?? "{}").fairId;
-    const sheetId = link.replace("https://docs.google.com/spreadsheets/d/", "").replace(/\/edit.*/, "");
+    const sheetId = link.replace("https://docs.google.com/spreadsheets/d/", "").replace(removeEditPartRegex, "");
 
     await fetch(`/api/admin/fairs/sheet-id/?fairId=${fairId}&sheetId=${sheetId}`)
       .then((res) => {

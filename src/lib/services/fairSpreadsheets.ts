@@ -359,7 +359,7 @@ export default class FairSpreadsheet {
     try {
       const evaluatorsSheet = await this.getSheetByTitle(fairsSpreadsheetTitlesOfSheets.evaluators);
 
-      let evaluator: Evaluator | undefined = undefined;
+      let evaluator: Evaluator | undefined;
       for (const row of await evaluatorsSheet.getRows()) {
         if (row.get("ID") === evaluatorCode) {
           const projectIds = (row.get("Projetos Atribuídos") ?? "").split(",");
