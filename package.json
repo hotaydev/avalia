@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "core-js": "^3.38.1",
+    "core-js": "^3.39.0",
     "firebase": "^11.0.1",
     "google-auth-library": "^9.14.2",
     "google-spreadsheet": "^4.1.4",
-    "next": "^15.0.1",
+    "next": "^15.0.2",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@types/node": "^22.8.1",
+    "@types/node": "^22.8.6",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
