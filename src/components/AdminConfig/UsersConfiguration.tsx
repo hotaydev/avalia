@@ -65,7 +65,7 @@ export default function UsersConfiguration() {
             type="text"
             value={newUserEmail}
             onChange={(e) => setNewUserEmail(e.target.value.toLowerCase())}
-            className="w-3/4 p-2 border border-gray-300 rounded-l-lg focus:outline-none"
+            className="w-3/4 p-2 border border-gray-300 rounded-l-lg focus:outline-hidden"
             placeholder="Email do novo usuário..."
           />
           <button

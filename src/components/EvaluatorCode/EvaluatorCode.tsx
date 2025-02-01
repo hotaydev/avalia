@@ -115,7 +115,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
         <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
           <div className="w-16 h-16 ">
             <input
-              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-hidden rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
               type="text"
               value={valueOne}
               onChange={(e) =>
@@ -131,7 +131,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
           </div>
           <div className="w-16 h-16 ">
             <input
-              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-hidden rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
               type="text"
               value={valueTwo}
               onChange={(e) =>
@@ -147,7 +147,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
           </div>
           <div className="w-16 h-16 ">
             <input
-              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-hidden rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
               type="text"
               value={valueThree}
               onChange={(e) =>
@@ -163,7 +163,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
           </div>
           <div className="w-16 h-16 ">
             <input
-              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+              className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-hidden rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
               type="text"
               value={valueFour}
               onChange={(e) =>
@@ -181,7 +181,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
 
         <div className="flex flex-col px-4 justify-center items-center">
           <button
-            className="text-center w-3/4 rounded-xl outline-none py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-blue-300"
+            className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-hidden focus:ring-3 focus:ring-blue-300"
             disabled={!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)}
             onClick={sendButton}
             ref={buttonRef}

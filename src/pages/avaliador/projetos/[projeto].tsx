@@ -330,7 +330,7 @@ function TextQuestion({ handle }: { handle: (value: number | string) => void }) 
   return (
     <div className="flex items-center justify-between mt-4 mb-2">
       <textarea
-        className="w-full p-2 border text-sm border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+        className="w-full p-2 border text-sm border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-transparent"
         rows={4}
         placeholder="Escreva aqui..."
         onChange={(e) => {

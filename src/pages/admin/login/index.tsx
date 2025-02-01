@@ -63,7 +63,7 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="seu@email.com"
-                className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-transparent"
               />
               {email !== "" && !validateEmail(email) && (
                 <span className="w-full text-left text-red-600 text-xs font-light ml-1 pt-1 mb-2">Email inválido</span>

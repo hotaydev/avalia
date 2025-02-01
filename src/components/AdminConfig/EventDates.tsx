@@ -160,12 +160,12 @@ function DateRow({
         <input
           type="date"
           onChange={(e) => handleDateChange(e.target.value, `${initOrEnd}Date`)}
-          className="border rounded-lg p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          className="border rounded-lg p-2 bg-white text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-300"
         />
         <input
           type="time"
           onChange={(e) => handleDateChange(e.target.value, `${initOrEnd}Time`)}
-          className="border rounded-lg p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          className="border rounded-lg p-2 bg-white text-gray-700 focus:outline-hidden focus:ring-2 focus:ring-gray-300"
         />
       </div>
     </div>

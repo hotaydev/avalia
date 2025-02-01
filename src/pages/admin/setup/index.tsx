@@ -154,7 +154,7 @@ export default function AdminInitialSetupPage() {
                 value={fairSchool}
                 onChange={(e) => setFairSchool(e.target.value)}
                 placeholder={'Ex. "EEEM exemplo" ou "Fundação exemplo"'}
-                className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm text-gray-800"
+                className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm text-gray-800"
               />
             </div>
             <div className="w-full flex flex-col">
@@ -164,13 +164,13 @@ export default function AdminInitialSetupPage() {
                 value={fairName}
                 onChange={(e) => setFairName(e.target.value)}
                 placeholder={'Ex. "Mostratec" ou "Feira da escola exemplo"'}
-                className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm text-gray-800"
+                className="border px-4 py-2 rounded-lg w-full h-12 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-transparent text-sm text-gray-800"
               />
             </div>
 
             <button
               type="button"
-              className="text-center w-3/4 rounded-xl outline-none py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-blue-300 mt-10"
+              className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-hidden focus:ring-3 focus:ring-blue-300 mt-10"
               disabled={fairSchool.length < 5 || fairName.length < 4 || sendingInformation}
               onClick={sendData}
             >

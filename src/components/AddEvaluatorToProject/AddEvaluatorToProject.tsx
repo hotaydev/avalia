@@ -8,7 +8,7 @@ export default function AddEvaluatorToProject() {
     <>
       <span
         onClick={() => setDialogIsOpen(true)}
-        className="py-1 px-2 ml-2 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer transition-all font-light text-gray-700"
+        className="py-1 px-2 ml-2 bg-gray-200 rounded-sm hover:bg-gray-300 cursor-pointer transition-all font-light text-gray-700"
       >
         ?
       </span>
