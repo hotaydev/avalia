@@ -13,29 +13,29 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "core-js": "^3.40.0",
-    "firebase": "^11.2.0",
+    "firebase": "^11.4.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
-    "next": "^15.1.6",
+    "next": "^15.2.0",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hot-toast": "^2.5.1",
-    "react-icons": "^5.4.0",
+    "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
     "react-tailwindcss-select": "^1.8.5",
     "react-tooltip": "^5.28.0",
     "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@tailwindcss/postcss": "^4.0.3",
-    "@types/node": "^22.13.0",
+    "@tailwindcss/postcss": "^4.0.9",
+    "@types/node": "^22.13.7",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "postcss": "^8.5.1",
+    "postcss": "^8.5.3",
     "tailwindcss": "^4.0.3",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=18.0.0"
