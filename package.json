@@ -13,10 +13,10 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "core-js": "^3.41.0",
-    "firebase": "^11.4.0",
+    "firebase": "^11.6.0",
     "google-auth-library": "^9.15.1",
     "google-spreadsheet": "^4.1.4",
-    "next": "^15.2.3",
+    "next": "^15.2.4",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@tailwindcss/postcss": "^4.0.14",
-    "@types/node": "^22.13.10",
+    "@tailwindcss/postcss": "^4.0.17",
+    "@types/node": "^22.13.14",
     "@types/qrcode": "^1.5.5",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
