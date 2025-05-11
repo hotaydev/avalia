@@ -1,136 +1,136 @@
-# Contribuindo com o Avalia
+# Contributing to Avalia
 
-Obrigado pelo seu interesse! :heart: Nós adoraríamos que você contribuísse com o Avalia e ajudasse a torná-lo ainda melhor do que é hoje!
+Thank you for your interest! :heart: We would love for you to contribute to Avalia and help make it even better than it is today!
 
-Como um colaborador, aqui está uma visão geral de coisas para aprender e maneiras de se envolver:
+As a contributor, here's an overview of things to learn and ways to get involved:
 
-- [Código de Conduta](#código-de-conduta)
-- [Como posso ajudar?](#como-posso-ajudar)
-  - [Contribuições de Código](#contribuições-de-código)
-- [Pergunta ou Problema?](#tem-uma-pergunta-ou-um-problema)
-- [Problemas e Bugs](#encontrou-um-bug)
-- [Solicitações de Recursos](#faltando-um-recurso)
-- [Reportar um Problema](#abrindo-uma-issue)
-- [Enviar uma Pull Request](#enviar-uma-pull-request-pr)
+- [Code of Conduct](#code-of-conduct)
+- [How can I help?](#how-can-i-help)
+  - [Code Contributions](#code-contributions)
+- [Questions or Problems?](#have-a-question-or-problem)
+- [Issues and Bugs](#found-a-bug)
+- [Feature Requests](#missing-a-feature)
+- [Reporting an Issue](#opening-an-issue)
+- [Submitting a Pull Request](#submitting-a-pull-request-pr)
 
-## Código de Conduta
+## Code of Conduct
 
-Ajude-nos a manter o Avalia aberto e inclusivo.
-Por favor, leia e siga nosso [Código de Conduta][https://github.com/hotaydev/avalia/blob/main/.github/CODE_OF_CONDUCT.md].
+Help us keep Avalia open and inclusive.
+Please read and follow our [Code of Conduct][https://github.com/hotaydev/avalia/blob/main/.github/CODE_OF_CONDUCT.md].
 
-## Como posso ajudar?
+## How can I help?
 
-Existem muitas maneiras de ajudar. Aqui estão algumas formas de contribuir sem codificar:
+There are many ways to help. Here are some ways to contribute without coding:
 
-- Você pode ajudar os outros em nossa [Página de Discussões no Github][https://github.com/hotaydev/avalia/discussions/categories/q-a].
-- Você pode [contribuir para a documentação oficial](https://github.com/hotaydev/avalia/tree/main/docs).
-- Você pode confirmar bugs na [aba de issues][https://github.com/hotaydev/avalia/issues] e mencionar os passos para reproduzi-los. Isso ajuda a equipe principal a receber mais relatórios para que possamos corrigir os bugs de maior prioridade.
+- You can help others in our [GitHub Discussions page][https://github.com/hotaydev/avalia/discussions/categories/q-a].
+- You can [contribute to the official documentation](https://github.com/hotaydev/avalia/tree/main/docs).
+- You can verify bugs in the [issues tab][https://github.com/hotaydev/avalia/issues] and mention the steps to reproduce them. This helps the core team receive more reports so we can fix higher priority bugs.
 
-Para maneiras de ajudar com código, leia a próxima seção.
+For ways to help with code, read the next section.
 
-### Contribuições de Código
+### Code Contributions
 
-Para os colaboradores que querem ajudar com código, temos uma lista de [bons primeiros problemas](https://github.com/hotaydev/avalia/labels/good%20first%20issue) para ajudá-lo a começar.
-Esses são problemas amigáveis para iniciantes e não requerem conhecimento avançado da base de código. Nós incentivamos novos colaboradores a começar com esses problemas e, gradualmente, passar para tarefas mais desafiadoras.
+For contributors who want to help with code, we have a list of [good first issues](https://github.com/hotaydev/avalia/labels/good%20first%20issue) to help you get started.
+These are beginner-friendly issues that don't require advanced knowledge of the codebase. We encourage new contributors to start with these issues and gradually move on to more challenging tasks.
 
-## Tem uma Pergunta ou um Problema?
+## Have a Question or Problem?
 
-Por favor, não abra issues para perguntas gerais de suporte, pois queremos manter a seção de issues do GitHub para relatórios de bugs e solicitações de recursos.
-Em vez disso, recomendamos usar nossa aba de [Discussões no Github][https://github.com/hotaydev/avalia/discussions/categories/q-a] para fazer perguntas relacionadas ao suporte.
+Please don't open issues for general support questions, as we want to keep the GitHub issues section for bug reports and feature requests.
+Instead, we recommend using our [GitHub Discussions tab][https://github.com/hotaydev/avalia/discussions/categories/q-a] for support-related questions.
 
-Esses canais são um lugar muito melhor para fazer perguntas porque:
+These channels are a much better place to ask questions because:
 
-- Há mais pessoas dispostas a ajudar lá
-- Perguntas e respostas ficam disponíveis para visualização pública, então sua pergunta/resposta pode ajudar outra pessoa
-- O sistema de votação dos canais garante que as melhores respostas sejam visíveis de forma proeminente.
+- There are more people willing to help there
+- Questions and answers remain publicly available, so your question/answer may help someone else
+- The channel's voting system ensures that the best answers are prominently visible.
 
-Para economizar seu tempo e o nosso, sistematicamente fecharemos todos os problemas que sejam pedidos de suporte geral e redirecionaremos as pessoas para o fórum.
+To save your time and ours, we will systematically close all issues that are general support requests and redirect people to the forum.
 
-Se você quiser conversar sobre seu problema em tempo real, pode entrar em contato com o [@TaylorHo][https://github.com/TaylorHo].
+If you want to discuss your issue in real-time, you can contact [@TaylorHo][https://github.com/TaylorHo].
 
-## Encontrou um Bug?
+## Found a Bug?
 
-Se você encontrar um bug, pode nos ajudar [abrindo uma issue](#abrindo-uma-issue) no nosso [Repositório no GitHub][https://github.com/hotaydev/avalia].
-Ainda melhor, você pode [enviar uma Pull Request](#enviar-um-pull-request-pr) com uma correção.
+If you find a bug, you can help us by [opening an issue](#opening-an-issue) in our [GitHub Repository][https://github.com/hotaydev/avalia].
+Even better, you can [submit a Pull Request](#submitting-a-pull-request-pr) with a fix.
 
-## Faltando um Recurso?
+## Missing a Feature?
 
-Você pode _solicitar_ um novo recurso [enviando uma issue](#abrindo-uma-issue) aqui mesmo no GitHub.
-Se você gostaria de _implementar_ um novo recurso, por favor, abra uma issue e descreva sua proposta para que possa ser discutida.
-É sempre benéfico se envolver em discussões sobre um recurso antes de começar seu desenvolvimento. Essa abordagem proativa ajuda a identificar se o recurso pode ser controverso ou não ter utilidade generalizada.
+You can _request_ a new feature by [submitting an issue](#opening-an-issue) right here on GitHub.
+If you would like to _implement_ a new feature, please open an issue and describe your proposal so it can be discussed.
+It's always beneficial to engage in discussions about a feature before starting its development. This proactive approach helps identify if the feature might be controversial or not have widespread utility.
 
-## Abrindo uma issue
+## Opening an Issue
 
-Antes de abrir uma Issue, por favor, pesquise no [aba de issues][https://github.com/hotaydev/avalia/issues]. Um problema para sua situação pode já existir, e a discussão pode informá-lo sobre soluções alternativas prontamente disponíveis.
+Before opening an Issue, please search the [issues tab][https://github.com/hotaydev/avalia/issues]. An issue for your situation may already exist, and the discussion may inform you about readily available alternative solutions.
 
-Para enviar um problema, [preencha a issue usando um modelo][https://github.com/hotaydev/avalia/issues/new]. Por favor, registre apenas uma issue por vez e não enumere vários bugs na mesma issue.
+To submit an issue, [fill out the issue using a template][https://github.com/hotaydev/avalia/issues/new]. Please only log one issue at a time and don't list multiple bugs in the same issue.
 
-## Enviar uma Pull Request (PR)
+## Submitting a Pull Request (PR)
 
-Sua PR deve ser aberta **da sua branch, do seu fork, diretamente para a branch principal**. Gerenciamos as versões publicando um release e uma tag aqui, no GitHub.
+Your PR should be opened **from your branch, from your fork, directly to the main branch**. We manage versions by publishing a release and a tag here on GitHub.
 
-Antes de trabalhar em seu pull request, por favor, verifique o seguinte:
+Before working on your pull request, please check the following:
 
-1. Pesquise no [GitHub][https://github.com/hotaydev/avalia/pulls] por PRs relacionados que possam afetar sua submissão.
+1. Search [GitHub][https://github.com/hotaydev/avalia/pulls] for related PRs that might affect your submission.
 
-2. Certifique-se de que há uma issue que descreva o problema que você está corrigindo ou o comportamento e o design do recurso que você gostaria de adicionar.
+2. Make sure there is an issue that describes the problem you're fixing or the behavior and design of the feature you'd like to add.
 
-3. Por favor, assine nosso [Contrato de Licença de Contribuidor (CLA)](#sign-the-cla). Não podemos aceitar código sem um CLA assinado.
+3. Please sign our [Contributor License Agreement (CLA)](#sign-the-cla). We cannot accept code without a signed CLA.
 
-Depois de fazer isso, você está pronto para trabalhar na sua PR! Para criar uma PR, faça um fork deste repositório e trabalhe nele. Depois que você incluir algum código no seu fork, você poderá abrir uma PR para o repositório do Avalia.
+After doing this, you're ready to work on your PR! To create a PR, fork this repository and work on it. Once you include some code in your fork, you can open a PR to the Avalia repository.
 
-Para mais informações, você pode seguir este [guia do GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
-Para mais guias de PR do github, veja [estes guias](https://docs.github.com/en/pull-requests).
+For more information, you can follow this [GitHub guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
+For more GitHub PR guides, see [these guides](https://docs.github.com/en/pull-requests).
 
-### Diretrizes para PR
+### PR Guidelines
 
-Ao enviar um Pull Request (PR) ou ao esperar por uma revisão subsequente, siga estas diretrizes:
+When submitting a Pull Request (PR) or waiting for subsequent review, follow these guidelines:
 
-1. A PR deve estar pronta para revisão. Se o trabalho estiver pendente ou em desenvolvimento, considere deixar as alterações no seu fork, aguardando para abrir a PR, ou então abra uma [PR de rascunho](https://github.blog/2019-02-14-introducing-draft-pull-requests/).
+1. The PR should be ready for review. If work is pending or in development, consider keeping the changes in your fork, waiting to open the PR, or open a [draft PR](https://github.blog/2019-02-14-introducing-draft-pull-requests/).
 
-2. A PR passa nos testes e verificações de lint (utilizamos o [Biome](https://biomejs.dev/)).
+2. The PR passes tests and lint checks (we use [Biome](https://biomejs.dev/)).
 
-3. A PR não tem conflitos de merge.
+3. The PR has no merge conflicts.
 
-4. Os commits e os títulos da Pull Request devem usar os prefixos/tipos de [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary). A mensagem do commit e o título do PR devem ter o mesmo formato, por exemplo, `<prefix>: descrição ...`. Os prefixos mais usados são:
-   - `fix` ou `bugfix` - Correções de bugs.
-   - `feat` ou `feature` - Novos recursos.
-   - `chore` - Alterações diversas que não são feat ou fix. Normalmente evitamos usar esta categoria.
-   - `enhance` - Melhorias em recursos existentes.
-   - `test` - Alterações apenas em testes.
-   - `ci` - Alterações no sistema ou fluxo de CI/CD.
-   - `build` - Alterações no sistema de build.
-   - `docs` - Alterações na documentação. A documentação fica na pasta `/docs`
-   - `style` - Alterações nos estilos e padrões de código, ou estilos visuais do projeto.
-   - `refactor` - Relacionado a algum refatoramento de código, visando melhorias de legibilidade ou simplicidade.
-   - `perf` ou `performance` - Específico para o desempenho do código ou da aplicação.
+4. Commits and Pull Request titles should use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) prefixes/types. The commit message and PR title should have the same format, for example, `<prefix>: description ...`. The most used prefixes are:
+   - `fix` or `bugfix` - Bug fixes.
+   - `feat` or `feature` - New features.
+   - `chore` - Miscellaneous changes that are not feat or fix. We usually avoid using this category.
+   - `enhance` - Improvements to existing features.
+   - `test` - Changes only to tests.
+   - `ci` - Changes to the CI/CD system or flow.
+   - `build` - Changes to the build system.
+   - `docs` - Changes to documentation. Documentation is in the `/docs` folder
+   - `style` - Changes to code styles and patterns, or project visual styles.
+   - `refactor` - Related to some code refactoring, aiming for readability or simplicity improvements.
+   - `perf` or `performance` - Specific to code or application performance.
 
-> Se seu PR introduzir uma mudança significativa, adicione um `!` ao final do commit, por exemplo, `<prefix>!: descrição ...`
+> If your PR introduces a significant change, add a `!` at the end of the commit, for example, `<prefix>!: description ...`
 
-5.  Agradecemos se o PR tiver "permitir edições de mantenedores" habilitado. Isso nos ajuda a apoiar sua contribuição.
+5. We appreciate if the PR has "allow maintainer edits" enabled. This helps us support your contribution.
 
-### Links Adicionais para PR
+### Additional PR Links
 
-- Para rodar o avalia localmente, basta clonar este repositório, executar um `npm install`, e rodar um `npm run dev` para rodar o projeto. Lembre de preencher o arquivo de variáveis de ambiente, `.env.local`.
-  - Para rodar a documentação, acesse a pasta `/docs` e rode um `nom run dev` lá.
+- To run avalia locally, just clone this repository, run `npm install`, and run `npm run dev` to start the project. Remember to fill in the environment variables file, `.env.local`.
+  - To run the documentation, go to the `/docs` folder and run `npm run dev` there.
 
-### Assine o CLA
+### Sign the CLA
 
-Por favor, assine nosso Contrato de Licença de Contribuidor (CLA) antes de enviar pull requests. Para que qualquer alteração de código seja aceita, o CLA deve ser assinado. Prometemos que é um processo rápido!
+Please sign our Contributor License Agreement (CLA) before submitting pull requests. For any code changes to be accepted, the CLA must be signed. We promise it's a quick process!
 
-Nós temos um CLA apenas para poder usar as contribuições da comunidade de forma comercial, visando licenciar o avalia para empresas e grandes equipes. Dessa forma, podemos apoiar financeiramente o desenvolvimento do projeto.
+We have a CLA only to be able to use community contributions commercially, aiming to license avalia for companies and large teams. This way, we can financially support the project's development.
 
-[Você pode ver e assinar nosso CLA aqui][https://cla-assistant.io/hotaydev/avalia].
+[You can view and sign our CLA here][https://cla-assistant.io/hotaydev/avalia].
 
-Se você tiver mais de uma conta no GitHub ou vários endereços de e-mail associados a uma única conta do GitHub, deve assinar o CLA usando o endereço de e-mail principal da conta do GitHub usada para autorar commits e enviar pull requests.
+If you have more than one GitHub account or multiple email addresses associated with a single GitHub account, you must sign the CLA using the primary email address of the GitHub account used to author commits and submit pull requests.
 
-Os seguintes documentos podem ajudá-lo a resolver problemas com contas do GitHub e vários endereços de e-mail:
+The following documents may help you resolve issues with GitHub accounts and multiple email addresses:
 
 - <https://help.github.com/articles/setting-your-commit-email-address-in-git/>
 - <https://stackoverflow.com/questions/37245303/what-does-usera-committed-with-userb-13-days-ago-on-github-mean>
 - <https://help.github.com/articles/about-commit-email-addresses/>
 - <https://help.github.com/articles/blocking-command-line-pushes-that-expose-your-personal-email-address/>
 
-## Obrigado
+## Thank You
 
-Suas contribuições para o código aberto, grandes ou pequenas, tornam possíveis projetos incríveis como este. Obrigado por dedicar seu tempo para contribuir.
+Your contributions to open source, big or small, make projects like this possible. Thank you for taking the time to contribute.

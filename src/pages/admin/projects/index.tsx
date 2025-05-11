@@ -62,7 +62,6 @@ export default function AdminProjetosPage() {
 }
 
 function ExtraComponentForTable({
-  projects,
   router,
   fairInfo,
 }: Readonly<{ projects: ProjectForAdmin[]; router: NextRouter; fairInfo?: ScienceFair }>) {

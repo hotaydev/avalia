@@ -73,8 +73,11 @@ export default function SheetsData() {
         <div className="flex flex-col pr-6 mb-2 w-full mt-4">
           <SingleSheet link={link} setLink={setLink} />
           <div className="w-full text-center flex items-center justify-center pt-8 font-light text-xs">
-            {/* TODO: ajustar link */}
-            <Link href={`${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/docs/`} target="_blank" className="w-3/4">
+            <Link
+              href={`${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/docs/guide/administrators/initial-config.html`}
+              target="_blank"
+              className="w-3/4"
+            >
               Clique aqui para instruções completas da configuração.
             </Link>
           </div>

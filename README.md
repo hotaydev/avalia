@@ -3,10 +3,9 @@
 ---
 
 <h1 align="center">Avalia</h1>
-<h4 align="center">Sistema para avaliação de projetos em Feiras de Iniciação Científica.<br/>De Código livre e Gratuito.</h4>
+<h4 align="center">System for evaluating projects in Scientific Initiation Fairs.<br/>Free and Open Source.</h4>
 
-
-<div align="center"><a href="https://avalia.hotay.dev/">🌐 Acessar online</a></div>
+<div align="center"><a href="https://avalia.hotay.dev/">🌐 Access online</a></div>
 &nbsp;
 
 <div align="center">
@@ -17,43 +16,42 @@
 </div>
 &nbsp;
 
+🎉 Welcome to **Avalia**, a free and open-source platform developed by [Hotay](#about-hotay) to facilitate the evaluation process of projects in Scientific Initiation Fairs. Our goal is to provide a simple and accessible tool that supports teachers and evaluators, especially in public schools, bringing more technology to the daily life of the school community.
 
-🎉 Bem-vindo ao **Avalia**, uma plataforma gratuita e de código aberto, desenvolvida pela [Hotay](#sobre-a-hotay) para facilitar o processo de avaliação de projetos em Feiras de Iniciação Científica. Nosso objetivo é proporcionar uma ferramenta simples e acessível que apoie professores e avaliadores, especialmente em escolas públicas, trazendo mais tecnologia ao cotidiano da comunidade escolar.
+## ✨ Main Features
 
-## ✨ Funcionalidades Principais
+- **Administrative Area:** Allows configuration and management of the science fair, including project creation, evaluator management, and ranking visualization.
+- **Evaluators Area:** Simplified access via link, where evaluators can easily perform their assessments without the need for password login.
 
-- **Área Administrativa:** Permite configurar e gerenciar a feira científica, incluindo a criação de projetos, gerenciamento de avaliadores e visualização de rankings.
-- **Área dos Avaliadores:** Acesso simplificado via link, onde os avaliadores podem facilmente realizar suas avaliações sem a necessidade de login com senha.
+## 💡 Project Philosophy
 
-## 💡 Filosofia do Projeto
+Avalia was created based on five fundamental pillars:
 
-O Avalia foi criado com base em cinco pilares fundamentais:
+- **Free of Charge:** 💸 A completely free tool, especially aimed at public schools.
+- **Open Source:** 🔓 The project is open source, allowing anyone to access, modify, and contribute.
+- **Importance of Open Source:** 🤝 We strengthen school and developer communities through collaboration and transparency.
+- **Technology in School Community:** 🏫 We bring accessible and practical technology to the daily life of schools.
+- **Facilities for Teachers:** 👩‍🏫 We reduce teachers' workload, facilitating project management and evaluation.
 
-- **Gratuidade:** 💸 Uma ferramenta totalmente gratuita, especialmente voltada para escolas públicas.
-- **Código Livre:** 🔓 O projeto é de código aberto, permitindo que qualquer pessoa possa acessar, modificar e contribuir.
-- **Importância do Código Livre:** 🤝 Fortalecemos as comunidades escolares e de desenvolvedores através da colaboração e da transparência.
-- **Tecnologia na Comunidade Escolar:** 🏫 Levamos tecnologia acessível e prática para o dia a dia das escolas.
-- **Facilidades para Professores:** 👩‍🏫 Reduzimos a carga de trabalho dos professores, facilitando a gestão e avaliação de projetos.
+## 🚀 Contribution and Open Source
 
-## 🚀 Contribuição e Código Livre
+Avalia is an open-source project and is open to contributions. If you wish to contribute to the development, see our [contribution guide](./CONTRIBUTING.md) and follow the guidelines in our [code of conduct](.github/CODE_OF_CONDUCT.md). Any contribution, whether code, documentation, or suggestions, is welcome!
 
-O Avalia é um projeto de código aberto e está aberto a contribuições. Se você deseja contribuir com o desenvolvimento, veja o nosso [guia de contribuição](./CONTRIBUTING.md) e siga as diretrizes em nosso [código de conduta](.github/CODE_OF_CONDUCT.md). Qualquer contribuição, seja código, documentação ou sugestões, é bem-vinda!
-
-A Hotay está aqui para construir um mundo melhor, **um código livre de cada vez**.
+Hotay is here to build a better world, **one free code at a time**.
 
 ## 🛠️ Roadmap
 
-Estamos continuamente melhorando o Avalia. Para entender mais do que já fizemos e o que ainda está por vir, confira o nosso [Roadmap](./ROADMAP.md).
+We are continuously improving Avalia. To understand more about what we've done and what's yet to come, check out our [Roadmap](./ROADMAP.md).
 
-## 🌍 Sobre a Hotay
+## 🌍 About Hotay
 
-A **[Hotay](https://www.hotay.dev)** é uma empresa brasileira de desenvolvimento de software, dedicada exclusivamente à criação de **software livre**. Com foco em fornecer ferramentas tecnológicas acessíveis para comunidades diversas, incluindo escolas e desenvolvedores, a Hotay sustenta seus projetos principalmente através de doações. Acreditamos que o software deve ser uma ferramenta de empoderamento, acessível a todos, e estamos comprometidos em construir um mundo melhor, **um código livre de cada vez**.
+**[Hotay](https://www.hotay.dev)** is a Brazilian software development company dedicated exclusively to creating **free software**. With a focus on providing accessible technological tools for diverse communities, including schools and developers, Hotay sustains its projects mainly through donations. We believe that software should be an empowering tool, accessible to everyone, and we are committed to building a better world, **one free code at a time**.
 
-## 📜 Licença
+## 📜 License
 
-Este projeto está licenciado sob a [Licença AGPL-3.0](LICENSE) - veja o arquivo `LICENSE` para mais detalhes.
-Em resumo, isso significa que este projeto pode ser modificado e redistribuído, desde que a aplicação derivada tenha seu código aberto também, sob a mesma licença.
+This project is licensed under the [AGPL-3.0 License](LICENSE) - see the `LICENSE` file for more details.
+In summary, this means that this project can be modified and redistributed, as long as the derived application also has its code open under the same license.
 
 ---
 
-Se você tem alguma dúvida ou deseja fornecer feedback, sinta-se à vontade para entrar em contato conosco, preferencialmente abrindo uma [discussão aqui pelo GitHub](https://github.com/hotaydev/avalia/discussions). Agradecemos seu interesse no Avalia! 💬
+If you have any questions or wish to provide feedback, feel free to contact us, preferably by opening a [discussion here on GitHub](https://github.com/hotaydev/avalia/discussions). We appreciate your interest in Avalia! 💬

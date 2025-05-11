@@ -71,7 +71,7 @@ export default function UsersConfiguration() {
           <button
             type="button"
             onClick={addNewUser}
-            className="w-1/4 p-2 bg-blue-500 text-white transition-all rounded-r-lg hover:bg-blue-600"
+            className="w-1/4 p-2 bg-blue-500 text-white transition-all rounded-r-lg hover:bg-blue-600 cursor-pointer"
           >
             Convidar
           </button>
@@ -204,7 +204,7 @@ function UserListItem({
         {!user.inviteAccepted && (
           <button
             type="button"
-            className="border border-gray-200 text-gray-600 rounded-md px-2 py-1 bg-gray-100 hover:bg-gray-200 hover:border-gray-300 transition-all"
+            className="border border-gray-200 text-gray-600 rounded-md px-2 py-1 bg-gray-100 hover:bg-gray-200 hover:border-gray-300 transition-all cursor-pointer"
             onClick={() => copyInviteLink()}
           >
             Link de Convite
@@ -216,7 +216,7 @@ function UserListItem({
           <button
             type="button"
             onClick={async () => await deleteUser(user)}
-            className="border border-red-500 text-white rounded-md px-2 py-1 bg-red-400 hover:bg-red-500 hover:border-red-600 transition-all"
+            className="border border-red-500 text-white rounded-md px-2 py-1 bg-red-400 hover:bg-red-500 hover:border-red-600 transition-all cursor-pointer"
           >
             Remover
           </button>

@@ -22,7 +22,7 @@ export default function DialogComponent({
     <Dialog className="relative z-10" open={open} onClose={setOpen}>
       <DialogBackdrop
         transition={true}
-        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in"
+        className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-leave:duration-200 data-enter:ease-out data-leave:ease-in"
       />
 
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">

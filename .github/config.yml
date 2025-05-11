@@ -4,17 +4,17 @@
 
 # Comment to be posted to on first time issues
 newIssueWelcomeComment: >
-  Obrigado por abrir esta issue. Um mantenedor entrará em contato com você em breve!
+  Thank you for opening this issue. A maintainer will get back to you soon!
 
 # Configuration for new-pr-welcome - https://github.com/behaviorbot/new-pr-welcome
 
 # Comment to be posted to on PRs from first time contributors in your repository
 newPRWelcomeComment: >
-  Muito obrigado por abrir seu primeiro PR aqui! Um mantenedor entrará em contato com você em breve!
+  Thank you so much for opening your first PR here! A maintainer will get back to you soon!
 
 # Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
 
 # Comment to be posted to on pull requests merged by a first time user
 firstPRMergeComment: >
-  Obrigado por mergear com sucesso a sua primeira PR aqui! :tada: <br/></br>
-  Agradecemos a sua valiosa contribuição :heart:!
+  Thank you for successfully merging your first PR here! :tada: <br/></br>
+  We appreciate your valuable contribution :heart:!

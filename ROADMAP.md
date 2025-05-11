@@ -1,75 +1,76 @@
-# Roadmap do Projeto Avalia
+# Avalia Project Roadmap
 
-Abaixo segue uma lista de funcionalidades que estarão contidas em cada uma das versões planejadas para o sistema "Avalia".
+Below is a list of features that will be included in each planned version of the "Avalia" system.
 
-### Versão 1.0 (Concluída)
+### Version 1.0 (Completed)
 
-- **Avaliador:**
+- **Evaluator:**
 
-  - [x] Área dos avaliadores acessível via link direto
-  - [x] Área dos avaliadores acessível via código
-  - [x] Enviar link de acesso e código do avaliador via email e WhatsApp
-  - [x] Bloquear o envio de avaliações fora do período definido
+  - [x] Evaluator area accessible via direct link
+  - [x] Evaluator area accessible via code
+  - [x] Send access link and evaluator code via email and WhatsApp
+  - [x] Block evaluation submissions outside the defined period
 
-- **Administração:**
+- **Administration:**
 
-  - [x] Importar Avaliadores via Google Sheets
-  - [x] Importar Projetos via Google Sheets
-  - [x] Configurar planilha de destino das notas
-  - [x] Área administrativa com login sem senha
-  - [x] Configuração de acesso e link das planilhas de controle
-  - [x] Autenticação com Google na área administrativa
-  - [x] Convite de administradores para a área administrativa
-  - [x] Configurar data máxima para o recebimento das avaliações
-  - [x] Configurar data de início para o recebimento das avaliações
-  - [x] Possibilidade de ver quantas avaliações foram feitas em cada projeto
+  - [x] Import Evaluators via Google Sheets
+  - [x] Import Projects via Google Sheets
+  - [x] Configure destination spreadsheet for grades
+  - [x] Administrative area with passwordless login
+  - [x] Configure access and links for control spreadsheets
+  - [x] Google authentication for administrative area
+  - [x] Invite administrators to the administrative area
+  - [x] Configure maximum date for receiving evaluations
+  - [x] Configure start date for receiving evaluations
+  - [x] Ability to view how many evaluations were completed for each project
 
-- **Sistema:**
-  - [x] Listagem de projetos com notas (classificação/ranking)
-  - [x] Atribuir um projeto a um avaliador
-  - [x] Adicionar favicon
-  - [x] Definir página 404 com link para a /
-  - [x] Adicionar `robots.txt`
-  - [x] Tratar erros 429 (WAF Rate-Limit) informando o usuário
-  - [x] Publicar a documentação
+- **System:**
 
-### Versão 2.0 (Em Andamento)
+  - [x] Project listing with grades (classification/ranking)
+  - [x] Assign a project to an evaluator
+  - [x] Add favicon
+  - [x] Define 404 page with link to /
+  - [x] Add `robots.txt`
+  - [x] Handle 429 errors (WAF Rate-Limit) by informing the user
+  - [x] Publish documentation
 
-- **Avaliador:**
+### Version 2.0 (In Progress)
 
-  - [ ] Página para cadastro de avaliadores
+- **Evaluator:**
 
-- **Administração:**
+  - [ ] Evaluator registration page
 
-  - [ ] Página para cadastro de projetos
-  - [ ] Configuração do formulário do avaliador
-  - [ ] Configuração de diferentes rankings
-  - [ ] Adicionar mais formas de login social
-  - [ ] Possibilidade de editar o nome da escola/feira (atualmente é possível apenas na configuração inicial)
-  - [ ] Melhorar estilos CSS para visualização em celulares (atualmente funciona apenas em desktop, apenas as páginas do avaliador que são otimizadas para celulares e desktops)
-  - [ ] Exportar colocações como PDF
-  - [ ] Opção de diferentes sistemas de notas (de 5 a 10 e de 1 a 5)
+- **Administration:**
 
-- **Sistema:**
+  - [ ] Projects registration page
+  - [ ] Configure evaluator form
+  - [ ] Configure different rankings
+  - [ ] Add more social login options
+  - [ ] Ability to edit school/fair name (currently only possible in initial setup)
+  - [ ] Improve CSS styles for mobile viewing (currently only works on desktop, only evaluator pages are optimized for mobile and desktop)
+  - [ ] Export rankings as PDF
+  - [ ] Option for different grading systems (e.g. 5 to 10 and 1 to 5)
 
-  - [ ] Criar automaticamente as planilhas no Drive conectado
-  - [ ] Utilizar IDs numéricos para projetos, de forma reordenável
+- **System:**
 
-### Versão 3.0
+  - [ ] Automatically create spreadsheets in connected Drive account
+  - [ ] Use numeric IDs for projects, allowing reordering
 
-- **Sistema:**
+### Version 3.0
 
-  - [ ] Migrar a pasta `/src/pages` para o padrão Next.js de `/src/app` (usando SSR)
-  - [ ] Melhor componentização do conteúdo das páginas
-  - [ ] Melhorar a documentação do projeto e guias de desenvolvimento para a comunidade
-  - [x] Implementar meio de doações para o projeto além do GitHub Sponsors
-  - [ ] Implementar sistema de internacionalização
-  - [ ] Mover todos os textos para um arquivo de fácil tradução (internacionalização)
+- **System:**
 
-- **Avaliador:**
+  - [ ] Migrate `/src/pages` to Next.js `/src/app` pattern (using SSR)
+  - [ ] Better componentization of page content
+  - [ ] Improve project documentation and development guides for the community
+  - [x] Implement donation methods for the project beyond GitHub Sponsors
+  - [ ] Implement internationalization system
+  - [ ] Move all texts to an easily translatable file (internationalization)
 
-  - [ ] Exportar certificado de participação como avaliador
+- **Evaluator:**
 
-- **Administração:**
+  - [ ] Export evaluator participation certificate
 
-  - [ ] Configurações para certificado de participação do avaliador
+- **Administration:**
+
+  - [ ] Settings for evaluator participation certificate
