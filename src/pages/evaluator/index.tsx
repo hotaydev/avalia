@@ -133,8 +133,8 @@ export default function EvaluatorLogin() {
           <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
             <h2 className="text-2xl font-semibold text-gray-800 mb-10">Qual seu código de avaliador?</h2>
             <EvaluatorCode callback={handleLogin} />
-            <div className="text-center mt-10 font-normal text-sm hover:underline cursor-pointer text-gray-500">
-              Precisa de ajuda?
+            <div className="text-center mt-10 font-normal text-sm text-gray-500">
+              Você deve ter recebido um link de acesso ou um código de acesso dos organizadores da feira.
             </div>
           </div>
           <Footer />
