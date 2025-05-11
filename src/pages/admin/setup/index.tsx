@@ -170,7 +170,7 @@ export default function AdminInitialSetupPage() {
 
             <button
               type="button"
-              className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-hidden focus:ring-3 focus:ring-blue-300 mt-10"
+              className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-hidden focus:ring-3 focus:ring-blue-300 mt-10 cursor-pointer"
               disabled={fairSchool.length < 5 || fairName.length < 4 || sendingInformation}
               onClick={sendData}
             >

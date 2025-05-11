@@ -55,7 +55,7 @@ export default function InviteLoginPage() {
             <div className="w-full flex items-center justify-center mt-12">
               <button
                 type="button"
-                className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm"
+                className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm cursor-pointer"
                 onClick={() => push("/admin/login")}
               >
                 Aceitar convite e criar conta

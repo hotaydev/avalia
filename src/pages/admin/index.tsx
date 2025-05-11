@@ -301,7 +301,7 @@ function NoContent({ router }: { router: NextRouter }) {
       <div className="w-full flex flex-col items-center justify-center">
         <button
           type="button"
-          className="w-1/4 p-2 mb-2 bg-blue-500 text-white transition-all rounded-lg hover:bg-blue-600"
+          className="w-1/4 p-2 mb-2 bg-blue-500 text-white transition-all rounded-lg hover:bg-blue-600 cursor-pointer"
           onClick={() => router.reload()}
         >
           Atualizar
@@ -330,7 +330,7 @@ function NoEvaluatedContent({ router }: { router: NextRouter }) {
       <div className="w-full flex flex-col items-center justify-center">
         <button
           type="button"
-          className="w-1/4 p-2 mb-2 bg-blue-500 text-white transition-all rounded-lg hover:bg-blue-600"
+          className="w-1/4 p-2 mb-2 bg-blue-500 text-white transition-all rounded-lg hover:bg-blue-600 cursor-pointer"
           onClick={getNewData}
         >
           Atualizar lista

@@ -181,7 +181,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
 
         <div className="flex flex-col px-4 justify-center items-center">
           <button
-            className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-hidden focus:ring-3 focus:ring-blue-300"
+            className="text-center w-3/4 rounded-xl outline-hidden py-4 bg-blue-600 hover:bg-blue-700 transition-all border-none text-white text-sm disabled:bg-gray-400 disabled:hover:bg-gray-500 disabled:cursor-not-allowed focus:outline-hidden focus:ring-3 focus:ring-blue-300 cursor-pointer"
             disabled={!(!!valueOne && !!valueTwo && !!valueThree && !!valueFour)}
             onClick={sendButton}
             ref={buttonRef}
