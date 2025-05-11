@@ -29,7 +29,7 @@ export default function ProjectToEvaluator() {
     const _fairInfo = localStorage.getItem("fairInfo");
 
     if (!(_evaluator && _fairInfo)) {
-      push("/avaliador");
+      push("/evaluator");
       return;
     }
 
@@ -38,7 +38,7 @@ export default function ProjectToEvaluator() {
 
     const outOfDateMessage = outOfEvaluationDates(fairInfo);
     if (outOfDateMessage) {
-      push(`/avaliador/projetos?error=${outOfDateMessage}`);
+      push(`/evaluator/projects?error=${outOfDateMessage}`);
       return;
     }
 
@@ -56,7 +56,7 @@ export default function ProjectToEvaluator() {
             if (isMounted) {
               if (data.status === "success" && data.data) {
                 localStorage.setItem("evaluator", JSON.stringify(data.data));
-                setProject((data.data as Evaluator).projects.filter((proj) => proj.id === query.projeto)[0]);
+                setProject((data.data as Evaluator).projects.filter((proj) => proj.id === query.project)[0]);
               } else {
                 toast.error("Não foi possível obter informações sobre o projeto. Tente novamente mais tarde.");
               }
@@ -110,7 +110,7 @@ export default function ProjectToEvaluator() {
   const getProjectFromList = (evaluator: Evaluator): ProjectForEvaluator | undefined => {
     let _project: ProjectForEvaluator | undefined;
     if (evaluator.projects.length > 0) {
-      _project = evaluator.projects.filter((proj) => proj.id === query.projeto)[0] ?? undefined;
+      _project = evaluator.projects.filter((proj) => proj.id === query.project)[0] ?? undefined;
       setProject(_project);
     }
 
@@ -153,7 +153,7 @@ export default function ProjectToEvaluator() {
       method: "POST",
       body: JSON.stringify({
         evaluator: evaluator.id,
-        project: query.projeto,
+        project: query.project,
         sheetId: fairInfo.spreadsheetId,
         questions: questions,
       }),
@@ -171,7 +171,7 @@ export default function ProjectToEvaluator() {
 
           const newProjects: ProjectForEvaluator[] = [];
           for (const proj of evaluator.projects) {
-            if (proj.id.toUpperCase() === (query.projeto as string).toUpperCase()) {
+            if (proj.id.toUpperCase() === (query.project as string).toUpperCase()) {
               newProjects.push({
                 ...proj,
                 evaluation: data.data as Evaluation,
@@ -190,7 +190,7 @@ export default function ProjectToEvaluator() {
           );
 
           await new Promise((r) => setTimeout(r, 1600)); // sleep
-          push("/avaliador/projetos");
+          push("/evaluator/projects");
         } else {
           toast.error(data.message ?? "Ocorreu algum erro. Tente novamente.");
           setButtonEnabled(true);
@@ -231,7 +231,7 @@ export default function ProjectToEvaluator() {
       </div>
       <EvaluatorLogoutComponent />
       <Footer fixed={false} />
-      <ArrowBack route="/avaliador/projetos" />
+      <ArrowBack route="/evaluator/projects" />
     </main>
   );
 }

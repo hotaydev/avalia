@@ -24,7 +24,7 @@ export default function ChooseFair() {
 
     const evaluatorCode = localStorage.getItem("evaluatorCode");
     if (!evaluatorCode) {
-      push("/avaliador");
+      push("/evaluator");
     }
 
     const fairs: ScienceFair[] = JSON.parse(localStorage.getItem("evailableFairs") ?? "[]");
@@ -92,7 +92,7 @@ export default function ChooseFair() {
 
   const selectFair = (fairId: string): void => {
     const evaluatorCode = localStorage.getItem("evaluatorCode");
-    push(`/avaliador/?code=${evaluatorCode?.toUpperCase()}-${fairId}`);
+    push(`/evaluator/?code=${evaluatorCode?.toUpperCase()}-${fairId}`);
   };
 
   return (
@@ -140,7 +140,7 @@ export default function ChooseFair() {
         </div>
       </div>
       <Footer />
-      <ArrowBack route="/avaliador" />
+      <ArrowBack route="/evaluator" />
     </main>
   );
 }

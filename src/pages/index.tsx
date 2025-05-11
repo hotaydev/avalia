@@ -28,7 +28,7 @@ export default function Login() {
           </div>
           <div
             onClick={() => {
-              push("/avaliador");
+              push("/evaluator");
             }}
             className="bg-gray-100 text-gray-800 rounded-lg px-6 py-4 flex items-center justify-between hover:bg-gray-200 transition-all cursor-pointer group"
           >

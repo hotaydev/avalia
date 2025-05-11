@@ -23,21 +23,21 @@ export default function AdminMenu({
           <MenuItem name="Classificação" selected={path === "/admin"} pushRoute={pushRoute} route="/admin" />
           <MenuItem
             name="Avaliadores"
-            selected={path === "/admin/avaliadores"}
+            selected={path === "/admin/evaluators"}
             pushRoute={pushRoute}
-            route="/admin/avaliadores"
+            route="/admin/evaluators"
           />
           <MenuItem
             name="Projetos"
-            selected={path === "/admin/projetos"}
+            selected={path === "/admin/projects"}
             pushRoute={pushRoute}
-            route="/admin/projetos"
+            route="/admin/projects"
           />
           <MenuItem
             name="Configurações"
-            selected={path === "/admin/config"}
+            selected={path === "/admin/settings"}
             pushRoute={pushRoute}
-            route="/admin/config"
+            route="/admin/settings"
           />
           <div className="px-8 mb-8">
             <hr />

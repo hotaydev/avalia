@@ -83,7 +83,7 @@ export default function ProjectsForEvaluator() {
 
       setFairInfo(localFairInfo);
     } else {
-      push("/avaliador"); // This page will handle the localStorage items
+      push("/evaluator"); // This page will handle the localStorage items
     }
 
     () => {
@@ -108,7 +108,7 @@ export default function ProjectsForEvaluator() {
   };
 
   const goToProject = (project: string): Promise<boolean> => {
-    return push(`/avaliador/projetos/${project}`);
+    return push(`/evaluator/project/${project}`);
   };
 
   return (
@@ -234,48 +234,27 @@ function ProjectListItem({
 }
 
 function TimeRemainingString({ fairInfo }: { fairInfo?: ScienceFair }) {
-  const days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-  const months = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-
-  const addZeroToDate = (date: number): string => {
-    if (date < 10) {
-      return `0${date}`;
-    }
-    return date.toString();
-  };
-
-  if (fairInfo?.endDate) {
-    const date = new Date(fairInfo?.endDate);
-
-    if (date.getTime() < Date.now()) {
-      return <p>As avaliações já encerraram. Agradecemos sua participação.</p>;
-    }
-
-    const weekday = days[date.getDay()];
-    const month = months[date.getMonth()];
-    const dayNumber = addZeroToDate(date.getDate());
-
-    const time = `${addZeroToDate(date.getHours())}h${addZeroToDate(date.getMinutes())}`;
-
-    return (
-      <p>
-        As avaliações encerram {weekday}, {dayNumber} de {month}, às {time}
-      </p>
-    );
+  if (!fairInfo?.endDate) {
+    return <p>Faça as avaliações antes do término da feira.</p>;
   }
 
-  return <p>Faça as avaliações antes do término da feira.</p>;
+  const date = new Date(fairInfo.endDate);
+
+  if (date.getTime() < Date.now()) {
+    return <p>As avaliações já encerraram. Agradecemos sua participação.</p>;
+  }
+
+  // toLocaleString(undefined) is equivalent the user's locale
+  return (
+    <p>
+      As avaliações encerram{" "}
+      {new Date(date).toLocaleString(undefined, {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+      })}
+    </p>
+  );
 }

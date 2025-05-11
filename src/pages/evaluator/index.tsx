@@ -78,7 +78,7 @@ export default function EvaluatorLogin() {
           localStorage.setItem("fairInfo", JSON.stringify(fairInfo));
           localStorage.setItem("evaluatorLastUpdated", Date.now().toString());
 
-          push("/avaliador/projetos");
+          push("/evaluator/projects");
         } else {
           toast.error(evaluatorResponse.message ?? "Não encontramos o seu convite para a feira informada pelo link.");
           setLoading(false);
@@ -95,9 +95,9 @@ export default function EvaluatorLogin() {
     const fairInfo = localStorage.getItem("fairInfo");
 
     if (evaluator && fairInfo) {
-      push("/avaliador/projetos");
+      push("/evaluator/projects");
     } else if (evaluator) {
-      push("/avaliador/feira");
+      push("/evaluator/fair");
     } else {
       setLoading(false);
     }
@@ -114,7 +114,7 @@ export default function EvaluatorLogin() {
 
   const handleLogin = (code: string): void => {
     localStorage.setItem("evaluatorCode", code.toUpperCase());
-    push("/avaliador/feira");
+    push("/evaluator/fair");
   };
 
   return (

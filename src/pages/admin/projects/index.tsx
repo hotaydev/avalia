@@ -1,7 +1,6 @@
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import DialogComponent from "@/components/Dialog/Dialog";
 import SortableTable from "@/components/SortableTable/SortableTable";
-import { HotayLogoSvg } from "@/lib/constants/hotay-logo";
 import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { ProjectForAdmin } from "@/lib/models/project";
@@ -10,10 +9,8 @@ import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { type NextRouter, useRouter } from "next/router";
-import qrCode from "qrcode";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { BsQrCode } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 import { IoReload } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
@@ -123,16 +120,6 @@ function ExtraComponentForTable({
       >
         <GoPlus size={20} />
         <Tooltip id="add-new-project-to-list" />
-      </div>
-      <div
-        className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
-        data-tooltip-id="projects-qr-codes"
-        data-tooltip-content="Baixar códigos dos projetos"
-        data-tooltip-place="left"
-        onClick={async () => await craftHtmlForThePdf(projects)}
-      >
-        <BsQrCode size={20} />
-        <Tooltip id="projects-qr-codes" />
       </div>
       <NewProjectModalContent
         dialogIsOpen={dialogIsOpen}
@@ -316,39 +303,4 @@ function NewProjectModalContent({
       </div>
     </DialogComponent>
   );
-}
-
-async function craftHtmlForThePdf(projects: ProjectForAdmin[]) {
-  const logoSvg = HotayLogoSvg;
-
-  const htmlStyles =
-    "<style>@page {size: A4;margin: 10mm 5mm;}body {font-family: Arial, sans-serif;margin: 0;padding: 0;display: grid;grid-template-columns: repeat(4, 1fr);grid-template-rows: auto;gap: 5mm;padding: 0;box-sizing: border-box;}.item {border: 1px dotted #ddd;padding: 5mm;text-align: center;page-break-inside: avoid;}.item img {display: block;margin: 0 auto; width: 30mm;}.item svg {width: 12mm;}</style>";
-
-  let htmlItems = "";
-  for (const project of projects) {
-    const qrcode = await qrCode.toDataURL(project.id.toUpperCase(), {
-      errorCorrectionLevel: "M",
-      width: 500,
-      margin: 3,
-    });
-    htmlItems += `<div class="item"><img src="${qrcode}" alt="QR Code"><p style="font-weight: semi-bold; font-size: 12px;">${project.title}</p><p style="font-weight: bold;">${project.id.toUpperCase()}</p><p style="font-size:8px; color: #888;">Desenvolvido pela</p>${logoSvg}</div>`;
-  }
-
-  const htmlContent = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Códigos dos Projetos da Feira</title>${htmlStyles}</head><body onafterprint="self.close()">${htmlItems}</body></html>`;
-
-  printContent(htmlContent);
-}
-
-function printContent(content: string) {
-  const mywindow = window.open("", "_blank");
-
-  if (mywindow) {
-    mywindow.document.open();
-    mywindow.document.write(content);
-    mywindow.document.close();
-
-    mywindow.onload = () => {
-      mywindow.print();
-    };
-  }
 }

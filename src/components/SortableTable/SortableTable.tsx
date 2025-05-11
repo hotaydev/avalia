@@ -446,7 +446,7 @@ function TableContent({
 }
 
 function SendMessageContact({ evaluator, fairInfo }: Readonly<{ evaluator: Evaluator; fairInfo: ScienceFair }>) {
-  const accessLink = `${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/avaliador/?code=${evaluator.id}-${fairInfo.fairId}`;
+  const accessLink = `${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/evaluator/?code=${evaluator.id}-${fairInfo.fairId}`;
   const message = EVALUATOR_INVITE_MESSAGE.replace("{name}", evaluator?.name)
     .replace("{link}", accessLink)
     .replace("{fair}", fairInfo.fairName)
