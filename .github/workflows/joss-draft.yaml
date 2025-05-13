@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - paper/**
-      - .github/workflows/joss-draft.yml
+      - .github/workflows/joss-draft.yaml
 
 # More info here: https://github.com/marketplace/actions/open-journals-pdf-generator
 
