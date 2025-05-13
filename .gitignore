@@ -39,3 +39,7 @@ next-env.d.ts
 
 # Documentation
 public/docs/**/*
+
+# Paper
+paper/paper.pdf
+paper/jats/*

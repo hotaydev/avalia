@@ -7,6 +7,7 @@ As a contributor, here's an overview of things to learn and ways to get involved
 - [Code of Conduct](#code-of-conduct)
 - [How can I help?](#how-can-i-help)
   - [Code Contributions](#code-contributions)
+  - [Running the Project](#running-the-project)
 - [Questions or Problems?](#have-a-question-or-problem)
 - [Issues and Bugs](#found-a-bug)
 - [Feature Requests](#missing-a-feature)
@@ -32,6 +33,62 @@ For ways to help with code, read the next section.
 
 For contributors who want to help with code, we have a list of [good first issues](https://github.com/hotaydev/avalia/labels/good%20first%20issue) to help you get started.
 These are beginner-friendly issues that don't require advanced knowledge of the codebase. We encourage new contributors to start with these issues and gradually move on to more challenging tasks.
+
+### Running the Project
+
+To run Avalia locally, follow these steps:
+
+1. **Prerequisites**
+
+   - Node.js version 18 or higher
+   - npm (comes with Node.js)
+   - Git
+
+2. **Setup**
+
+   ```bash
+   # Clone the repository
+   git clone https://github.com/hotaydev/avalia.git
+   cd avalia
+
+   # Install dependencies
+   npm install
+
+   # Copy environment variables file
+   cp .env.example .env
+   ```
+
+3. **Environment Configuration**
+
+   - Open `.env` and fill in all required environment variables
+   - Pay special attention to Firebase configuration for social login
+   - Example values are provided in the file as reference
+
+4. **Development**
+
+   ```bash
+   # Start development server
+   npm run dev
+
+   # Format code using linter
+   npm run format
+
+   # Build for production
+   npm run build
+   ```
+
+5. **Deployment**
+   To deploy to Vercel:
+
+   ```bash
+   # Install Vercel CLI globally
+   npm i -g vercel
+
+   # Deploy to production
+   vercel deploy --prod
+   ```
+
+> Note: Make sure all environment variables are properly configured in your Vercel project settings when deploying.
 
 ## Have a Question or Problem?
 
@@ -108,11 +165,6 @@ When submitting a Pull Request (PR) or waiting for subsequent review, follow the
 > If your PR introduces a significant change, add a `!` at the end of the commit, for example, `<prefix>!: description ...`
 
 5. We appreciate if the PR has "allow maintainer edits" enabled. This helps us support your contribution.
-
-### Additional PR Links
-
-- To run avalia locally, just clone this repository, run `npm install`, and run `npm run dev` to start the project. Remember to fill in the environment variables file, `.env.local`.
-  - To run the documentation, go to the `/docs` folder and run `npm run dev` there.
 
 ### Sign the CLA
 
