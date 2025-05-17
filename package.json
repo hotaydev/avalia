@@ -2,7 +2,7 @@
   "name": "avalia",
   "version": "1.0.0",
   "private": true,
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "next dev",
     "build": "cd docs && npm run build && cd ../ && next build",
