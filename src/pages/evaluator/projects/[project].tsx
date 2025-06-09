@@ -350,12 +350,12 @@ function PossibleScores({
 }) {
   return (
     <div className="flex items-center justify-between px-10 mt-8 mb-2">
-      <SinglePossibleScore score={10} id={`score-option-10-${questionId}`} questionId={questionId} handle={handle} />
-      <SinglePossibleScore score={9} id={`score-option-9-${questionId}`} questionId={questionId} handle={handle} />
-      <SinglePossibleScore score={8} id={`score-option-8-${questionId}`} questionId={questionId} handle={handle} />
-      <SinglePossibleScore score={7} id={`score-option-7-${questionId}`} questionId={questionId} handle={handle} />
-      <SinglePossibleScore score={6} id={`score-option-6-${questionId}`} questionId={questionId} handle={handle} />
-      <SinglePossibleScore score={5} id={`score-option-5-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={5} id={`score-option-10-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={6} id={`score-option-9-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={7} id={`score-option-8-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={8} id={`score-option-7-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={9} id={`score-option-6-${questionId}`} questionId={questionId} handle={handle} />
+      <SinglePossibleScore score={10} id={`score-option-5-${questionId}`} questionId={questionId} handle={handle} />
     </div>
   );
 }

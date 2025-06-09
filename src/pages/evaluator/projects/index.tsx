@@ -108,7 +108,7 @@ export default function ProjectsForEvaluator() {
   };
 
   const goToProject = (project: string): Promise<boolean> => {
-    return push(`/evaluator/project/${project}`);
+    return push(`/evaluator/projects/${project}`);
   };
 
   return (
@@ -132,10 +132,13 @@ export default function ProjectsForEvaluator() {
             <TimeRemainingString fairInfo={fairInfo} />
           </div>
         ) : (
-          <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
-            <FcOk className="mr-2" />
-            Ótimo trabalho! Seus projetos já foram avaliados.
-          </span>
+          <>
+            <span className="text-center flex justify-center items-center mt-10 font-normal text-sm text-gray-500">
+              <FcOk className="mr-2" />
+              Ótimo trabalho! Seus projetos já foram avaliados.
+            </span>
+            <AskForEvaluatorFeedback />
+          </>
         )}
       </div>
       <EvaluatorLogoutComponent />
@@ -229,6 +232,31 @@ function ProjectListItem({
           </span>
         )}
       </div>
+    </div>
+  );
+}
+
+function AskForEvaluatorFeedback() {
+  if (!process.env.NEXT_PUBLIC_EVALUATOR_FEEDBACK_FORM) {
+    return;
+  }
+
+  return (
+    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6 text-center">
+      <h3 className="text-lg font-semibold text-blue-800 mb-3">Nos ajude a melhorar o Avalia!</h3>
+      <p className="text-sm text-blue-700 mb-4">
+        Ajude nossa pesquisa compartilhando sua experiência.
+        <br />
+        Leva apenas 5 minutos!
+      </p>
+      <a
+        href={process.env.NEXT_PUBLIC_EVALUATOR_FEEDBACK_FORM}
+        target="_blank"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 cursor-pointer"
+        rel="noreferrer"
+      >
+        Compartilhar Feedback
+      </a>
     </div>
   );
 }
