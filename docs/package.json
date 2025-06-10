@@ -12,7 +12,7 @@
     "rspress": "^1.44.0"
   },
   "devDependencies": {
-    "@types/node": "^22.15.31"
+    "@types/node": "^24.0.0"
   },
   "overrides": {
     "prismjs": "1.30.0"
