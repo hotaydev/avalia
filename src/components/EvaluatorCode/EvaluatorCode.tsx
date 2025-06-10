@@ -39,7 +39,7 @@ export default function EvaluatorCode({ callback }: Readonly<{ callback?: (code:
     setState,
   }: {
     value: string;
-    nextInput?: RefObject<HTMLInputElement>;
+    nextInput?: RefObject<HTMLInputElement | null>;
     setState: Dispatch<SetStateAction<string>>;
   }) => {
     let newVal = value;
