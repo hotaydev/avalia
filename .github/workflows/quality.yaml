@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: "0 6 * * 1" # 06 AM, every Monday
 
+permissions:
+  contents: read
+
 # Scanning only the last commit in the branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
