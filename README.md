@@ -13,7 +13,7 @@
   <a href="https://github.com/hotaydev/avalia/issues"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/hotaydev/avalia?label=Issues"></a>
   <a href="https://github.com/hotaydev/avalia?tab=AGPL-3.0-1-ov-file"><img alt="License" src="https://img.shields.io/github/license/hotaydev/avalia?color=blue&label=Licen%C3%A7a"></a>
   <a href="https://avalia.hotay.dev/"><img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Favalia.hotay.dev&up_message=online&down_message=offline&label=Plataforma%20Web"></a>
-  <a href="https://doi.org/10.5281/zenodo.15392563"><img src="https://zenodo.org/badge/821557935.svg" alt="DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.15392563"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.15392563.svg" alt="DOI"></a>
 </div>
 &nbsp;
 
