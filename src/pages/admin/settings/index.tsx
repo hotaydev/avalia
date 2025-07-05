@@ -9,6 +9,7 @@ import { auth } from "@/lib/firebase/config";
 
 export default function AdminConfigPage() {
   const [loading, setLoading] = useState(true);
+  const [showEditEvaluatorsMessage, setShowEditEvaluatorsMessage] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +28,13 @@ export default function AdminConfigPage() {
     });
   }, [router]);
 
+  useEffect(() => {
+    if (router.isReady) {
+      const { action } = router.query;
+      setShowEditEvaluatorsMessage(action === "edit-evaluators-message");
+    }
+  }, [router.isReady, router.query]);
+
   return (
     <main className="z-10 flex flex-col relative px-10 py-10 h-screen">
       <Head>
@@ -41,7 +49,7 @@ export default function AdminConfigPage() {
             <div className="w-full max-w-2xl m-auto mb-6">
               <hr />
             </div>
-            <ConfigOptions />
+            <ConfigOptions showEditEvaluatorsMessage={showEditEvaluatorsMessage} />
           </div>
         </div>
       )}

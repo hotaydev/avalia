@@ -4,7 +4,7 @@ import { DEFAULT_EVALUATOR_INVITE_MESSAGE, PLACEHOLDER_TAGS } from "@/lib/consta
 import DialogComponent from "../Dialog/Dialog";
 import ConfigItem from "./ConfigItem";
 
-export default function EditEvaluatorsMessage() {
+export default function EditEvaluatorsMessage({ needToOpenDialog }: { needToOpenDialog?: boolean }) {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
   const [message, setMessage] = useState("");
 
@@ -16,6 +16,12 @@ export default function EditEvaluatorsMessage() {
       setMessage(DEFAULT_EVALUATOR_INVITE_MESSAGE);
     }
   }, [dialogIsOpen]);
+
+  useEffect(() => {
+    if (needToOpenDialog) {
+      setDialogIsOpen(true);
+    }
+  }, [needToOpenDialog]);
 
   const saveMessage = () => {
     if (!message) return;
