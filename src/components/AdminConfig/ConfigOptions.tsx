@@ -1,4 +1,5 @@
 import ConfigItem from "./ConfigItem";
+import EditEvaluatorsMessage from "./EvaluatorsMessage";
 import EvaluatorsQuestionaire from "./EvaluatorsQuestionaire";
 import EventDates from "./EventDates";
 import SheetsData from "./SheetsData";
@@ -9,6 +10,7 @@ export default function ConfigOptions() {
     <div className="space-y-3 flex flex-col justify-center items-center">
       <SheetsData />
       <EventDates />
+      <EditEvaluatorsMessage />
       <UsersConfiguration />
       <EvaluatorsQuestionaire />
       <ConfigItem text="Página de Cadastro de Avaliadores" soon={true} />

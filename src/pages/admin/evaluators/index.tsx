@@ -5,6 +5,7 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { GoPlus } from "react-icons/go";
 import { IoReload } from "react-icons/io5";
+import { TbMessageCirclePlus } from "react-icons/tb";
 import { Tooltip } from "react-tooltip";
 import AdminMenu from "@/components/AdminMenu/AdminMenu";
 import DialogComponent from "@/components/Dialog/Dialog";
@@ -91,6 +92,10 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
       });
   };
 
+  const pushMessageEditScreen = () => {
+    router.push("/admin/settings?action=edit-evaluators-message");
+  };
+
   return (
     <div className="flex items-center">
       <div className="flex items-center">
@@ -105,7 +110,7 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
         </div>
       </div>
       <div
-        className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
+        className="mr-2 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
         data-tooltip-id="add-new-evaluator-to-list"
         data-tooltip-content="Adicionar novo avaliador"
         data-tooltip-place="left"
@@ -113,6 +118,16 @@ function ExtraComponentForTable({ router, fairInfo }: { router: NextRouter; fair
       >
         <GoPlus size={20} />
         <Tooltip id="add-new-evaluator-to-list" />
+      </div>
+      <div
+        className="mr-4 p-2 bg-gray-100 hover:bg-gray-200 transition-all cursor-pointer rounded-md"
+        data-tooltip-id="edit-evaluators-message"
+        data-tooltip-content="Editar mensagem enviada para os avaliadores"
+        data-tooltip-place="left"
+        onClick={pushMessageEditScreen}
+      >
+        <TbMessageCirclePlus size={20} />
+        <Tooltip id="edit-evaluators-message" />
       </div>
       <NewEvaluatorModalContent
         dialogIsOpen={dialogIsOpen}

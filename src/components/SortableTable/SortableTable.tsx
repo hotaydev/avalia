@@ -5,7 +5,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { IoMdLink } from "react-icons/io";
 import { Tooltip } from "react-tooltip";
-import { EVALUATOR_INVITE_MESSAGE } from "@/lib/constants/messages";
+import { DEFAULT_EVALUATOR_INVITE_MESSAGE, PLACEHOLDER_TAGS } from "@/lib/constants/messages";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
@@ -447,11 +447,16 @@ function TableContent({
 
 function SendMessageContact({ evaluator, fairInfo }: Readonly<{ evaluator: Evaluator; fairInfo: ScienceFair }>) {
   const accessLink = `${process.env.NEXT_PUBLIC_APPLICATION_DOMAIN}/evaluator/?code=${evaluator.id}-${fairInfo.fairId}`;
-  const message = EVALUATOR_INVITE_MESSAGE.replace("{name}", evaluator?.name)
-    .replace("{link}", accessLink)
-    .replace("{fair}", fairInfo.fairName)
-    .replace("{code}", evaluator.id)
-    .replaceAll("{space}", "%0A");
+
+  const raw_message = localStorage.getItem("evaluatorsMessage") ?? DEFAULT_EVALUATOR_INVITE_MESSAGE;
+  const message = encodeURIComponent(
+    raw_message
+      .replaceAll(PLACEHOLDER_TAGS.nome_do_avaliador.id, evaluator?.name)
+      .replaceAll(PLACEHOLDER_TAGS.nome_da_feira.id, fairInfo.fairName)
+      .replaceAll(PLACEHOLDER_TAGS.link_de_acesso.id, accessLink)
+      .replaceAll(PLACEHOLDER_TAGS.codigo_do_avaliador.id, evaluator.id),
+  );
+
   return (
     <div className="flex space-x-2">
       <div
