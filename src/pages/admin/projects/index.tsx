@@ -1,11 +1,3 @@
-import AdminMenu from "@/components/AdminMenu/AdminMenu";
-import DialogComponent from "@/components/Dialog/Dialog";
-import SortableTable from "@/components/SortableTable/SortableTable";
-import { auth } from "@/lib/firebase/config";
-import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
-import type { ProjectForAdmin } from "@/lib/models/project";
-import type { ScienceFair } from "@/lib/models/scienceFair";
-import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { type NextRouter, useRouter } from "next/router";
@@ -14,6 +6,14 @@ import toast, { Toaster } from "react-hot-toast";
 import { GoPlus } from "react-icons/go";
 import { IoReload } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
+import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import DialogComponent from "@/components/Dialog/Dialog";
+import SortableTable from "@/components/SortableTable/SortableTable";
+import { auth } from "@/lib/firebase/config";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import type { ProjectForAdmin } from "@/lib/models/project";
+import type { ScienceFair } from "@/lib/models/scienceFair";
+import { getLastTime } from "@/lib/utils/lastUpdateTime";
 
 export default function AdminProjetosPage() {
   const [loading, setLoading] = useState(true);
@@ -148,7 +148,6 @@ function NewProjectModalContent({
   const [projectCategory, setProjectCategory] = useState("");
   const [projectArea, setProjectArea] = useState("");
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: We don't want to "retrigger" this useEffect when availableCategories changes, it would cause an infinite loop
   useEffect(() => {
     let mounted = true;
 

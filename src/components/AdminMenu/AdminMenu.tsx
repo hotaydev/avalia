@@ -1,9 +1,9 @@
-import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
-import AvaliaAuthentication from "@/lib/services/auth";
 import type { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
 import { IoPower } from "react-icons/io5";
+import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import AvaliaAuthentication from "@/lib/services/auth";
 
 export default function AdminMenu({
   path,

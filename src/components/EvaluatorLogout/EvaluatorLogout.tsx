@@ -1,5 +1,5 @@
-import wipeLocalStorage from "@/lib/services/wipeLocalStorage";
 import { useRouter } from "next/router";
+import wipeLocalStorage from "@/lib/services/wipeLocalStorage";
 
 export default function EvaluatorLogoutComponent() {
   const { push } = useRouter();

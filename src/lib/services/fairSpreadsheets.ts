@@ -275,13 +275,9 @@ export default class FairSpreadsheet {
       const id = await this.getIdThatDoesNotExist(evaluatorsSheet);
 
       await evaluatorsSheet.addRow({
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         ID: id,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Nome: evaluatorName,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Email: evaluatorEmail,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Telefone: evaluatorPhone,
         "Área de Atuação": evaluatorArea,
         "Projetos Atribuídos": "",
@@ -329,19 +325,12 @@ export default class FairSpreadsheet {
       const id = await this.getIdThatDoesNotExist(projectsSheet);
 
       await projectsSheet.addRow({
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         ID: id,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Título: projectName,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Descrição: projectDescription,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Categoria: projectCategory,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Área: projectArea,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Nota: "",
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Avaliadores: "",
       });
 
@@ -429,7 +418,11 @@ export default class FairSpreadsheet {
     evaluator,
     project,
     questions,
-  }: { evaluator: string; project: string; questions: Question[] }): Promise<Evaluation> {
+  }: {
+    evaluator: string;
+    project: string;
+    questions: Question[];
+  }): Promise<Evaluation> {
     if (!(evaluator && questions && project)) {
       throw new Error(ErrorMessage.lackOfParameters);
     }
@@ -450,17 +443,12 @@ export default class FairSpreadsheet {
       };
 
       await answersSheet.addRow({
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Projeto: project.toUpperCase(),
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Avaliador: evaluator.toUpperCase(),
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Metodologia: notes.metodology,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Documentos: notes.documents,
         "Apresentação Visual": notes.visualApresentation,
         "Apresentação Oral": notes.oralApresentation,
-        // biome-ignore lint/style/useNamingConvention: the Spreadsheet uses a more easy to understand column name
         Relevância: notes.relevancy,
         "Considerações Finais": notes.finalConsiderations,
       });

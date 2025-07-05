@@ -1,6 +1,6 @@
-import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import DialogComponent from "../Dialog/Dialog";
 import ConfigItem from "./ConfigItem";
 

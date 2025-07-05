@@ -1,16 +1,16 @@
+import type { JSX } from "react";
+import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
+import { FaWhatsapp } from "react-icons/fa";
+import { HiOutlineMail } from "react-icons/hi";
+import { IoMdLink } from "react-icons/io";
+import { Tooltip } from "react-tooltip";
 import { EVALUATOR_INVITE_MESSAGE } from "@/lib/constants/messages";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
 import capitalizeFirstLetters from "@/lib/utils/capitalize";
-import { type ChangeEvent, type Dispatch, type SetStateAction, useEffect, useMemo, useState } from "react";
-import type { JSX } from "react";
-import toast from "react-hot-toast";
-import { FaWhatsapp } from "react-icons/fa";
-import { HiOutlineMail } from "react-icons/hi";
-import { IoMdLink } from "react-icons/io";
-import { Tooltip } from "react-tooltip";
 import AddEvaluatorToProject from "../AddEvaluatorToProject/AddEvaluatorToProject";
 import AddProjectToEvaluator from "../AddProjectToEvaluator/AddProjectToEvaluator";
 

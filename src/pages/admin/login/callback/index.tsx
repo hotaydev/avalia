@@ -1,12 +1,12 @@
+import { onAuthStateChanged } from "firebase/auth";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Spinner from "@/components/Spinner";
 import { auth } from "@/lib/firebase/config";
 import AvaliaAuthentication from "@/lib/services/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 export default function EmailLinkCallbackPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>("");

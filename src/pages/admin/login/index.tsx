@@ -1,18 +1,17 @@
+import { onAuthStateChanged } from "firebase/auth";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { FcGoogle, FcLink } from "react-icons/fc";
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import DialogComponent from "@/components/Dialog/Dialog";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import { auth } from "@/lib/firebase/config";
 import AvaliaAuthentication from "@/lib/services/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { FcGoogle } from "react-icons/fc";
-import { FcLink } from "react-icons/fc";
 
-const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const isValidEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 // TODO: disable button click on email link loading
 export default function AdminLoginPage() {

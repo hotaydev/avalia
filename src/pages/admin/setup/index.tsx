@@ -1,14 +1,14 @@
+import { onAuthStateChanged } from "firebase/auth";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Spinner from "@/components/Spinner";
 import { auth } from "@/lib/firebase/config";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import AvaliaAuthentication from "@/lib/services/auth";
-import { onAuthStateChanged } from "firebase/auth";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 
 export default function AdminInitialSetupPage() {
   const [loading, setLoading] = useState(true);

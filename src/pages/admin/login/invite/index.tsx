@@ -1,10 +1,10 @@
-import Footer from "@/components/Footer/Footer";
-import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
-import { auth } from "@/lib/firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Footer from "@/components/Footer/Footer";
+import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
+import { auth } from "@/lib/firebase/config";
 
 export default function InviteLoginPage() {
   const [loading, setLoading] = useState(true);

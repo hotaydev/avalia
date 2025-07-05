@@ -1,12 +1,3 @@
-import AdminMenu from "@/components/AdminMenu/AdminMenu";
-import DialogComponent from "@/components/Dialog/Dialog";
-import Spinner from "@/components/Spinner";
-import { auth } from "@/lib/firebase/config";
-import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
-import type { Category } from "@/lib/models/category";
-import type { ScienceFair } from "@/lib/models/scienceFair";
-import capitalizeFirstLetters from "@/lib/utils/capitalize";
-import { getLastTime } from "@/lib/utils/lastUpdateTime";
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
@@ -16,6 +7,15 @@ import toast, { Toaster } from "react-hot-toast";
 import { IoReload } from "react-icons/io5";
 import { SlMagnifier } from "react-icons/sl";
 import { Tooltip } from "react-tooltip";
+import AdminMenu from "@/components/AdminMenu/AdminMenu";
+import DialogComponent from "@/components/Dialog/Dialog";
+import Spinner from "@/components/Spinner";
+import { auth } from "@/lib/firebase/config";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
+import type { Category } from "@/lib/models/category";
+import type { ScienceFair } from "@/lib/models/scienceFair";
+import capitalizeFirstLetters from "@/lib/utils/capitalize";
+import { getLastTime } from "@/lib/utils/lastUpdateTime";
 
 export default function AdminPage() {
   const [loading, setLoading] = useState(true);
@@ -96,18 +96,14 @@ export default function AdminPage() {
             <div className="w-full flex h-full pb-20 justify-center items-center">
               <Spinner />
             </div>
+          ) : ranking.length > 0 ? (
+            ranking.some((rank) => rank.hasEvaluations) ? (
+              <RankingContent ranking={ranking} router={router} />
+            ) : (
+              <NoEvaluatedContent router={router} />
+            )
           ) : (
-            <>
-              {ranking.length > 0 ? (
-                ranking.some((rank) => rank.hasEvaluations) ? (
-                  <RankingContent ranking={ranking} router={router} />
-                ) : (
-                  <NoEvaluatedContent router={router} />
-                )
-              ) : (
-                <NoContent router={router} />
-              )}
-            </>
+            <NoContent router={router} />
           )}
         </div>
       </div>

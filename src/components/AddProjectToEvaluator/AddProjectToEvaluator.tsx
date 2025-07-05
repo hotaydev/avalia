@@ -1,10 +1,10 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForAdmin } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import toast from "react-hot-toast";
 import DialogComponent from "../Dialog/Dialog";
 
 export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evaluator }) {

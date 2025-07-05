@@ -1,9 +1,9 @@
-import DialogComponent from "@/components/Dialog/Dialog";
-import Footer from "@/components/Footer/Footer";
-import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import DialogComponent from "@/components/Dialog/Dialog";
+import Footer from "@/components/Footer/Footer";
+import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 
 export default function Login() {
   const [open, setOpen] = useState(false);

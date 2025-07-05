@@ -1,3 +1,8 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { FcOk } from "react-icons/fc";
 import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
@@ -6,11 +11,6 @@ import type { Evaluator } from "@/lib/models/evaluator";
 import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { ScienceFair } from "@/lib/models/scienceFair";
 import capitalizeFirstLetters from "@/lib/utils/capitalize";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { FcOk } from "react-icons/fc";
 
 export default function ProjectsForEvaluator() {
   const { push, query } = useRouter();

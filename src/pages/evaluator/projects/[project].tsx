@@ -1,3 +1,7 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import EvaluatorLogoutComponent from "@/components/EvaluatorLogout/EvaluatorLogout";
 import Footer from "@/components/Footer/Footer";
@@ -9,10 +13,6 @@ import type { ProjectForEvaluator } from "@/lib/models/project";
 import type { Question } from "@/lib/models/question";
 import type { ScienceFair } from "@/lib/models/scienceFair";
 import capitalizeFirstLetters from "@/lib/utils/capitalize";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 
 // TODO: validate fair start and end times before allowing this page and the previous page.
 
@@ -341,13 +341,7 @@ function TextQuestion({ handle }: { handle: (value: number | string) => void }) 
   );
 }
 
-function PossibleScores({
-  questionId,
-  handle,
-}: {
-  questionId: number;
-  handle: (value: number | string) => void;
-}) {
+function PossibleScores({ questionId, handle }: { questionId: number; handle: (value: number | string) => void }) {
   return (
     <div className="flex items-center justify-between px-10 mt-8 mb-2">
       <SinglePossibleScore score={5} id={`score-option-10-${questionId}`} questionId={questionId} handle={handle} />

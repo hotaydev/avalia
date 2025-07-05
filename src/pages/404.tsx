@@ -1,7 +1,7 @@
-import Footer from "@/components/Footer/Footer";
-import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Footer from "@/components/Footer/Footer";
+import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 
 // This page will work only in production, using the `npm run start`.
 

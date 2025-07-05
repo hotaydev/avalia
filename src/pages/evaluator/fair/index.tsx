@@ -1,13 +1,13 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import ArrowBack from "@/components/ArrowBack/ArrowBack";
 import Footer from "@/components/Footer/Footer";
 import HeaderTitle from "@/components/HeaderTitle/HeaderTitle";
 import Spinner from "@/components/Spinner";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { ScienceFair } from "@/lib/models/scienceFair";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 
 export default function ChooseFair() {
   const [heigth, setHeigth] = useState<number | undefined>();

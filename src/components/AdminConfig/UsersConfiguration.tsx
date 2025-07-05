@@ -1,13 +1,13 @@
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import type { ScienceFair } from "@/lib/models/scienceFair";
 import type { FairUser } from "@/lib/models/user";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import DialogComponent from "../Dialog/Dialog";
 import Spinner from "../Spinner";
 import ConfigItem from "./ConfigItem";
 
-const isValidEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const isValidEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 export default function UsersConfiguration() {
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);

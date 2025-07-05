@@ -1,7 +1,7 @@
-import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import Link from "next/link";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
+import type { AvaliaApiResponse } from "@/lib/models/apiResponse";
 import DialogComponent from "../Dialog/Dialog";
 import ConfigItem from "./ConfigItem";
 
