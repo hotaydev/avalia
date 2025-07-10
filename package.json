@@ -15,7 +15,7 @@
     "@headlessui/react": "^2.2.4",
     "core-js": "^3.44.0",
     "firebase": "^11.10.0",
-    "google-auth-library": "^9.15.1",
+    "google-auth-library": "^10.1.0",
     "google-spreadsheet": "^4.1.4",
     "next": "^15.3.5",
     "react": "^19.1.0",
