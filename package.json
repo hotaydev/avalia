@@ -15,8 +15,8 @@
     "@headlessui/react": "^2.2.4",
     "core-js": "^3.44.0",
     "firebase": "^11.10.0",
-    "google-auth-library": "^9.15.1",
-    "google-spreadsheet": "^4.1.4",
+    "google-auth-library": "^10.1.0",
+    "google-spreadsheet": "^4.1.5",
     "next": "^15.3.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -36,6 +36,6 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0 || >=20.0.0 || >=22.0.0"
   }
 }
