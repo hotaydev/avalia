@@ -211,7 +211,7 @@ export default function ProjectToEvaluator() {
       <HeaderTitle />
       <div className="bg-white shadow-md rounded-lg px-4 pt-12 pb-6 mb-12 max-w-lg w-full text-center">
         <h2 className="text-2xl font-semibold text-gray-800 mb-2">Avaliação do projeto</h2>
-        <h3 className="font-normal text-gray-500 mb-6">
+        <h3 className="font-normal text-gray-700 mb-6">
           {project?.title ? (
             capitalizeFirstLetters(project.title)
           ) : (
@@ -320,7 +320,7 @@ function SingleQuestion({
   return (
     <div className="border border-gray-200 border-b-blue-500 border-b-4 px-5 py-4 rounded-lg mb-2 w-full text-left">
       <h3 className="font-bold text-gray-700">{title[title.length - 1] === ":" ? title : `${title}:`}</h3>
-      <p className="text-sm font-light">{description}</p>
+      <p className="text-sm font-light text-gray-600">{description}</p>
       {isText ? <TextQuestion handle={handle} /> : <PossibleScores questionId={id} handle={handle} />}
     </div>
   );
@@ -331,7 +331,7 @@ function TextQuestion({ handle }: { handle: (value: number | string) => void }) 
     <div className="flex items-center justify-between mt-4 mb-2">
       <textarea
         className="w-full p-2 border text-sm border-gray-200 rounded-lg bg-white text-gray-700 placeholder-gray-400 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-transparent"
-        rows={4}
+        rows={8}
         placeholder="Escreva aqui..."
         onChange={(e) => {
           handle(e.target.value);
@@ -343,7 +343,7 @@ function TextQuestion({ handle }: { handle: (value: number | string) => void }) 
 
 function PossibleScores({ questionId, handle }: { questionId: number; handle: (value: number | string) => void }) {
   return (
-    <div className="flex items-center justify-between px-10 mt-8 mb-2">
+    <div className="flex items-center justify-between px-2 md:px-10 mt-8 mb-2">
       <SinglePossibleScore score={5} id={`score-option-10-${questionId}`} questionId={questionId} handle={handle} />
       <SinglePossibleScore score={6} id={`score-option-9-${questionId}`} questionId={questionId} handle={handle} />
       <SinglePossibleScore score={7} id={`score-option-8-${questionId}`} questionId={questionId} handle={handle} />

@@ -219,9 +219,7 @@ function ProjectListItem({
         <h3 className={`text-normal text-gray-700 ${project.evaluation ? "line-through" : ""}`}>
           {capitalizeFirstLetters(project.title)}
         </h3>
-        <p className={`text-xs text-gray-500 font-light ${project.evaluation ? "line-through" : ""}`}>
-          {capitalizeFirstLetters(project.category)}
-        </p>
+        <p className="text-xs text-gray-500 font-light">{capitalizeFirstLetters(project.category)}</p>
       </div>
       <div>
         {project.evaluation ? (

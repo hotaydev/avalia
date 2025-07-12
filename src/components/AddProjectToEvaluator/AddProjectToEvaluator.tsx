@@ -47,18 +47,8 @@ export default function AddProjectToEvaluator({ evaluator }: { evaluator: Evalua
 
   const openDialog = async (): Promise<void> => {
     setDialogIsOpen(true);
-    const projectsGetted = await getProjects();
-
-    const projectsAlreadyFromTheEvaluator: string[] = [];
-
-    for (const proj of projectsGetted) {
-      if (proj.evaluators?.some((ev) => ev.id === evaluator.id)) {
-        projectsAlreadyFromTheEvaluator.push(proj.id);
-      }
-    }
-
-    setSelectedProjectsIds(projectsAlreadyFromTheEvaluator);
-    setProjects(projectsGetted);
+    setSelectedProjectsIds(evaluator.projects.map((project) => project.id));
+    setProjects(await getProjects());
   };
 
   const sendData = async () => {
