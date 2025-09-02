@@ -39,7 +39,9 @@ export default function ProjectsForEvaluator() {
 
       if (_evaluatorLastUpdated) {
         // FUTURE: In the future this "future date" can be a environment variable or something configurable by the admins
-        const futureDate = new Date(Number.parseInt(_evaluatorLastUpdated)).setMinutes(new Date().getMinutes() + 10);
+        const futureDate = new Date(Number.parseInt(_evaluatorLastUpdated, 10)).setMinutes(
+          new Date().getMinutes() + 10,
+        );
         if (futureDate < Date.now()) {
           // It have passed more than 10 minutes since the last update
 

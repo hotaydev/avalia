@@ -4,7 +4,7 @@ export const getLastTime = (key: string) => {
     return "0 minutos";
   }
 
-  const oldTime = new Date(Number.parseInt(value));
+  const oldTime = new Date(Number.parseInt(value, 10));
   const newTime = new Date();
 
   const seconds = Math.floor((newTime.getTime() - oldTime.getTime()) / 1000);

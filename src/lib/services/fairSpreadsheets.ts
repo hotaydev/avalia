@@ -482,11 +482,11 @@ export default class FairSpreadsheet {
           project: evaluation.get("Projeto"),
           evaluator: evaluation.get("Avaliador"),
           notes: {
-            metodology: Number.parseInt(evaluation.get("Metodologia")),
-            documents: Number.parseInt(evaluation.get("Documentos")),
-            visualApresentation: Number.parseInt(evaluation.get("Apresentação Visual")),
-            oralApresentation: Number.parseInt(evaluation.get("Apresentação Oral")),
-            relevancy: Number.parseInt(evaluation.get("Relevância")),
+            metodology: Number.parseInt(evaluation.get("Metodologia"), 10),
+            documents: Number.parseInt(evaluation.get("Documentos"), 10),
+            visualApresentation: Number.parseInt(evaluation.get("Apresentação Visual"), 10),
+            oralApresentation: Number.parseInt(evaluation.get("Apresentação Oral"), 10),
+            relevancy: Number.parseInt(evaluation.get("Relevância"), 10),
           },
           // Don't need the "finalConsiderations" here, since it doesn't change the final score
         });

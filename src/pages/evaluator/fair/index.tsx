@@ -35,7 +35,7 @@ export default function ChooseFair() {
 
       const lastUpdatedTime = localStorage.getItem("evailableFairsLastUpdated");
       if (lastUpdatedTime) {
-        const futureDate = new Date(Number.parseInt(lastUpdatedTime)).setMinutes(new Date().getMinutes() + 10);
+        const futureDate = new Date(Number.parseInt(lastUpdatedTime, 10)).setMinutes(new Date().getMinutes() + 10);
 
         if (futureDate < Date.now()) {
           needToReload = true;
